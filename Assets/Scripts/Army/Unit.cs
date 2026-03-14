@@ -9,6 +9,8 @@ public class Unit : MonoBehaviour
     private List<UnitMember> _membersAlive = new();
     private Army _enemyArmy;
 
+    private bool _isBattleEnded;
+
     public event Action<Unit> Dead;
 
     private void OnEnable()
@@ -29,6 +31,14 @@ public class Unit : MonoBehaviour
             member.Dead -= OnMemberDead;
             member.Free -= OnMemberFree;
         }
+    }
+
+    public void Win()
+    {
+        _isBattleEnded = true;
+
+        foreach (var member in _members)
+            member.Win();
     }
 
     public List<UnitMember> GetAliveMembers()
@@ -56,6 +66,9 @@ public class Unit : MonoBehaviour
 
     private void OnMemberFree(UnitMember member)
     {
+        if (_isBattleEnded)
+            return;
+
         member.SetTarget(_enemyArmy.GetClosestTarget(member.transform));
     }
 }

@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(Mover))]
@@ -14,7 +13,6 @@ public abstract class UnitMember : MonoBehaviour
     private Mover _mover;
     private Attacker _attacker;
     private MemberAnimator _animator;
-    private UnitMember _target;
 
     public event Action<UnitMember> Dead;
     public event Action<UnitMember> Free;
@@ -35,9 +33,11 @@ public abstract class UnitMember : MonoBehaviour
     private void OnEnable()
     {
         _health.Dead += OnDead;
-        _mover.WentToTarget += StartAttack;
-        _mover.LeaveTarget += StopAttack;
         _attacker.AttackStarted += OnAttackStarted;
+        _mover.WentToTarget += OnWentToTarget;
+        _mover.LeaveTarget += OnLeaveTarget;
+        _attacker.TargetDead += OnTargetDead;
+        IsAlive = true;
     }
 
     private void Update()
@@ -48,15 +48,9 @@ public abstract class UnitMember : MonoBehaviour
     private void OnDisable()
     {
         _health.Dead -= OnDead;
-        _mover.WentToTarget -= StartAttack;
-        _mover.LeaveTarget -= StopAttack;
         _attacker.AttackStarted -= OnAttackStarted;
-
-        if (_target != null)
-        {
-            _target.Dead += OnTargetDead;
-            _target = null;
-        }
+        _mover.WentToTarget -= OnWentToTarget;
+        _mover.LeaveTarget -= OnLeaveTarget;
     }
 
     public void TakeDamage(int damage)
@@ -67,36 +61,37 @@ public abstract class UnitMember : MonoBehaviour
 
     public void SetTarget(UnitMember target)
     {
-        _target = target;
-        _target.Dead += OnTargetDead;
         _mover.SetTarget(target.transform);
     }
 
-    private void OnTargetDead(UnitMember _)
+    public void Win()
     {
-        _target.Dead -= OnTargetDead;
-        _target = null;
+        _mover.Disable();
+        _animator.OnWin();
+    }
 
-        if (IsAlive)
-            Free?.Invoke(this);
+    private void OnWentToTarget()
+    {
+        _attacker.Attack();
+    }
+
+    private void OnLeaveTarget()
+    {
+        _attacker.StopAttack();
+    }
+
+    private void OnTargetDead()
+    {
+        _mover.Enable();
+        Free?.Invoke(this);
     }
 
     private void OnDead()
     {
-        IsAlive = false;
         _mover.Disable();
         _animator.OnDeath();
+        IsAlive = false;
         Dead?.Invoke(this);
-    }
-
-    private void StartAttack()
-    {
-        _attacker.Enable();
-    }
-
-    private void StopAttack()
-    {
-        _attacker.Disable();
     }
 
     private void OnAttackStarted()

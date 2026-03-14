@@ -1058,7 +1058,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dc06c0c51062184193792b28b41e26e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weapon: {fileID: 3010057259721552064}
+  _eventSender: {fileID: 8496222091692357846}
+  _attackTargets:
+    serializedVersion: 2
+    m_Bits: 0
+  _collider: {fileID: 5568262012391416911}
+  _damage: 5
+  _cooldownTime: 1.5
 --- !u!114 &8876725585034810223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1986,24 +1992,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 140
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 183399575229169464, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
---- !u!114 &3010057259721552064 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 183399575229169464, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
-  m_PrefabInstance: {fileID: 3120519346891526136}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06182014b2afec64f9f42f4dc09882c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &3534670381482841271 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1892607146396556111, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
+  m_PrefabInstance: {fileID: 3120519346891526136}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &5568262012391416911 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 7352195783100230583, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
   m_PrefabInstance: {fileID: 3120519346891526136}
   m_PrefabAsset: {fileID: 0}

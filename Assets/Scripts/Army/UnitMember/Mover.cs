@@ -35,13 +35,9 @@ public class Mover : MonoBehaviour
         MoveNavmesh();
     }
 
-    public void Initialize(NavMeshAgent agent)
+    public void Enable()
     {
-        _agent = agent;
-        _agent.updateRotation = false;
-        _agent.enabled = false;
-        _agent.radius *= transform.lossyScale.x;
-        _agent.height *= transform.lossyScale.y;
+        _agent.enabled = true;
     }
 
     public void Disable()
