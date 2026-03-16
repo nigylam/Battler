@@ -885,9 +885,9 @@ GameObject:
   - component: {fileID: 5335410890991636213}
   - component: {fileID: 8496222091692357846}
   - component: {fileID: 2858756706154115267}
-  - component: {fileID: 2062107450840290106}
   - component: {fileID: 8876725585034810223}
   - component: {fileID: 3761040249525030457}
+  - component: {fileID: 3022521004129387759}
   m_Layer: 7
   m_Name: SoldierArmWeapon
   m_TagString: Untagged
@@ -1046,25 +1046,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 20
---- !u!114 &2062107450840290106
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4207753064186563347}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5dc06c0c51062184193792b28b41e26e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _eventSender: {fileID: 8496222091692357846}
-  _attackTargets:
-    serializedVersion: 2
-    m_Bits: 0
-  _collider: {fileID: 5568262012391416911}
-  _damage: 5
-  _cooldownTime: 1.5
 --- !u!114 &8876725585034810223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1090,6 +1071,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attackRange: 1
+--- !u!114 &3022521004129387759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4207753064186563347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 365d6b6d6dbc8ff4d9b8f005e71ebdd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackTargets:
+    serializedVersion: 2
+    m_Bits: 0
+  _damage: 5
+  _cooldownTime: 1.5
+  Target: {fileID: 0}
+  _eventSender: {fileID: 8496222091692357846}
+  _collider: {fileID: 5568262012391416911}
 --- !u!1 &4264366966006641668
 GameObject:
   m_ObjectHideFlags: 0
@@ -1953,16 +1954,28 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1892607146396556111, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1892607146396556111, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1892607146396556111, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1892607146396556111, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.1
+      value: 0.22
       objectReference: {fileID: 0}
     - target: {fileID: 1892607146396556111, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.05
+      value: 0.115
       objectReference: {fileID: 0}
     - target: {fileID: 1892607146396556111, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.04
+      value: -0.144
       objectReference: {fileID: 0}
     - target: {fileID: 1892607146396556111, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1991,6 +2004,10 @@ PrefabInstance:
     - target: {fileID: 1892607146396556111, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 140
+      objectReference: {fileID: 0}
+    - target: {fileID: 1892607146396556111, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 183399575229169464, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}

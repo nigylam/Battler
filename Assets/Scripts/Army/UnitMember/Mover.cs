@@ -28,10 +28,11 @@ public class Mover : MonoBehaviour
 
     private void Update()
     {
+        RotateTowardsTarget();
+
         if (_agent.enabled == false)
             return;
 
-        RotateTowardsTarget();
         MoveNavmesh();
     }
 
@@ -48,6 +49,7 @@ public class Mover : MonoBehaviour
     public void SetTarget(Transform target)
     {
         _target = target;
+        _wentEventSended = false;
         _agent.SetDestination(_target.position);
     }
 

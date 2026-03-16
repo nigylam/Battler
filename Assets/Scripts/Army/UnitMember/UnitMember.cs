@@ -62,6 +62,7 @@ public abstract class UnitMember : MonoBehaviour
     public void SetTarget(UnitMember target)
     {
         _mover.SetTarget(target.transform);
+        _attacker.SetTarget(target.transform);
     }
 
     public void Win()
@@ -72,7 +73,7 @@ public abstract class UnitMember : MonoBehaviour
 
     private void OnWentToTarget()
     {
-        _attacker.Attack();
+        _attacker.StartAttack();
     }
 
     private void OnLeaveTarget()
@@ -90,6 +91,7 @@ public abstract class UnitMember : MonoBehaviour
     {
         _mover.Disable();
         _animator.OnDeath();
+        _attacker.StopAttack();
         IsAlive = false;
         Dead?.Invoke(this);
     }
