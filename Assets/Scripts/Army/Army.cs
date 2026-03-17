@@ -45,29 +45,18 @@ public class Army : MonoBehaviour
             unit.Dead -= OnUnitDead;
     }
 
-    public UnitMember GetClosestTarget(Transform point)
+    public List<UnitMember> GetTargets()
     {
-        List<UnitMember> allTargets = new();
+        List<UnitMember> targets = new();
 
         foreach (var unit in _units)
         {
-            allTargets.AddRange(unit.GetAliveMembers());
+            targets.AddRange(unit.GetAliveMembers());
         }
 
-        UnitMember closestTarget = allTargets[0];
-        float closestTargetSqrDistance = Vector3.SqrMagnitude(closestTarget.transform.position - point.position);
 
-        foreach (var target in allTargets)
-        {
-            float targetSqrDistance = Vector3.SqrMagnitude(target.transform.position - point.position);
 
-            if (closestTargetSqrDistance > targetSqrDistance)
-            {
-                closestTarget = target;
-            }
-        }
-
-        return closestTarget;
+        return targets;
     }
 
     private void OnEnemyArmyLose()

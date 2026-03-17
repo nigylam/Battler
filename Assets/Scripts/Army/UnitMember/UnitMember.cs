@@ -1,10 +1,13 @@
 using System;
+using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(Mover))]
 [RequireComponent(typeof(Attacker))]
 [RequireComponent(typeof(MemberAnimator))]
+[RequireComponent(typeof(TargetFinder))]
 public abstract class UnitMember : MonoBehaviour
 {
     [SerializeField] private SmoothSliderBar _healthBar;
@@ -12,19 +15,21 @@ public abstract class UnitMember : MonoBehaviour
     private Health _health;
     private Mover _mover;
     private Attacker _attacker;
-    private MemberAnimator _animator;
+    private TargetFinder _targetFinder;
 
     public event Action<UnitMember> Dead;
     public event Action<UnitMember> Free;
 
     public bool IsAlive { get; private set; }
+    protected bool IsMoving => _mover.Speed > 0;
+    protected abstract MemberAnimator Animator { get; }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _health = GetComponent<Health>();
         _mover = GetComponent<Mover>();
         _attacker = GetComponent<Attacker>();
-        _animator = GetComponent<MemberAnimator>();
+        _targetFinder = GetComponent<TargetFinder>();
 
         _healthBar.Initialize(_health);
         _healthBar.Enable();
@@ -33,34 +38,30 @@ public abstract class UnitMember : MonoBehaviour
     private void OnEnable()
     {
         _health.Dead += OnDead;
-        _attacker.AttackStarted += OnAttackStarted;
         _mover.WentToTarget += OnWentToTarget;
         _mover.LeaveTarget += OnLeaveTarget;
         _attacker.TargetDead += OnTargetDead;
+        _attacker.AttackStarted += OnAttackStarted;
         IsAlive = true;
-    }
-
-    private void Update()
-    {
-        _animator.ProcessMovingAnimations(_mover.Speed > 0);
     }
 
     private void OnDisable()
     {
         _health.Dead -= OnDead;
-        _attacker.AttackStarted -= OnAttackStarted;
         _mover.WentToTarget -= OnWentToTarget;
         _mover.LeaveTarget -= OnLeaveTarget;
+        _attacker.AttackStarted -= OnAttackStarted;
     }
 
     public void TakeDamage(int damage)
     {
         _health.TakeDamage(damage);
-        _animator.OnHit();
+        Animator.OnHit();
     }
 
-    public void SetTarget(UnitMember target)
+    public void SetTarget(List<UnitMember> targets)
     {
+        UnitMember target = _targetFinder.GetTarget(targets);
         _mover.SetTarget(target.transform);
         _attacker.SetTarget(target.transform);
     }
@@ -68,8 +69,10 @@ public abstract class UnitMember : MonoBehaviour
     public void Win()
     {
         _mover.Disable();
-        _animator.OnWin();
+        Animator.OnWin();
     }
+
+    protected virtual void OnAttackStarted() { }
 
     private void OnWentToTarget()
     {
@@ -90,14 +93,9 @@ public abstract class UnitMember : MonoBehaviour
     private void OnDead()
     {
         _mover.Disable();
-        _animator.OnDeath();
+        Animator.OnDeath();
         _attacker.StopAttack();
         IsAlive = false;
         Dead?.Invoke(this);
-    }
-
-    private void OnAttackStarted()
-    {
-        _animator.OnAttack();
     }
 }

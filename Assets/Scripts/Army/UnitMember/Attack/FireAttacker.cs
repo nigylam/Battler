@@ -3,32 +3,32 @@ using UnityEngine;
 
 public class FireAttacker : Attacker
 {
-    [SerializeField] private BulletSpawner _bulletSpawner;
+    [SerializeField] private ProjectileSpawner _projectileSpawner;
     [SerializeField] private Transform _muzzlePoint;
 
-    private List<Bullet> _spawnedBullets = new List<Bullet>();
+    private List<Projectile> _spawnedProjectiles = new List<Projectile>();
 
     private void OnDisable()
     {
-        foreach (var bullet in _spawnedBullets)
-            bullet.Collided -= OnBulleteCollide;
+        foreach (var bullet in _spawnedProjectiles)
+            bullet.Collided -= OnProjectileCollide;
     }
 
     protected override void Attack()
     {
         base.Attack();
-        Bullet bullet = _bulletSpawner.Spawn(_muzzlePoint.position, GetDirectionToTarget(_muzzlePoint.position));
-        bullet.Collided += OnBulleteCollide;
-        _spawnedBullets.Add(bullet);
+        Projectile projectile = _projectileSpawner.Spawn(_muzzlePoint.position, GetDirectionToTarget(_muzzlePoint.position));
+        projectile.Collided += OnProjectileCollide;
+        _spawnedProjectiles.Add(projectile);
     }
 
-    private void OnBulleteCollide(Bullet bullet, UnitMember unitMember)
+    private void OnProjectileCollide(Projectile projectile, UnitMember unitMember)
     {
         if (IsInLayerMask(unitMember.gameObject) == false)
             return;
 
-        bullet.Collided -= OnBulleteCollide;
-        _spawnedBullets.Remove(bullet);
+        projectile.Collided -= OnProjectileCollide;
+        _spawnedProjectiles.Remove(projectile);
         TakeDamage(unitMember);
     }
 }

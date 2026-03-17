@@ -885,9 +885,10 @@ GameObject:
   - component: {fileID: 5335410890991636213}
   - component: {fileID: 8496222091692357846}
   - component: {fileID: 2858756706154115267}
-  - component: {fileID: 8876725585034810223}
   - component: {fileID: 3761040249525030457}
   - component: {fileID: 3022521004129387759}
+  - component: {fileID: 1963550804781257162}
+  - component: {fileID: 1422263508427399357}
   m_Layer: 7
   m_Name: SoldierArmWeapon
   m_TagString: Untagged
@@ -1046,18 +1047,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 20
---- !u!114 &8876725585034810223
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4207753064186563347}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6d0399139a4b2b4b84ca18167136da0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3761040249525030457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1088,9 +1077,32 @@ MonoBehaviour:
     m_Bits: 0
   _damage: 5
   _cooldownTime: 1.5
-  Target: {fileID: 0}
   _eventSender: {fileID: 8496222091692357846}
   _collider: {fileID: 5568262012391416911}
+--- !u!114 &1963550804781257162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4207753064186563347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839f92493bb0bb2448e3d6b546e4d187, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1422263508427399357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4207753064186563347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e2bc05d394dd034b8b8ee68c7b97166, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4264366966006641668
 GameObject:
   m_ObjectHideFlags: 0

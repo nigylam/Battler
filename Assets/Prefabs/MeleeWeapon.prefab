@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3309089891393606890}
   - component: {fileID: 723048676402585632}
   - component: {fileID: 7352195783100230583}
-  - component: {fileID: 183399575229169464}
   m_Layer: 0
   m_Name: MeleeWeapon
   m_TagString: Untagged
@@ -106,22 +105,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.13554366, y: 0.073354274, z: 0.032267462}
   m_Center: {x: 0.043143954, y: 0.3530141, z: 0.00025618216}
---- !u!114 &183399575229169464
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1227288625216307701}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06182014b2afec64f9f42f4dc09882c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Damage: 5
-  _cooldownTime: 1.5
-  _eventSender: {fileID: 0}
-  _attackTargets:
-    serializedVersion: 2
-    m_Bits: 0
-  _collider: {fileID: 7352195783100230583}

@@ -2,15 +2,14 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Bullet : MonoBehaviour
+public abstract class Projectile : MonoBehaviour
 {
-    [SerializeField] private float _speed;
+    [SerializeField] private float _lifetime = 4f;
 
-    private float _lifetime = 4f;
     private Rigidbody _rigidbody;
 
-    public event Action<Bullet, UnitMember> Collided;
-    public event Action<Bullet> Wasted;
+    public event Action<Projectile, UnitMember> Collided;
+    public event Action<Projectile> Wasted;
 
     private void Awake()
     {
@@ -33,8 +32,10 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    public void Initialize(Vector3 shotDirection)
+    public abstract void Initialize(Vector3 shotDirection);
+
+    protected void SetVelocity(Vector3 velocity)
     {
-        _rigidbody.velocity = Vector3.Normalize(shotDirection) * _speed;
+        _rigidbody.velocity = velocity;
     }
 }

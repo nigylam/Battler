@@ -52,7 +52,7 @@ public class Unit : MonoBehaviour
 
         foreach (UnitMember member in _membersAlive)
         {
-            member.SetTarget(_enemyArmy.GetClosestTarget(member.transform));
+            member.SetTarget(_enemyArmy.GetTargets());
         }
     }
 
@@ -69,6 +69,6 @@ public class Unit : MonoBehaviour
         if (_isBattleEnded)
             return;
 
-        member.SetTarget(_enemyArmy.GetClosestTarget(member.transform));
+        member.SetTarget(_enemyArmy.GetTargets());
     }
 }
