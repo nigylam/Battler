@@ -65886,14 +65886,14 @@ AnimationClip:
   - time: 0.73333335
     functionName: OnAttackHitEnable
     data: 
-    objectReferenceParameter: {fileID: 11500000, guid: 4f5eb067e35bbc54180e515fcb3e8249, type: 3}
+    objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.8666667
+  - time: 1.3333334
     functionName: OnAttackHitDisable
     data: 
-    objectReferenceParameter: {fileID: 11500000, guid: 4f5eb067e35bbc54180e515fcb3e8249, type: 3}
+    objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0

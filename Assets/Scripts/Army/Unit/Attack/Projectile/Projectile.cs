@@ -1,14 +1,12 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
 public abstract class Projectile : MonoBehaviour
 {
     [SerializeField] private float _lifetime = 4f;
+    [SerializeField] private Rigidbody _rigidbody;
 
-    private Rigidbody _rigidbody;
-
-    public event Action<Projectile, UnitMember> Collided;
+    public event Action<Projectile, Unit> Collided;
     public event Action<Projectile> Wasted;
 
     private void Awake()
@@ -26,7 +24,7 @@ public abstract class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out UnitMember unitMember))
+        if (other.TryGetComponent(out Unit unitMember))
         {
             Collided?.Invoke(this, unitMember);
         }

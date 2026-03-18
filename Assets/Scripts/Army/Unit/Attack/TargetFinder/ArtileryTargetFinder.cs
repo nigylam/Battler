@@ -1,12 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ArtileryTargetFinder : TargetFinder
 {
-    public override UnitMember GetTarget(List<UnitMember> targets)
+    public override Unit GetTarget(List<Unit> targets)
     {
-        UnitMember farestTarget = targets[0];
+        Unit farestTarget = targets[0];
         float closestTargetSqrDistance = Vector3.SqrMagnitude(farestTarget.transform.position - transform.position);
 
         foreach (var target in targets)

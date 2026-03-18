@@ -883,7 +883,8 @@ GameObject:
   - component: {fileID: 2389418485003686422}
   - component: {fileID: -7303164083405069350}
   - component: {fileID: 5335410890991636213}
-  - component: {fileID: 8496222091692357846}
+  - component: {fileID: 1247464205483539601}
+  - component: {fileID: 4192156377848910161}
   - component: {fileID: 2858756706154115267}
   - component: {fileID: 3761040249525030457}
   - component: {fileID: 3022521004129387759}
@@ -996,7 +997,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 4207753064186563347}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.7
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -1022,7 +1023,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthBar: {fileID: 7925398405332039666}
---- !u!114 &8496222091692357846
+  _health: {fileID: 2858756706154115267}
+  _mover: {fileID: 3761040249525030457}
+  _attacker: {fileID: 3022521004129387759}
+  _targetFinder: {fileID: 1963550804781257162}
+  _deadAnimationEventSender: {fileID: 1247464205483539601}
+  _animator: {fileID: 1422263508427399357}
+--- !u!114 &1247464205483539601
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1031,7 +1038,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 4207753064186563347}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f5eb067e35bbc54180e515fcb3e8249, type: 3}
+  m_Script: {fileID: 11500000, guid: e64b9837681ded448bcf05d6536aaede, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4192156377848910161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4207753064186563347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b84dff5cc3ce324a92fee600f4d9790, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &2858756706154115267
@@ -1059,7 +1078,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac921b25e893fa34d8d420fd8d4f071e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackRange: 1
+  _attackRange: 1.5
 --- !u!114 &3022521004129387759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1077,7 +1096,7 @@ MonoBehaviour:
     m_Bits: 0
   _damage: 5
   _cooldownTime: 1.5
-  _eventSender: {fileID: 8496222091692357846}
+  _weaponAnimationEventSender: {fileID: 4192156377848910161}
   _collider: {fileID: 5568262012391416911}
 --- !u!114 &1963550804781257162
 MonoBehaviour:
@@ -1103,6 +1122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e2bc05d394dd034b8b8ee68c7b97166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animator: {fileID: 2389418485003686422}
 --- !u!1 &4264366966006641668
 GameObject:
   m_ObjectHideFlags: 0
@@ -1950,10 +1970,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 8748013074984963673}
     m_Modifications:
     - target: {fileID: 183399575229169464, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
-      propertyPath: _eventSender
-      value: 
-      objectReference: {fileID: 8496222091692357846}
-    - target: {fileID: 183399575229169464, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
       propertyPath: _attackTargets.m_Bits
       value: 64
       objectReference: {fileID: 0}
@@ -2020,6 +2036,26 @@ PrefabInstance:
     - target: {fileID: 1892607146396556111, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7352195783100230583, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
+      propertyPath: m_Size.x
+      value: 0.3106617
+      objectReference: {fileID: 0}
+    - target: {fileID: 7352195783100230583, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
+      propertyPath: m_Size.y
+      value: 0.215158
+      objectReference: {fileID: 0}
+    - target: {fileID: 7352195783100230583, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
+      propertyPath: m_Center.x
+      value: 0.13069965
+      objectReference: {fileID: 0}
+    - target: {fileID: 7352195783100230583, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
+      propertyPath: m_Center.y
+      value: 0.38073546
+      objectReference: {fileID: 0}
+    - target: {fileID: 7352195783100230583, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
+      propertyPath: m_Center.z
+      value: 0.00026043007
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 183399575229169464, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}

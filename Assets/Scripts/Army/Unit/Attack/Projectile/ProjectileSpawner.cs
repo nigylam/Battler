@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -45,7 +44,7 @@ public class ProjectileSpawner : MonoBehaviour
         _activeElements.Clear();
     }
 
-    private void OnCollided(Projectile projectile, UnitMember _)
+    private void OnCollided(Projectile projectile, Unit _)
     {
         Release(projectile);
     }

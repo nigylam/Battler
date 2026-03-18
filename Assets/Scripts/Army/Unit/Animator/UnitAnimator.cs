@@ -1,14 +1,15 @@
+using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
-public abstract class MemberAnimator : MonoBehaviour
+public abstract class UnitAnimator : MonoBehaviour
 {
+    [SerializeField] private Animator _animator;
+
     private readonly int AnimatorWin = Animator.StringToHash("Win");
     private readonly int AnimatorHit = Animator.StringToHash("Hit");
     private readonly int AnimatorDeath = Animator.StringToHash("Death");
     private readonly string AnimatorHitLayer = "HitLayer";
 
-    private Animator _animator;
     private int _hitLayer;
 
     private void Awake()

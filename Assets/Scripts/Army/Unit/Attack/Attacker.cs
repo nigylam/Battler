@@ -52,7 +52,7 @@ public abstract class Attacker : MonoBehaviour
         StartCooldown();
     }
 
-    protected void TakeDamage(UnitMember member)
+    protected void TakeDamage(Unit member)
     {
         int damage = UnityEngine.Random.Range(_damage - _damageOffset, _damage + _damageOffset);
         damage = Mathf.Clamp(damage, _damageMinValue, int.MaxValue);

@@ -1,47 +1,35 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-[RequireComponent(typeof(Health))]
-[RequireComponent(typeof(Mover))]
-[RequireComponent(typeof(Attacker))]
-[RequireComponent(typeof(MemberAnimator))]
-[RequireComponent(typeof(TargetFinder))]
-public abstract class UnitMember : MonoBehaviour
+public abstract class Unit : MonoBehaviour
 {
     [SerializeField] private SmoothSliderBar _healthBar;
+    [SerializeField] private Health _health;
+    [SerializeField] private Mover _mover;
+    [SerializeField] private Attacker _attacker;
+    [SerializeField] private TargetFinder _targetFinder;
+    [SerializeField] private DeathAnimationEventSender _deadAnimationEventSender;
 
-    private Health _health;
-    private Mover _mover;
-    private Attacker _attacker;
-    private TargetFinder _targetFinder;
-
-    public event Action<UnitMember> Dead;
-    public event Action<UnitMember> Free;
+    public event Action<Unit> Dead;
+    public event Action<Unit> Free;
 
     public bool IsAlive { get; private set; }
     protected bool IsMoving => _mover.Speed > 0;
-    protected abstract MemberAnimator Animator { get; }
-
-    protected virtual void Awake()
-    {
-        _health = GetComponent<Health>();
-        _mover = GetComponent<Mover>();
-        _attacker = GetComponent<Attacker>();
-        _targetFinder = GetComponent<TargetFinder>();
-
-        _healthBar.Initialize(_health);
-        _healthBar.Enable();
-    }
+    protected abstract UnitAnimator Animator { get; }
 
     private void OnEnable()
     {
+        _healthBar.Initialize(_health);
+        _healthBar.Enable();
+
         _health.Dead += OnDead;
         _mover.WentToTarget += OnWentToTarget;
         _mover.LeaveTarget += OnLeaveTarget;
         _attacker.TargetDead += OnTargetDead;
         _attacker.AttackStarted += OnAttackStarted;
+        _deadAnimationEventSender.AnimationEnded += OnDeadAnimationPlayed;
+
         IsAlive = true;
     }
 
@@ -50,7 +38,9 @@ public abstract class UnitMember : MonoBehaviour
         _health.Dead -= OnDead;
         _mover.WentToTarget -= OnWentToTarget;
         _mover.LeaveTarget -= OnLeaveTarget;
+        _attacker.TargetDead -= OnTargetDead;
         _attacker.AttackStarted -= OnAttackStarted;
+        _deadAnimationEventSender.AnimationEnded -= OnDeadAnimationPlayed;
     }
 
     public void TakeDamage(int damage)
@@ -59,9 +49,9 @@ public abstract class UnitMember : MonoBehaviour
         Animator.OnHit();
     }
 
-    public void SetTarget(List<UnitMember> targets)
+    public void SetTarget(List<Unit> targets)
     {
-        UnitMember target = _targetFinder.GetTarget(targets);
+        Unit target = _targetFinder.GetTarget(targets);
         _mover.SetTarget(target.transform);
         _attacker.SetTarget(target.transform);
     }
@@ -95,7 +85,13 @@ public abstract class UnitMember : MonoBehaviour
         _mover.Disable();
         Animator.OnDeath();
         _attacker.StopAttack();
+        _healthBar.gameObject.SetActive(false);
         IsAlive = false;
         Dead?.Invoke(this);
+    }
+
+    private void OnDeadAnimationPlayed()
+    {
+        gameObject.SetActive(false);
     }
 }

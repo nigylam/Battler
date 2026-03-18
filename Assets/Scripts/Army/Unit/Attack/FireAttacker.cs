@@ -22,7 +22,7 @@ public class FireAttacker : Attacker
         _spawnedProjectiles.Add(projectile);
     }
 
-    private void OnProjectileCollide(Projectile projectile, UnitMember unitMember)
+    private void OnProjectileCollide(Projectile projectile, Unit unitMember)
     {
         if (IsInLayerMask(unitMember.gameObject) == false)
             return;

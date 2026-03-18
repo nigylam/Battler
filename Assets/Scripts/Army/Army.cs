@@ -4,36 +4,36 @@ using UnityEngine;
 
 public class Army : MonoBehaviour
 {
-    [SerializeField] private List<Unit> _units;
+    [SerializeField] private List<Squad> _squads;
     [SerializeField] private Army _enemyArmy;
 
-    private List<Unit> _aliveUnits;
+    private List<Squad> _aliveSquads;
 
     public event Action Lose;
 
     private void OnEnable()
     {
         _enemyArmy.Lose += OnEnemyArmyLose;
-        _aliveUnits = new List<Unit>();
-        _aliveUnits.AddRange(_units);
+        _aliveSquads = new List<Squad>();
+        _aliveSquads.AddRange(_squads);
 
-        foreach (var unit in _units)
-            unit.Dead += OnUnitDead;
+        foreach (var unit in _squads)
+            unit.Dead += OnSquadDead;
     }
 
-    private void OnUnitDead(Unit unit)
+    private void OnSquadDead(Squad squad)
     {
-        _aliveUnits.Remove(unit);
+        _aliveSquads.Remove(squad);
 
-        if(_aliveUnits.Count == 0)
+        if(_aliveSquads.Count == 0)
             Lose?.Invoke();
     }
 
     private void Start()
     {
-        foreach (var unit in _units)
+        foreach (var squad in _squads)
         {
-            unit.Attack(_enemyArmy);
+            squad.Attack(_enemyArmy);
         }
     }
 
@@ -41,27 +41,23 @@ public class Army : MonoBehaviour
     {
         _enemyArmy.Lose -= OnEnemyArmyLose;
 
-        foreach (var unit in _units)
-            unit.Dead -= OnUnitDead;
+        foreach (var squads in _squads)
+            squads.Dead -= OnSquadDead;
     }
 
-    public List<UnitMember> GetTargets()
+    public List<Unit> GetTargets()
     {
-        List<UnitMember> targets = new();
+        List<Unit> targets = new();
 
-        foreach (var unit in _units)
-        {
+        foreach (var unit in _squads)
             targets.AddRange(unit.GetAliveMembers());
-        }
-
-
 
         return targets;
     }
 
     private void OnEnemyArmyLose()
     {
-        foreach (var unit in _units)
+        foreach (var unit in _squads)
             unit.Win();
     }
 }

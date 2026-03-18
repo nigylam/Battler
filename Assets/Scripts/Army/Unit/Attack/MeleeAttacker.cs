@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MeleeAttacker : Attacker
 {
-    [SerializeField] private MeleeWeaponAnimationEventSender _eventSender;
+    [SerializeField] private MeleeWeaponAnimationEventSender _weaponAnimationEventSender;
     [SerializeField] private Collider _collider;
 
     private bool _damageDid = false;
@@ -10,14 +10,14 @@ public class MeleeAttacker : Attacker
     private void OnEnable()
     {
         _collider.enabled = false;
-        _eventSender.AttackHitEnable += EnableDamage;
-        _eventSender.AttackHitDisable += DisableDamage;
+        _weaponAnimationEventSender.AttackHitEnable += EnableDamage;
+        _weaponAnimationEventSender.AttackHitDisable += DisableDamage;
     }
 
     private void OnDisable()
     {
-        _eventSender.AttackHitEnable -= EnableDamage;
-        _eventSender.AttackHitDisable -= DisableDamage;
+        _weaponAnimationEventSender.AttackHitEnable -= EnableDamage;
+        _weaponAnimationEventSender.AttackHitDisable -= DisableDamage;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -28,7 +28,7 @@ public class MeleeAttacker : Attacker
         if (IsInLayerMask(other.gameObject) == false)
             return;
 
-        if (other.TryGetComponent(out UnitMember member))
+        if (other.TryGetComponent(out Unit member))
         {
             if (_damageDid)
                 return;

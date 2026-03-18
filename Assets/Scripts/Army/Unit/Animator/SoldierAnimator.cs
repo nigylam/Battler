@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SoldierAnimator : MemberAnimator
+public class SoldierAnimator : UnitAnimator
 {
     private readonly int AnimatorIsMoving = Animator.StringToHash("IsMoving");
     private readonly int AnimatorAttack = Animator.StringToHash("Attack");

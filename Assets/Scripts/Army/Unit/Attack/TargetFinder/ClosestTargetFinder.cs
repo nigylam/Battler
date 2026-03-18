@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class ClosestTargetFinder : TargetFinder
 {
-    public override UnitMember GetTarget(List<UnitMember> targets)
+    public override Unit GetTarget(List<Unit> targets)
     {
-        UnitMember closestTarget = targets[0];
+        Unit closestTarget = targets[0];
         float closestTargetSqrDistance = Vector3.SqrMagnitude(closestTarget.transform.position - transform.position);
 
         foreach (var target in targets)

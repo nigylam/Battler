@@ -3,5 +3,5 @@ using UnityEngine;
 
 public abstract class TargetFinder : MonoBehaviour
 {
-    public abstract UnitMember GetTarget(List<UnitMember> targets);
+    public abstract Unit GetTarget(List<Unit> targets);
 }
