@@ -49,6 +49,11 @@ public abstract class Unit : MonoBehaviour
         Animator.OnHit();
     }
 
+    public void Heal(int count)
+    {
+        _health.Heal(count);
+    }
+
     public void SetTarget(List<Unit> targets)
     {
         Unit target = _targetFinder.GetTarget(targets);

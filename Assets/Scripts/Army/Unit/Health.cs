@@ -30,7 +30,6 @@ public class Health : MonoBehaviour, ICountable
 
     public void TakeDamage(float damage)
     {
-
         if (_active == false)
             return;
 
@@ -41,6 +40,17 @@ public class Health : MonoBehaviour, ICountable
             _active = false;
             Dead?.Invoke();
         }
+    }
+
+    public void Heal(int count)
+    {
+        if (_active == false)
+            return;
+
+        Current += count;
+
+        if (Current > _maxHealth)
+            Current = _maxHealth;
     }
 
     public void Restart()
