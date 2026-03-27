@@ -19,7 +19,7 @@ public class Healer : Attacker
         {
             if(collider.TryGetComponent(out Unit unit))
             {
-                if(IsInLayerMask(unit.gameObject)) 
+                if(IsInLayerMask(unit.gameObject) == false) 
                 {
                     unit.Heal(_healPerTime);
                 }

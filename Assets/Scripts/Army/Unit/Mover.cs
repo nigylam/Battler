@@ -15,6 +15,7 @@ public class Mover : MonoBehaviour
     private float _angleAttackOffset = 0.001f;
     private bool _wentEventSended = false;
     private bool _leaveEventSended = false;
+    private bool _isEnabled = false;
 
     public event Action WentToTarget;
     public event Action LeaveTarget;
@@ -28,6 +29,9 @@ public class Mover : MonoBehaviour
 
     private void Update()
     {
+        if (_isEnabled == false)
+            return;
+
         RotateTowardsTarget();
 
         if (_agent.enabled == false)
@@ -38,18 +42,19 @@ public class Mover : MonoBehaviour
 
     public void Enable()
     {
-        _agent.enabled = true;
+        _isEnabled = true;
     }
 
     public void Disable()
     {
-        _agent.enabled = false;
+        _isEnabled = false;
     }
 
     public void SetTarget(Transform target)
     {
         _target = target;
         _wentEventSended = false;
+        _agent.enabled = true;
         _agent.SetDestination(_target.position);
     }
 

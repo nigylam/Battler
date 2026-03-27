@@ -1029,6 +1029,7 @@ MonoBehaviour:
   _attacker: {fileID: 5491905913219757933}
   _targetFinder: {fileID: 9211808200915473453}
   _deadAnimationEventSender: {fileID: 6860497008804336249}
+  _meshRenderer: {fileID: 2582408216279078366}
   _animator: {fileID: 4035927440205319950}
 --- !u!114 &2858756706154115267
 MonoBehaviour:

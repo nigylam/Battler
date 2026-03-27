@@ -10,6 +10,9 @@ public abstract class Unit : MonoBehaviour
     [SerializeField] private Attacker _attacker;
     [SerializeField] private TargetFinder _targetFinder;
     [SerializeField] private DeathAnimationEventSender _deadAnimationEventSender;
+    [SerializeField] private SkinnedMeshRenderer _meshRenderer;
+
+    private Unit _target;
 
     public event Action<Unit> Dead;
     public event Action<Unit> Free;
@@ -26,21 +29,34 @@ public abstract class Unit : MonoBehaviour
         _health.Dead += OnDead;
         _mover.WentToTarget += OnWentToTarget;
         _mover.LeaveTarget += OnLeaveTarget;
-        _attacker.TargetDead += OnTargetDead;
         _attacker.AttackStarted += OnAttackStarted;
         _deadAnimationEventSender.AnimationEnded += OnDeadAnimationPlayed;
+        _mover.Disable();
+
+        if (_target != null)
+            _target.Dead += OnTargetDead;
 
         IsAlive = true;
     }
 
     private void OnDisable()
     {
+        _mover.Disable();
+
         _health.Dead -= OnDead;
         _mover.WentToTarget -= OnWentToTarget;
         _mover.LeaveTarget -= OnLeaveTarget;
-        _attacker.TargetDead -= OnTargetDead;
         _attacker.AttackStarted -= OnAttackStarted;
         _deadAnimationEventSender.AnimationEnded -= OnDeadAnimationPlayed;
+
+        if (_target != null)
+            _target.Dead -= OnTargetDead;
+    }
+
+    public void Initialize(Material armyMaterial, LayerMask attackTargets)
+    {
+        _meshRenderer.material = armyMaterial;
+        _attacker.Initialize(attackTargets);
     }
 
     public void TakeDamage(int damage)
@@ -56,15 +72,24 @@ public abstract class Unit : MonoBehaviour
 
     public void SetTarget(List<Unit> targets)
     {
-        Unit target = _targetFinder.GetTarget(targets);
-        _mover.SetTarget(target.transform);
-        _attacker.SetTarget(target.transform);
+        if(_target != null)
+        {
+            _target.Dead -= OnTargetDead;
+        }
+
+        _target = _targetFinder.GetTarget(targets);
+        _target.Dead += OnTargetDead;
+
+        _mover.Enable();
+        _mover.SetTarget(_target.transform);
+        _attacker.SetTarget(_target.transform);
     }
 
     public void Win()
     {
         _mover.Disable();
         Animator.OnWin();
+        _attacker.StopAttack();
     }
 
     protected virtual void OnAttackStarted() { }
@@ -79,8 +104,11 @@ public abstract class Unit : MonoBehaviour
         _attacker.StopAttack();
     }
 
-    private void OnTargetDead()
+    private void OnTargetDead(Unit _)
     {
+        _target.Dead -= OnTargetDead;
+        _target = null;
+
         _mover.Enable();
         Free?.Invoke(this);
     }

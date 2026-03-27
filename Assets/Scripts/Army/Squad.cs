@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Squad : MonoBehaviour
 {
-    [SerializeField] private Unit[] _units;
-
     private List<Unit> _unitsAlive = new();
     private Army _enemyArmy;
 
@@ -15,29 +13,40 @@ public class Squad : MonoBehaviour
 
     private void OnEnable()
     {
-        _unitsAlive.AddRange(_units);
-
-        foreach (Unit unit in _units)
+        if (_unitsAlive.Count > 0)
         {
-            unit.Dead += OnUnitDead;
-            unit.Free += OnUnitFree;
+            foreach (Unit unit in _unitsAlive)
+            {
+                unit.Dead += OnUnitDead;
+                unit.Free += OnUnitFree;
+            }
         }
     }
 
     private void OnDisable()
     {
-        foreach (Unit unit in _units)
+        if (_unitsAlive.Count > 0)
         {
-            unit.Dead -= OnUnitDead;
-            unit.Free -= OnUnitFree;
+            foreach (Unit unit in _unitsAlive)
+            {
+                unit.Dead -= OnUnitDead;
+                unit.Free -= OnUnitFree;
+            }
         }
+    }
+
+    internal void AddUnit(Unit unit)
+    {
+        _unitsAlive.Add(unit);
+        unit.Dead += OnUnitDead;
+        unit.Free += OnUnitFree;
     }
 
     public void Win()
     {
         _isBattleEnded = true;
 
-        foreach (var unit in _units)
+        foreach (var unit in _unitsAlive)
             unit.Win();
     }
 
@@ -59,8 +68,10 @@ public class Squad : MonoBehaviour
     private void OnUnitDead(Unit unit)
     {
         _unitsAlive.Remove(unit);
+        unit.Dead -= OnUnitDead;
+        unit.Free -= OnUnitFree;
 
-        if(_unitsAlive.Count == 0)
+        if (_unitsAlive.Count == 0)
             Dead?.Invoke(this);
     }
 

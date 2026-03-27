@@ -4,10 +4,10 @@ using UnityEngine;
 
 public abstract class Attacker : MonoBehaviour
 {
-    [SerializeField] private LayerMask _attackTargets;
     [SerializeField] private int _damage;
     [SerializeField] private float _cooldownTime;
 
+    private LayerMask _attackTargets;
     private Coroutine _cooldown;
     private Transform _target;
     private int _damageOffset = 2;
@@ -18,7 +18,6 @@ public abstract class Attacker : MonoBehaviour
 
     public event Action AttackStarted;
     public event Action AttackEnded;
-    public event Action TargetDead;
 
     private void Update()
     {
@@ -29,6 +28,11 @@ public abstract class Attacker : MonoBehaviour
             return;
 
         Attack();
+    }
+
+    public void Initialize(LayerMask attackTargets)
+    {
+        _attackTargets = attackTargets;
     }
 
     public void StartAttack()
@@ -57,12 +61,6 @@ public abstract class Attacker : MonoBehaviour
         int damage = UnityEngine.Random.Range(_damage - _damageOffset, _damage + _damageOffset);
         damage = Mathf.Clamp(damage, _damageMinValue, int.MaxValue);
         member.TakeDamage(damage);
-
-        if (member.IsAlive == false)
-        {
-            TargetDead?.Invoke();
-            StopAttack();
-        }
     }
 
     protected bool IsInLayerMask(GameObject obj)

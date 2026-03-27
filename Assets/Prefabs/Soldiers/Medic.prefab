@@ -862,6 +862,7 @@ MonoBehaviour:
   _attacker: {fileID: 7369175117944474772}
   _targetFinder: {fileID: 5487393903947933082}
   _deadAnimationEventSender: {fileID: 6434043615054914057}
+  _meshRenderer: {fileID: 4471323225736770862}
   _animator: {fileID: 7616678023636531462}
 --- !u!114 &7369175117944474772
 MonoBehaviour:
@@ -875,13 +876,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd4e044b8a3432346ae1c83387d56279, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackTargets:
-    serializedVersion: 2
-    m_Bits: 0
   _damage: 0
-  _cooldownTime: 3
-  _healPerTime: 5
-  _healRange: 4
+  _cooldownTime: 4
+  _healPerTime: 1
+  _healRange: 3
 --- !u!114 &6434043615054914057
 MonoBehaviour:
   m_ObjectHideFlags: 0

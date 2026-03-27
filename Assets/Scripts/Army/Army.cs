@@ -4,60 +4,64 @@ using UnityEngine;
 
 public class Army : MonoBehaviour
 {
-    [SerializeField] private List<Squad> _squads;
     [SerializeField] private Army _enemyArmy;
 
-    private List<Squad> _aliveSquads;
+    private List<Squad> _aliveSquads = new();
 
     public event Action Lose;
 
     private void OnEnable()
     {
         _enemyArmy.Lose += OnEnemyArmyLose;
-        _aliveSquads = new List<Squad>();
-        _aliveSquads.AddRange(_squads);
 
-        foreach (var unit in _squads)
-            unit.Dead += OnSquadDead;
-    }
-
-    private void OnSquadDead(Squad squad)
-    {
-        _aliveSquads.Remove(squad);
-
-        if(_aliveSquads.Count == 0)
-            Lose?.Invoke();
-    }
-
-    private void Start()
-    {
-        foreach (var squad in _squads)
-        {
-            squad.Attack(_enemyArmy);
-        }
+        foreach (var squads in _aliveSquads)
+            squads.Dead += OnSquadDead;
     }
 
     private void OnDisable()
     {
         _enemyArmy.Lose -= OnEnemyArmyLose;
 
-        foreach (var squads in _squads)
+        foreach (var squads in _aliveSquads)
             squads.Dead -= OnSquadDead;
+    }
+
+    public void AddSquad(Squad squad)
+    {
+        _aliveSquads.Add(squad);
+        squad.Dead += OnSquadDead;
+    }
+
+    public void Attack()
+    {
+        foreach (var squad in _aliveSquads)
+        {
+            squad.Attack(_enemyArmy);
+        }
     }
 
     public List<Unit> GetTargets()
     {
         List<Unit> targets = new();
 
-        foreach (var unit in _squads)
+        foreach (var unit in _aliveSquads)
             targets.AddRange(unit.GetAliveMembers());
 
         return targets;
     }
 
+    private void OnSquadDead(Squad squad)
+    {
+        _aliveSquads.Remove(squad);
+        squad.Dead -= OnSquadDead;
+
+        if (_aliveSquads.Count == 0)
+            Lose?.Invoke();
+    }
+
     private void OnEnemyArmyLose()
     {
-        foreach (var unit in _squads)
+        foreach (var unit in _aliveSquads)
             unit.Win();
     }
 }
