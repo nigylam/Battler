@@ -3,13 +3,11 @@ using UnityEngine;
 public class MeleeAttacker : Attacker
 {
     [SerializeField] private MeleeWeaponAnimationEventSender _weaponAnimationEventSender;
-    [SerializeField] private Collider _collider;
-
-    private bool _damageDid = false;
+    [SerializeField] private MeleeDamager _damager;
 
     private void OnEnable()
     {
-        _collider.enabled = false;
+
         _weaponAnimationEventSender.AttackHitEnable += EnableDamage;
         _weaponAnimationEventSender.AttackHitDisable += DisableDamage;
     }
@@ -20,32 +18,18 @@ public class MeleeAttacker : Attacker
         _weaponAnimationEventSender.AttackHitDisable -= DisableDamage;
     }
 
-    private void OnTriggerEnter(Collider other)
+    public override void Initialize(LayerMask attackTargets)
     {
-        if (_collider.enabled == false)
-            return;
-
-        if (IsInLayerMask(other.gameObject) == false)
-            return;
-
-        if (other.TryGetComponent(out Unit member))
-        {
-            if (_damageDid)
-                return;
-
-            _damageDid = true;
-            TakeDamage(member);
-        }
+        _damager.Initialize(attackTargets);
     }
 
     private void EnableDamage()
     {
-        _damageDid = false;
-        _collider.enabled = true;
+        _damager.EnableDamage();
     }
 
     private void DisableDamage()
     {
-        _collider.enabled = false;
+        _damager.DisableDamage();
     }
 }

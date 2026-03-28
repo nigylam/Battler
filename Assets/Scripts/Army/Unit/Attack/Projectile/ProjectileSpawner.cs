@@ -24,10 +24,10 @@ public class ProjectileSpawner : MonoBehaviour
         );
     }
 
-    public Projectile Spawn(Vector3 position, Vector3 shotDirection)
+    public Projectile Spawn(Vector3 position, LayerMask attackTargets, Vector3 shotDirection)
     {
         Projectile projectile = Instantiate(_projectilePrefab, position, Quaternion.identity, transform);
-        projectile.Initialize(shotDirection);
+        projectile.Initialize(attackTargets, shotDirection);
         projectile.Collided += OnCollided;
         projectile.Wasted += OnWasted;
         TryAddToActiveList(projectile);
@@ -44,7 +44,7 @@ public class ProjectileSpawner : MonoBehaviour
         _activeElements.Clear();
     }
 
-    private void OnCollided(Projectile projectile, Unit _)
+    private void OnCollided(Projectile projectile)
     {
         Release(projectile);
     }

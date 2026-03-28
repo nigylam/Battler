@@ -4,15 +4,11 @@ using UnityEngine;
 
 public abstract class Attacker : MonoBehaviour
 {
-    [SerializeField] private int _damage;
     [SerializeField] private float _cooldownTime;
 
-    private LayerMask _attackTargets;
     private Coroutine _cooldown;
     private Transform _target;
-    private int _damageOffset = 2;
     private float _coolDownOffset = 0.6f;
-    private int _damageMinValue = 1;
     private bool _canAttack = false;
     private bool _cooldownEnded = true;
 
@@ -30,10 +26,7 @@ public abstract class Attacker : MonoBehaviour
         Attack();
     }
 
-    public void Initialize(LayerMask attackTargets)
-    {
-        _attackTargets = attackTargets;
-    }
+    public abstract void Initialize(LayerMask attackTargets);
 
     public void StartAttack()
     {
@@ -56,18 +49,6 @@ public abstract class Attacker : MonoBehaviour
         StartCooldown();
     }
 
-    protected void TakeDamage(Unit member)
-    {
-        int damage = UnityEngine.Random.Range(_damage - _damageOffset, _damage + _damageOffset);
-        damage = Mathf.Clamp(damage, _damageMinValue, int.MaxValue);
-        member.TakeDamage(damage);
-    }
-
-    protected bool IsInLayerMask(GameObject obj)
-    {
-        return (_attackTargets.value & (1 << obj.layer)) != 0;
-    }
-
     protected Vector3 GetDirectionToTarget(Vector3 startPosition)
     {
         Vector3 shotDirection = _target.position - startPosition;
@@ -87,9 +68,7 @@ public abstract class Attacker : MonoBehaviour
 
     private IEnumerator AttackCooldown()
     {
-
         float time = 0;
-
         float cooldown = UnityEngine.Random.Range(_cooldownTime - _coolDownOffset, _cooldownTime + _coolDownOffset);
 
         while (time < cooldown)

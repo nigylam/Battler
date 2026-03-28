@@ -718,6 +718,7 @@ GameObject:
   - component: {fileID: 7678730110437750025}
   - component: {fileID: 8920159461003252076}
   - component: {fileID: 7369175117944474772}
+  - component: {fileID: 6662229171327450196}
   - component: {fileID: 6434043615054914057}
   - component: {fileID: 1828170166982920167}
   - component: {fileID: 2647813651139323208}
@@ -876,8 +877,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd4e044b8a3432346ae1c83387d56279, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 0
   _cooldownTime: 4
+  _healer: {fileID: 6662229171327450196}
+--- !u!114 &6662229171327450196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4686998562956784609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0b1a45ff3e1b7640926ae593233acfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damage: 0
   _healPerTime: 1
   _healRange: 3
 --- !u!114 &6434043615054914057

@@ -4,8 +4,9 @@ public class Grenade : Projectile
 {
     [SerializeField] private float _arcHeight = 5f;
 
-    public override void Initialize(Vector3 targetVector)
+    public override void Initialize(LayerMask attackTargets, Vector3 targetVector)
     {
+        base.Initialize(attackTargets, targetVector);
         SetVelocity(CalculateBallisticVelocity(targetVector, _arcHeight));
     }
 

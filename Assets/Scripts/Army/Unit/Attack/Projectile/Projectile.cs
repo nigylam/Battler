@@ -1,12 +1,12 @@
 using System;
 using UnityEngine;
 
-public abstract class Projectile : MonoBehaviour
+public abstract class Projectile : Damager
 {
     [SerializeField] private float _lifetime = 4f;
     [SerializeField] private Rigidbody _rigidbody;
 
-    public event Action<Projectile, Unit> Collided;
+    public event Action<Projectile> Collided;
     public event Action<Projectile> Wasted;
 
     private void Awake()
@@ -24,13 +24,20 @@ public abstract class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out Unit unitMember))
-        {
-            Collided?.Invoke(this, unitMember);
-        }
+        if (other.TryGetComponent(out Unit unitMember) == false)
+            return;
+
+        if (IsInLayerMask(unitMember.gameObject) == false)
+            return;
+
+        ApplyDamage(unitMember);
+        Collided?.Invoke(this);
     }
 
-    public abstract void Initialize(Vector3 shotDirection);
+    public virtual void Initialize(LayerMask attackTargets, Vector3 shotDirection)
+    {
+        base.Initialize(attackTargets);
+    }
 
     protected void SetVelocity(Vector3 velocity)
     {
