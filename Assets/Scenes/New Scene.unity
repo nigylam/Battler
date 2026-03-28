@@ -606,11 +606,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22a90621d4572a34698c1dcd2e4a2321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _squads:
-  - {fileID: 3264878291395778645, guid: 106b5438349bc104db64d55c7cd2aca3, type: 3}
-  - {fileID: -864476455278839830, guid: 52c80bb4894fe674590570b75397ddeb, type: 3}
-  - {fileID: 1681863201356703300, guid: 5d6a4754c6109fb4eb50ebae3d2e5937, type: 3}
-  - {fileID: 8985550516221197739, guid: 661723031e579b843a6cc73b51419ab9, type: 3}
+  _enemy: {fileID: 11400000, guid: e21fabbcfe7587644a0a63caf681557c, type: 2}
   _army: {fileID: 851882739}
   _squadCreator: {fileID: 303088309}
 --- !u!114 &303088309
@@ -1069,7 +1065,6 @@ GameObject:
   m_Component:
   - component: {fileID: 520980541}
   - component: {fileID: 520980540}
-  - component: {fileID: 520980539}
   m_Layer: 0
   m_Name: ArmyPlayer
   m_TagString: Untagged
@@ -1077,24 +1072,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &520980539
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 520980538}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66e42b33f3eca324680682d3549c9d9d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _field: {fileID: 117877202}
-  _armyMaterial: {fileID: 2100000, guid: 19d255ddce54f7046849885558977f50, type: 2}
-  _attackTargets:
-    serializedVersion: 2
-    m_Bits: 128
-  _squadPrefab: {fileID: 0}
 --- !u!114 &520980540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1860,7 +1837,6 @@ GameObject:
   m_Component:
   - component: {fileID: 851882740}
   - component: {fileID: 851882739}
-  - component: {fileID: 851882741}
   m_Layer: 0
   m_Name: ArmyEnemy
   m_TagString: Untagged
@@ -1897,24 +1873,6 @@ Transform:
   - {fileID: 1828301346}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180.036, z: 0}
---- !u!114 &851882741
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 851882738}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66e42b33f3eca324680682d3549c9d9d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _field: {fileID: 1828301347}
-  _armyMaterial: {fileID: 2100000, guid: 7f0de6c0c9143c246b0429c862cde6a6, type: 2}
-  _attackTargets:
-    serializedVersion: 2
-    m_Bits: 64
-  _squadPrefab: {fileID: 0}
 --- !u!1 &853794390
 GameObject:
   m_ObjectHideFlags: 0
@@ -2778,11 +2736,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22a90621d4572a34698c1dcd2e4a2321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _squads:
-  - {fileID: 3264878291395778645, guid: 106b5438349bc104db64d55c7cd2aca3, type: 3}
-  - {fileID: -864476455278839830, guid: 52c80bb4894fe674590570b75397ddeb, type: 3}
-  - {fileID: 1681863201356703300, guid: 5d6a4754c6109fb4eb50ebae3d2e5937, type: 3}
-  - {fileID: 8985550516221197739, guid: 661723031e579b843a6cc73b51419ab9, type: 3}
+  _enemy: {fileID: 11400000, guid: e21fabbcfe7587644a0a63caf681557c, type: 2}
   _army: {fileID: 520980540}
   _squadCreator: {fileID: 1062050773}
 --- !u!114 &1062050773
