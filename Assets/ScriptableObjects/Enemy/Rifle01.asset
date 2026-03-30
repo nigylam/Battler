@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _squad: {fileID: 8985550516221197739, guid: 661723031e579b843a6cc73b51419ab9, type: 3}
   positionX: 0
-  positionY: 1
+  positionY: 0
