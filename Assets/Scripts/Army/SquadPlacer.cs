@@ -70,6 +70,8 @@ public class SquadPlacer : MonoBehaviour
         {
             if (_creator.TryCreate(_draggingItem.Squad, _startCell, _army.transform, out Squad squad))
                 _army.AddSquad(squad);
+
+            _draggingItem.Decrease();
         }
 
         _draggingItem = null;

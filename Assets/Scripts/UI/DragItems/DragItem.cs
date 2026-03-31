@@ -5,12 +5,27 @@ using UnityEngine.EventSystems;
 public class DragItem : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     [SerializeField] private SquadItem _squad;
+    [SerializeField] private TextCounter _textCounter;
+    [SerializeField] private ItemCounter _itemsCount;
 
     public event Action<DragItem> DragStarted;
     public event Action<PointerEventData> DragEnded;
     public event Action<PointerEventData> Drag;
 
     public SquadPlan Squad => _squad.Plan;
+
+
+    private void OnEnable()
+    {
+        _textCounter.Initialize(_itemsCount);
+        _itemsCount.Ended += OnItemsEnded;
+    }
+
+    private void OnDisable()
+    {
+        _textCounter.Disable();
+        _itemsCount.Ended -= OnItemsEnded;
+    }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -55,5 +70,15 @@ public class DragItem : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     {
         _squad.Preview.SetBlocked();
         _squad.Preview.transform.position = position;
+    }
+
+    public void Decrease()
+    {
+        _itemsCount.Decrease();
+    }
+
+    private void OnItemsEnded()
+    {
+        gameObject.SetActive(false);
     }
 }
