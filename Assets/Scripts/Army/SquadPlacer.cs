@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -5,6 +6,7 @@ public class SquadPlacer : MonoBehaviour
 {
     [SerializeField] private Camera _camera;
     [SerializeField] private LayerMask _groundMask;
+    [SerializeField] private LayerMask _thisCanvas;
     [SerializeField] private SquadCreator _creator;
     [SerializeField] private Army _army;
     [SerializeField] private DragItem[] _dragItems;
@@ -79,7 +81,16 @@ public class SquadPlacer : MonoBehaviour
 
     private bool IsPointerOverUI(PointerEventData eventData)
     {
-        return EventSystem.current.IsPointerOverGameObject(eventData.pointerId);
+        var results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, results);
+
+        foreach (var result in results)
+        {
+            if(IsInLayerMask(result.gameObject))
+                return true;
+        }
+
+        return false;
     }
 
     private bool IsOnWorld(Vector3 position, out Vector3 worldPoint, out Cell cell)
@@ -96,5 +107,10 @@ public class SquadPlacer : MonoBehaviour
         hit.collider.TryGetComponent(out cell);
 
         return true;
+    }
+
+    private bool IsInLayerMask(GameObject obj)
+    {
+        return (_thisCanvas.value & (1 << obj.layer)) != 0;
     }
 }

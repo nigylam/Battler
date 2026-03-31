@@ -5,6 +5,7 @@ public class SquadCreator : MonoBehaviour
 {
     [SerializeField] private Field _field;
     [SerializeField] private Material _armyMaterial;
+    [SerializeField] private LayerMask _squadLayer;
     [SerializeField] private LayerMask _attackTargets;
     [SerializeField] private Squad _squadPrefab;
 
@@ -44,6 +45,9 @@ public class SquadCreator : MonoBehaviour
     {
         Unit unit = Instantiate(unitPrefab, position, Quaternion.identity, parrent);
         unit.Initialize(armyMaterial, attackTargets);
+        int logP = 2;
+        int layerIndex = (int)Mathf.Log(_squadLayer.value, logP);
+        unit.gameObject.layer = layerIndex;
         return unit;
     }
 
