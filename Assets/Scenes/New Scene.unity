@@ -647,6 +647,7 @@ GameObject:
   - component: {fileID: 247386945}
   - component: {fileID: 247386947}
   - component: {fileID: 247386946}
+  - component: {fileID: 247386948}
   m_Layer: 5
   m_Name: ArmyPannel
   m_TagString: Untagged
@@ -712,6 +713,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 247386944}
   m_CullTransparentMesh: 1
+--- !u!114 &247386948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 247386944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e81f48484adb53b478b8e04385cf5d86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _camera: {fileID: 909694701}
+  _groundMask:
+    serializedVersion: 2
+    m_Bits: 8
+  _creator: {fileID: 1062050773}
+  _army: {fileID: 520980540}
+  _dragItems:
+  - {fileID: 1289120611}
 --- !u!1 &303088306
 GameObject:
   m_ObjectHideFlags: 0
@@ -3407,6 +3428,7 @@ GameObject:
   - component: {fileID: 1289120610}
   - component: {fileID: 1289120609}
   - component: {fileID: 1289120611}
+  - component: {fileID: 1289120612}
   m_Layer: 5
   m_Name: Squad
   m_TagString: Untagged
@@ -3484,16 +3506,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 480a70d71c61d7b499fb89920599ebe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _parrentCanvas: {fileID: 1810525450}
-  _image: {fileID: 1289120609}
-  _groundMask:
-    serializedVersion: 2
-    m_Bits: 8
-  _camera: {fileID: 909694701}
+  _squad: {fileID: 1289120612}
+--- !u!114 &1289120612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289120607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a3193cc6f6a34943b183346893decb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _preview: {fileID: 23394091}
-  _squad: {fileID: -864476455278839830, guid: 52c80bb4894fe674590570b75397ddeb, type: 3}
-  _creator: {fileID: 1062050773}
-  _army: {fileID: 520980540}
+  _plan: {fileID: -864476455278839830, guid: 52c80bb4894fe674590570b75397ddeb, type: 3}
+  _image: {fileID: 1289120609}
 --- !u!1 &1407376782
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,8 +6,6 @@ public class DragItem : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 {
     [SerializeField] private SquadItem _squad;
 
-    private Vector3 _startPosition;
-
     public event Action<DragItem> DragStarted;
     public event Action<PointerEventData> DragEnded;
     public event Action<PointerEventData> Drag;
@@ -17,8 +15,6 @@ public class DragItem : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     public void OnBeginDrag(PointerEventData eventData)
     {
         DragStarted?.Invoke(this);
-
-        _startPosition = transform.position;
         _squad.Image.raycastTarget = false;
     }
 
@@ -31,16 +27,16 @@ public class DragItem : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     {
         DragEnded?.Invoke(eventData);
         _squad.Preview.gameObject.SetActive(false);
-        _squad.Image.enabled = true;
-        _squad.Image.raycastTarget = true;
-        transform.position = _startPosition;
+        _squad.Image.enabled = false;
+        _squad.Image.raycastTarget = false;
+        _squad.Image.transform.position = transform.position;
     }
 
     public void HandleUIDrag(PointerEventData eventData)
     {
         _squad.Image.enabled = true;
         _squad.Preview.gameObject.SetActive(false);
-        transform.position = eventData.position;
+        _squad.Image.transform.position = eventData.position;
     }
 
     public void HandleWorldDrag()

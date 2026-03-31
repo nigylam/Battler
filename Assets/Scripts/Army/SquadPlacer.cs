@@ -42,6 +42,7 @@ public class SquadPlacer : MonoBehaviour
     {
         if (IsPointerOverUI(eventData))
         {
+            _canBuild = false;
             _draggingItem.HandleUIDrag(eventData);
             return;
         }
@@ -58,6 +59,7 @@ public class SquadPlacer : MonoBehaviour
                 return;
             }
 
+            _canBuild = false;
             _draggingItem.HandleBuildBlocked(worldPoint);
         }
     }
