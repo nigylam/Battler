@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Squad : MonoBehaviour
 {
+    private List<Unit> _deadUnits = new();
     private List<Unit> _unitsAlive = new();
     private Army _enemyArmy;
 
@@ -35,8 +36,26 @@ public class Squad : MonoBehaviour
         }
     }
 
-    internal void AddUnit(Unit unit)
+    public void Respawn()
     {
+        foreach(Unit unit in _deadUnits)
+        {
+            unit.Dead += OnUnitDead;
+            unit.Free += OnUnitFree;
+        }
+
+        _unitsAlive.AddRange(_deadUnits);
+        _deadUnits.Clear();
+
+        foreach(Unit unit in _unitsAlive)
+        {
+            unit.Respawn();
+        }
+    }
+
+    public void AddUnit(Unit unit)
+    {
+        _deadUnits.Add(unit);
         _unitsAlive.Add(unit);
         unit.Dead += OnUnitDead;
         unit.Free += OnUnitFree;

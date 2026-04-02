@@ -1,27 +1,60 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Game : MonoBehaviour
 {
-    [SerializeField] Army _playerArmy;
-    [SerializeField] Army _enemyArmy;
-    [SerializeField] Button _playButton;
+    [SerializeField] private PlayerSide _playerSide;
+    [SerializeField] private EnemySide _enemySide;
+    [SerializeField] private BeforeBattleMenu _beforeBattleMenu;
 
     private void OnEnable()
     {
-        _playButton.onClick.AddListener(OnClick);
+        _playerSide.WinRound += OnRoundEnd;
+        _enemySide.WinRound += OnRoundEnd;
+        _playerSide.WinBattle += OnPlayerWin;
+        _enemySide.WinBattle += OnEnemyWin;
+        _beforeBattleMenu.PlayButtonClicked += OnPlayButtonClicked;
+    }
+
+    private void Start()
+    {
+        ProcessRounds();
     }
 
     private void OnDisable()
     {
-        _playButton.onClick.RemoveListener(OnClick);
+        _playerSide.WinBattle -= OnEnemyWin;
+        _enemySide.WinBattle -= OnPlayerWin;
+        _beforeBattleMenu.PlayButtonClicked -= OnPlayButtonClicked;
     }
 
-    private void OnClick()
+    private void OnRoundEnd()
     {
-        _playButton.onClick.RemoveListener(OnClick);
-        _playerArmy.Attack();
-        _enemyArmy.Attack();
+        ProcessRounds();
+    }
+
+    private void ProcessRounds()
+    {
+        _beforeBattleMenu.gameObject.SetActive(true);
+        _playerSide.PrepareToRound();
+        _enemySide.PrepareToRound();
+    }
+
+    private void OnPlayerWin()
+    {
+        Debug.Log("You win");
+    }
+
+    private void OnEnemyWin()
+    {
+        Debug.Log("Enemy win");
+    }
+
+    private void OnPlayButtonClicked()
+    {
+        _beforeBattleMenu.gameObject.SetActive(false);
+        _playerSide.Attack();
+        _enemySide.Attack();
     }
 }

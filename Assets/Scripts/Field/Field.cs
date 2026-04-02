@@ -45,4 +45,10 @@ public class Field : MonoBehaviour
 
         return _cellsField[(x, y)].transform.position;
     }
+
+    public void Clear()
+    {
+        foreach(var cell in _cells)
+            cell.Free();
+    }
 }

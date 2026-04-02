@@ -8,11 +8,14 @@ public class Army : MonoBehaviour
 
     private List<Squad> _aliveSquads = new();
 
-    public event Action Lose;
+    public event Action LoseRound;
+    public event Action WinRound;
+
+    public IReadOnlyCollection<Squad> AliveSquads => _aliveSquads;
 
     private void OnEnable()
     {
-        _enemyArmy.Lose += OnEnemyArmyLose;
+        _enemyArmy.LoseRound += OnEnemyArmyLose;
 
         foreach (var squads in _aliveSquads)
             squads.Dead += OnSquadDead;
@@ -20,7 +23,7 @@ public class Army : MonoBehaviour
 
     private void OnDisable()
     {
-        _enemyArmy.Lose -= OnEnemyArmyLose;
+        _enemyArmy.LoseRound -= OnEnemyArmyLose;
 
         foreach (var squads in _aliveSquads)
             squads.Dead -= OnSquadDead;
@@ -30,6 +33,17 @@ public class Army : MonoBehaviour
     {
         _aliveSquads.Add(squad);
         squad.Dead += OnSquadDead;
+    }
+
+    public void Clear()
+    {
+        if (_aliveSquads.Count == 0)
+            return;
+
+        while(_aliveSquads.Count > 0)
+        {
+            Remove(_aliveSquads[0]);
+        }
     }
 
     public void Attack()
@@ -56,12 +70,21 @@ public class Army : MonoBehaviour
         squad.Dead -= OnSquadDead;
 
         if (_aliveSquads.Count == 0)
-            Lose?.Invoke();
+            LoseRound?.Invoke();
     }
 
     private void OnEnemyArmyLose()
     {
         foreach (var unit in _aliveSquads)
             unit.Win();
+
+        WinRound?.Invoke();
+    }
+
+    private void Remove(Squad squad)
+    {
+        squad.Dead -= OnSquadDead;
+        _aliveSquads.Remove(squad);
+        Destroy(squad.gameObject);
     }
 }

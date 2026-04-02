@@ -13,6 +13,7 @@ public abstract class Unit : MonoBehaviour
     [SerializeField] private SkinnedMeshRenderer _meshRenderer;
 
     private Unit _target;
+    private Vector3 _startPosition;
 
     public event Action<Unit> Dead;
     public event Action<Unit> Free;
@@ -57,6 +58,7 @@ public abstract class Unit : MonoBehaviour
     {
         _meshRenderer.material = armyMaterial;
         _attacker.Initialize(attackTargets);
+        _startPosition = transform.position;
     }
 
     public void TakeDamage(int damage)
@@ -90,6 +92,12 @@ public abstract class Unit : MonoBehaviour
         _mover.Disable();
         Animator.OnWin();
         _attacker.StopAttack();
+    }
+
+    public void Respawn()
+    {
+        transform.position = _startPosition;
+        _health.Restart();
     }
 
     protected virtual void OnAttackStarted() { }
