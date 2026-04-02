@@ -3,17 +3,16 @@ using UnityEngine;
 
 public class SquadCreator : MonoBehaviour
 {
-    [SerializeField] private Field _field;
     [SerializeField] private Material _armyMaterial;
     [SerializeField] private LayerMask _squadLayer;
     [SerializeField] private LayerMask _attackTargets;
     [SerializeField] private Squad _squadPrefab;
 
-    public bool TryCreate(SquadPlan squadPlan, (int x, int y) startCell, Transform parrent, out Squad squad)
+    public bool TryCreate(SquadPlan squadPlan, (int x, int y) startCell, Transform parrent, Field field, out Squad squad)
     {
         squad = null;
 
-        if (_field.HavePlace(startCell, squadPlan.Size) == false)
+        if (field.HavePlace(startCell, squadPlan.Size) == false)
             return false;
 
         squad = Instantiate(_squadPrefab, parrent);
@@ -25,17 +24,17 @@ public class SquadCreator : MonoBehaviour
         {
             for (int y = startCell.y; y < squadPlan.Size.y + startCell.y; y++)
             {
-                _field.TakeCell((x, y));
+                field.TakeCell((x, y));
                 cellsToTake.Add((x, y));
 
                 if (cellsPerUnit == 1)
-                    squad.AddUnit(CreateUnit(squadPlan.Unit, _field.GetCellPosition(x, y), _armyMaterial, _attackTargets, squad.transform));
+                    squad.AddUnit(CreateUnit(squadPlan.Unit, field.GetCellPosition(x, y), _armyMaterial, _attackTargets, squad.transform));
             }
         }
 
         if (cellsPerUnit > 1)
         {
-            squad.AddUnit(CreateUnit(squadPlan.Unit, GetCenter(cellsToTake), _armyMaterial, _attackTargets, squad.transform));
+            squad.AddUnit(CreateUnit(squadPlan.Unit, GetCenter(cellsToTake, field), _armyMaterial, _attackTargets, squad.transform));
         }
 
         return true;
@@ -51,7 +50,7 @@ public class SquadCreator : MonoBehaviour
         return unit;
     }
 
-    private Vector3 GetCenter(List<(int x, int y)> cells)
+    private Vector3 GetCenter(List<(int x, int y)> cells, Field field)
     {
         int xMax = 0;
         int yMax = 0;
@@ -73,6 +72,6 @@ public class SquadCreator : MonoBehaviour
                 yMin = y;
         }
 
-        return Vector3.Lerp(_field.GetCellPosition(xMin, yMin), _field.GetCellPosition(xMax, yMax), 0.5f);
+        return Vector3.Lerp(field.GetCellPosition(xMin, yMin), field.GetCellPosition(xMax, yMax), 0.5f);
     }
 }

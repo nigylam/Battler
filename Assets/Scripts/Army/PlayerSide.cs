@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -8,50 +7,33 @@ public class PlayerSide : Side
 {
     [SerializeField] private SquadPlacer _placer;
 
-    private List<Squad> _survivedSquads = new();
-    private Dictionary<Squad, (SquadPlan plan, (int x, int y) startCell)> _spawnedSquads = new();
-
     public override void PrepareToRound()
     {
-        if (_survivedSquads.Count == 0)
-        {
-            Debug.Log("spqni");
-            return;
-
-        }
-
-        Army.Clear();
-        Field.Clear();
-        Dictionary<Squad, (SquadPlan plan, (int x, int y) startCell)> newSquads = new();
-
-        foreach (Squad squad in _survivedSquads)
-        {
-
-            if (SquadCreator.TryCreate(_spawnedSquads[squad].plan, _spawnedSquads[squad].startCell, gameObject.transform, out Squad newSquad))
-            {
-                Army.AddSquad(newSquad);
-                newSquads.Add(newSquad, (_spawnedSquads[squad].plan, _spawnedSquads[squad].startCell));
-            }
-        }
-
-        _spawnedSquads.Clear();
-        _spawnedSquads.AddRange(newSquads);
-        _survivedSquads.Clear();
+        ClearAfterRound();
+        RespawnSurvivedSquads();
     }
 
     protected override void OnOnEnable()
     {
-        _placer.Spawned += OnSpawned;
+        _placer.ReadyForBuild += OnReadyForBuild;
     }
 
-    protected override void OnWinRound()
+    private void OnReadyForBuild(SquadPlan plan, (int x, int y) startCell)
     {
-        _survivedSquads.AddRange(Army.AliveSquads);
-        base.OnWinRound();
+        TryCreateSquad(plan, startCell);
     }
 
-    private void OnSpawned(SquadPlan plan, (int x, int y) startCell, Squad squad)
+    protected override void OnOnDisable()
     {
-        _spawnedSquads.Add(squad, (plan, startCell));
+        _placer.ReadyForBuild -= OnReadyForBuild;
+    }
+
+    private void RespawnSurvivedSquads()
+    {
+        if (SurvivedSquads.Count == 0)
+            return;
+
+        foreach (SquadContext squadContext in SurvivedSquads)
+            TryCreateSquad(squadContext.Plan, squadContext.StartCell);
     }
 }

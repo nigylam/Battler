@@ -1855,8 +1855,6 @@ MonoBehaviour:
   _thisCanvas:
     serializedVersion: 2
     m_Bits: 256
-  _creator: {fileID: 1062050773}
-  _army: {fileID: 1062050774}
   _dragItems:
   - {fileID: 1289120611}
   - {fileID: 1397069434}
@@ -1870,7 +1868,6 @@ GameObject:
   m_Component:
   - component: {fileID: 303088307}
   - component: {fileID: 303088311}
-  - component: {fileID: 303088308}
   - component: {fileID: 303088309}
   - component: {fileID: 303088310}
   m_Layer: 0
@@ -1895,20 +1892,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1462418480}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &303088308
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 303088306}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22a90621d4572a34698c1dcd2e4a2321, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _army: {fileID: 303088310}
-  _squadCreator: {fileID: 303088309}
 --- !u!114 &303088309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1921,7 +1904,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66e42b33f3eca324680682d3549c9d9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _field: {fileID: 1828301347}
   _armyMaterial: {fileID: 2100000, guid: 7f0de6c0c9143c246b0429c862cde6a6, type: 2}
   _squadLayer:
     serializedVersion: 2
@@ -1962,7 +1944,6 @@ MonoBehaviour:
   _squadCreator: {fileID: 303088309}
   _roundsToWin: 2
   _level: {fileID: 11400000, guid: 443b8f02f24f7d444bf0c9989325b96f, type: 2}
-  _fabric: {fileID: 303088308}
 --- !u!1 &317564178
 GameObject:
   m_ObjectHideFlags: 0
@@ -4372,7 +4353,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66e42b33f3eca324680682d3549c9d9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _field: {fileID: 117877202}
   _armyMaterial: {fileID: 2100000, guid: 19d255ddce54f7046849885558977f50, type: 2}
   _squadLayer:
     serializedVersion: 2

@@ -8,15 +8,13 @@ public class SquadPlacer : MonoBehaviour
     [SerializeField] private Camera _camera;
     [SerializeField] private LayerMask _groundMask;
     [SerializeField] private LayerMask _thisCanvas;
-    [SerializeField] private SquadCreator _creator;
-    [SerializeField] private Army _army;
     [SerializeField] private DragItem[] _dragItems;
 
     private DragItem _draggingItem;
     private bool _canBuild;
     private (int x, int y) _startCell;
 
-    public event Action<SquadPlan, (int x, int y), Squad> Spawned;
+    public event Action<SquadPlan, (int x, int y)> ReadyForBuild;
 
     private void OnEnable()
     {
@@ -73,12 +71,7 @@ public class SquadPlacer : MonoBehaviour
     {
         if (_canBuild)
         {
-            if (_creator.TryCreate(_draggingItem.Squad, _startCell, _army.transform, out Squad squad))
-            {
-                _army.AddSquad(squad);
-                Spawned?.Invoke(_draggingItem.Squad, _startCell, squad);
-            }
-
+            ReadyForBuild?.Invoke(_draggingItem.Squad, _startCell);
             _draggingItem.Decrease();
         }
 
