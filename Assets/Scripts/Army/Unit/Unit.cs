@@ -14,11 +14,11 @@ public abstract class Unit : MonoBehaviour
 
     private Unit _target;
     private Vector3 _startPosition;
+    private bool _dead;
 
     public event Action<Unit> Dead;
     public event Action<Unit> Free;
 
-    public bool IsAlive { get; private set; }
     protected bool IsMoving => _mover.Speed > 0;
     protected abstract UnitAnimator Animator { get; }
 
@@ -36,8 +36,6 @@ public abstract class Unit : MonoBehaviour
 
         if (_target != null)
             _target.Dead += OnTargetDead;
-
-        IsAlive = true;
     }
 
     private void OnDisable()
@@ -74,7 +72,10 @@ public abstract class Unit : MonoBehaviour
 
     public void SetTarget(List<Unit> targets)
     {
-        if(_target != null)
+        if (_dead)
+            return;
+
+        if (_target != null)
         {
             _target.Dead -= OnTargetDead;
         }
@@ -89,6 +90,9 @@ public abstract class Unit : MonoBehaviour
 
     public void Win()
     {
+        if(_dead) 
+            return;
+
         _mover.Disable();
         Animator.OnWin();
         _attacker.StopAttack();
@@ -114,6 +118,9 @@ public abstract class Unit : MonoBehaviour
 
     private void OnTargetDead(Unit _)
     {
+        if(_dead)
+            return;
+
         _target.Dead -= OnTargetDead;
         _target = null;
 
@@ -127,7 +134,7 @@ public abstract class Unit : MonoBehaviour
         Animator.OnDeath();
         _attacker.StopAttack();
         _healthBar.gameObject.SetActive(false);
-        IsAlive = false;
+        _dead = true;
         Dead?.Invoke(this);
     }
 

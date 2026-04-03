@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,11 +12,14 @@ public abstract class Side : MonoBehaviour
     [SerializeField] private SquadCreator _squadCreator;
     [SerializeField] private int _roundsToWin;
 
+    private float _roundPause = 1f;
+    private Coroutine _setRound;
     private List<SquadContext> _spawnedSquads = new();
     private List<SquadContext> _survivedSquads = new();
 
     public event Action WinBattle;
     public event Action WinRound;
+    public event Action SquadCreated;
 
     public IReadOnlyCollection<SquadContext> SurvivedSquads => _survivedSquads;
 
@@ -23,6 +27,8 @@ public abstract class Side : MonoBehaviour
     {
         _army.WinRound += OnWinRound;
         _winsCounter.Win += OnWinBattle;
+        _field.CellTaken += OnCellTaken;
+
         _winsCounter.Initialize(_roundsToWin);
         _iconWinsCounter.Initialize(_winsCounter);
         OnOnEnable();
@@ -30,18 +36,28 @@ public abstract class Side : MonoBehaviour
 
     private void OnDisable()
     {
+        _field.CellTaken -= OnCellTaken;
         _army.WinRound -= OnWinRound;
         _winsCounter.Win -= OnWinBattle;
         OnOnDisable();
     }
 
-    public abstract void PrepareToRound();
+    public void PrepareToRound()
+    {
+        ClearAfterRound();
+
+        if (_setRound != null)
+            StopCoroutine(_setRound);
+
+        _setRound = StartCoroutine(SetRoundAfterPause());
+    }
 
     public void Attack()
     {
         _army.Attack();
     }
 
+    protected abstract void SetRound();
     protected virtual void OnOnEnable() { }
     protected virtual void OnOnDisable() { }
 
@@ -57,10 +73,33 @@ public abstract class Side : MonoBehaviour
         return false;
     }
 
-    protected void ClearAfterRound()
+    private void OnCellTaken()
+    {
+        SquadCreated?.Invoke();
+    }
+
+    private IEnumerator SetRoundAfterPause()
+    {
+        float time = 0;
+
+        while (time < _roundPause)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        SetRound();
+    }
+
+    private void ClearAfterRound()
     {
         _army.Clear();
         _field.Clear();
+
+        if (_setRound != null)
+            StopCoroutine(_setRound);
+
+        _setRound = StartCoroutine(SetRoundAfterPause());
     }
 
     private void OnWinRound()

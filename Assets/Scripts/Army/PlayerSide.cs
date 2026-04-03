@@ -1,17 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerSide : Side
 {
     [SerializeField] private SquadPlacer _placer;
-
-    public override void PrepareToRound()
-    {
-        ClearAfterRound();
-        RespawnSurvivedSquads();
-    }
 
     protected override void OnOnEnable()
     {
@@ -26,6 +17,11 @@ public class PlayerSide : Side
     protected override void OnOnDisable()
     {
         _placer.ReadyForBuild -= OnReadyForBuild;
+    }
+
+    protected override void SetRound()
+    {
+        RespawnSurvivedSquads();
     }
 
     private void RespawnSurvivedSquads()

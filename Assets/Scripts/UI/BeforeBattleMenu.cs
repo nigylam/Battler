@@ -8,14 +8,19 @@ public class BeforeBattleMenu : MonoBehaviour
 
     public event Action PlayButtonClicked;
 
-    private void OnEnable()
+    public void SetPlayButtonActive()
     {
+        if (_playButton.gameObject.activeSelf)
+            return;
+
+        _playButton.gameObject.SetActive(true);
         _playButton.onClick.AddListener(OnClick);
     }
 
     private void OnDisable()
     {
         _playButton.onClick.RemoveListener(OnClick);
+        _playButton.gameObject.SetActive(false);
     }
 
     private void OnClick()

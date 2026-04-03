@@ -8,14 +8,14 @@ public class EnemySide : Side
     private List<EnemyRound> _rounds = new();
     private int _currentRound = 0;
 
+
     private void Awake()
     {
         _rounds.AddRange(_level.Rounds);
     }
 
-    public override void PrepareToRound()
+    protected override void SetRound()
     {
-        ClearAfterRound();
         SetRound(_rounds[_currentRound++]);
     }
 

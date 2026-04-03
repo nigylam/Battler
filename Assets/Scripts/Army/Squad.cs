@@ -36,23 +36,6 @@ public class Squad : MonoBehaviour
         }
     }
 
-    public void Respawn()
-    {
-        foreach(Unit unit in _deadUnits)
-        {
-            unit.Dead += OnUnitDead;
-            unit.Free += OnUnitFree;
-        }
-
-        _unitsAlive.AddRange(_deadUnits);
-        _deadUnits.Clear();
-
-        foreach(Unit unit in _unitsAlive)
-        {
-            unit.Respawn();
-        }
-    }
-
     public void AddUnit(Unit unit)
     {
         _deadUnits.Add(unit);
@@ -91,13 +74,19 @@ public class Squad : MonoBehaviour
         unit.Free -= OnUnitFree;
 
         if (_unitsAlive.Count == 0)
+        {
+            _isBattleEnded = true;
             Dead?.Invoke(this);
+        }
     }
 
     private void OnUnitFree(Unit unit)
     {
         if (_isBattleEnded)
+        {
+
             return;
+        }
 
         unit.SetTarget(_enemyArmy.GetTargets());
     }
