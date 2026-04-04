@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SquadPlan : MonoBehaviour
@@ -11,6 +9,5 @@ public class SquadPlan : MonoBehaviour
 
     public (int x, int y) Size => (_sizeX, _sizeY);
     public int Count => _unitCount;
-
     public Unit Unit => _unitPrefab;
 }

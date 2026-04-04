@@ -1,8 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerSide : Side
 {
     [SerializeField] private SquadPlacer _placer;
+
+    private List<SquadContext> _survived = new();
 
     protected override void OnOnEnable()
     {
@@ -24,12 +27,26 @@ public class PlayerSide : Side
         RespawnSurvivedSquads();
     }
 
-    private void RespawnSurvivedSquads()
+    protected override void DoAfterWin(List<SquadContext> survivedSquads)
     {
-        if (SurvivedSquads.Count == 0)
+        if (survivedSquads.Count == 0)
             return;
 
-        foreach (SquadContext squadContext in SurvivedSquads)
-            TryCreateSquad(squadContext.Plan, squadContext.StartCell);
+        foreach (SquadContext squadContext in survivedSquads)
+        {
+            squadContext.Upgrade();
+            _survived.Add(squadContext);
+        }
+    }
+
+    private void RespawnSurvivedSquads()
+    {
+        if (_survived.Count == 0)
+            return;
+
+        foreach (SquadContext squadContext in _survived)
+            TryCreateSquad(squadContext.Plan, squadContext.StartCell, squadContext.CreateUpgraded);
+
+        _survived.Clear();
     }
 }

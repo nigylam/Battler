@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Unit : MonoBehaviour
 {
-    [SerializeField] private SmoothSliderBar _healthBar;
+    [SerializeField] private HealthBar _healthBar;
     [SerializeField] private Health _health;
     [SerializeField] private Mover _mover;
     [SerializeField] private Attacker _attacker;
@@ -13,7 +13,6 @@ public abstract class Unit : MonoBehaviour
     [SerializeField] private SkinnedMeshRenderer _meshRenderer;
 
     private Unit _target;
-    private Vector3 _startPosition;
     private bool _dead;
 
     public event Action<Unit> Dead;
@@ -22,17 +21,24 @@ public abstract class Unit : MonoBehaviour
     protected bool IsMoving => _mover.Speed > 0;
     protected abstract UnitAnimator Animator { get; }
 
+    public void Upgrade()
+    {
+        _healthBar.Upgrade();
+        _health.Upgrade();
+        _mover.Upgrade();
+        _attacker.Upgrade();
+        Animator.OnUpgrade();
+    }
+
     private void OnEnable()
     {
-        _healthBar.Initialize(_health);
-        _healthBar.Enable();
-
         _health.Dead += OnDead;
         _mover.WentToTarget += OnWentToTarget;
         _mover.LeaveTarget += OnLeaveTarget;
         _attacker.AttackStarted += OnAttackStarted;
         _deadAnimationEventSender.AnimationEnded += OnDeadAnimationPlayed;
         _mover.Disable();
+        
 
         if (_target != null)
             _target.Dead += OnTargetDead;
@@ -56,7 +62,6 @@ public abstract class Unit : MonoBehaviour
     {
         _meshRenderer.material = armyMaterial;
         _attacker.Initialize(attackTargets);
-        _startPosition = transform.position;
     }
 
     public void TakeDamage(int damage)
@@ -96,12 +101,6 @@ public abstract class Unit : MonoBehaviour
         _mover.Disable();
         Animator.OnWin();
         _attacker.StopAttack();
-    }
-
-    public void Respawn()
-    {
-        transform.position = _startPosition;
-        _health.Restart();
     }
 
     protected virtual void OnAttackStarted() { }

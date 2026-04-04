@@ -15,13 +15,10 @@ public abstract class Side : MonoBehaviour
     private float _roundPause = 1f;
     private Coroutine _setRound;
     private List<SquadContext> _spawnedSquads = new();
-    private List<SquadContext> _survivedSquads = new();
 
     public event Action WinBattle;
     public event Action WinRound;
     public event Action SquadCreated;
-
-    public IReadOnlyCollection<SquadContext> SurvivedSquads => _survivedSquads;
 
     private void OnEnable()
     {
@@ -61,9 +58,11 @@ public abstract class Side : MonoBehaviour
     protected virtual void OnOnEnable() { }
     protected virtual void OnOnDisable() { }
 
-    protected bool TryCreateSquad(SquadPlan plan, (int x, int y) startCell)
+    protected virtual void DoAfterWin(List<SquadContext> survivedSquads) { }
+
+    protected bool TryCreateSquad(SquadPlan plan, (int x, int y) startCell, bool createUpgraded = false)
     {
-        if (_squadCreator.TryCreate(plan, startCell, gameObject.transform, _field, out Squad newSquad))
+        if (_squadCreator.TryCreate(plan, startCell, gameObject.transform, _field, createUpgraded, out Squad newSquad))
         {
             _army.AddSquad(newSquad);
             _spawnedSquads.Add(new SquadContext(newSquad, plan, startCell));
@@ -76,6 +75,12 @@ public abstract class Side : MonoBehaviour
     private void OnCellTaken()
     {
         SquadCreated?.Invoke();
+    }
+
+    private void ClearAfterRound()
+    {
+        _army.Clear();
+        _field.Clear();
     }
 
     private IEnumerator SetRoundAfterPause()
@@ -91,34 +96,24 @@ public abstract class Side : MonoBehaviour
         SetRound();
     }
 
-    private void ClearAfterRound()
-    {
-        _army.Clear();
-        _field.Clear();
-
-        if (_setRound != null)
-            StopCoroutine(_setRound);
-
-        _setRound = StartCoroutine(SetRoundAfterPause());
-    }
-
     private void OnWinRound()
     {
-        GetSurvived();
+        DoAfterWin(GetSurvived());
         _spawnedSquads.Clear();
         _winsCounter.Increase();
         WinRound?.Invoke();
     }
 
-    private void GetSurvived()
+    private List<SquadContext> GetSurvived()
     {
-        List<Squad> survivedSquads = new();
-        survivedSquads.AddRange(_army.AliveSquads);
+        List<SquadContext> survivedSquads = new();
 
-        foreach(var squad in survivedSquads)
-            foreach(var squadContext in _spawnedSquads)
-                if(squad == squadContext.Squad)
-                    _survivedSquads.Add(squadContext);
+        foreach (var squad in _army.AliveSquads)
+            foreach (var squadContext in _spawnedSquads)
+                if (squad == squadContext.Squad)
+                    survivedSquads.Add(squadContext);
+
+        return survivedSquads;
     }
 
     private void OnWinBattle()

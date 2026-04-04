@@ -5,6 +5,7 @@ using UnityEngine.AI;
 public class Mover : MonoBehaviour
 {
     [SerializeField] private float _attackRange;
+    [SerializeField] private float _attackRangeUpgraded;
 
     private Transform _target;
     private NavMeshAgent _agent;
@@ -56,6 +57,11 @@ public class Mover : MonoBehaviour
         _wentEventSended = false;
         _agent.enabled = true;
         _agent.SetDestination(_target.position);
+    }
+
+    public void Upgrade()
+    {
+        _attackRange = _attackRangeUpgraded;
     }
 
     private bool CloseToTarget()

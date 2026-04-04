@@ -52,6 +52,12 @@ public class Squad : MonoBehaviour
             unit.Win();
     }
 
+    public void Upgrade()
+    {
+        foreach (var unit in _unitsAlive)
+            unit.Upgrade();
+    }
+
     public List<Unit> GetAliveMembers()
     {
         return _unitsAlive;

@@ -23,6 +23,11 @@ public class MeleeAttacker : Attacker
         _damager.Initialize(attackTargets);
     }
 
+    public override void Upgrade()
+    {
+        _damager.Upgrade();
+    }
+
     private void EnableDamage()
     {
         _damager.EnableDamage();

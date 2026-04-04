@@ -3,6 +3,7 @@ using UnityEngine;
 public abstract class Damager : MonoBehaviour
 {
     [SerializeField] private int _damage;
+    [SerializeField] private int _damageUpgraded;
 
     private int _damageOffset = 2;
     private int _damageMinValue = 1;
@@ -11,6 +12,11 @@ public abstract class Damager : MonoBehaviour
     public virtual void Initialize(LayerMask attackTargets)
     {
         _attackTargets = attackTargets;
+    }
+
+    public virtual void Upgrade()
+    {
+        _damage = _damageUpgraded;
     }
 
     protected void ApplyDamage(Unit member)

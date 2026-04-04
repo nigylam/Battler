@@ -27,6 +27,7 @@ public abstract class Attacker : MonoBehaviour
     }
 
     public abstract void Initialize(LayerMask attackTargets);
+    public abstract void Upgrade();
 
     public void StartAttack()
     {

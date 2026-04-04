@@ -6,6 +6,7 @@ public abstract class UnitAnimator : MonoBehaviour
     [SerializeField] private Animator _animator;
 
     private readonly int AnimatorWin = Animator.StringToHash("Win");
+    private readonly int AnimatorUpgrade = Animator.StringToHash("Upgrade");
     private readonly int AnimatorHit = Animator.StringToHash("Hit");
     private readonly int AnimatorDeath = Animator.StringToHash("Death");
     private readonly string AnimatorHitLayer = "HitLayer";
@@ -26,6 +27,11 @@ public abstract class UnitAnimator : MonoBehaviour
     public void OnWin()
     {
         SetTrigger(AnimatorWin);
+    }
+
+    public void OnUpgrade()
+    {
+        SetTrigger(AnimatorUpgrade);
     }
 
     public void OnDeath()

@@ -148,6 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 6
+  _damageUpgraded: 8
   _lifetime: 4
   _rigidbody: {fileID: 5615922289110471858}
   _arcHeight: 5

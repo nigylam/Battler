@@ -4,6 +4,7 @@ using UnityEngine;
 public class Health : MonoBehaviour, ICountable
 {
     [SerializeField] private float _maxHealth = 100f;
+    [SerializeField] private float _maxHealthUpgraded = 100f;
 
     private float _currentHealth;
     private bool _active = true;
@@ -57,5 +58,11 @@ public class Health : MonoBehaviour, ICountable
     {
         Current = _maxHealth;
         _active = true;
+    }
+
+    public void Upgrade()
+    {
+        _maxHealth = _maxHealthUpgraded;
+        Current = _maxHealth;
     }
 }

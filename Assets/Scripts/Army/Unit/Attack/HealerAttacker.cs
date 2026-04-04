@@ -9,11 +9,14 @@ public class HealerAttacker : Attacker
         _healer.Initialize(attackTargets);
     }
 
+    public override void Upgrade()
+    {
+        _healer.Upgrade();
+    }
+
     protected override void Attack()
     {
         base.Attack();
         _healer.Heal();
     }
-
-    
 }

@@ -8,7 +8,7 @@ public class SquadCreator : MonoBehaviour
     [SerializeField] private LayerMask _attackTargets;
     [SerializeField] private Squad _squadPrefab;
 
-    public bool TryCreate(SquadPlan squadPlan, (int x, int y) startCell, Transform parrent, Field field, out Squad squad)
+    public bool TryCreate(SquadPlan squadPlan, (int x, int y) startCell, Transform parrent, Field field, bool createUpgraded, out Squad squad)
     {
         squad = null;
 
@@ -36,6 +36,9 @@ public class SquadCreator : MonoBehaviour
         {
             squad.AddUnit(CreateUnit(squadPlan.Unit, GetCenter(cellsToTake, field), _armyMaterial, _attackTargets, squad.transform));
         }
+
+        if (createUpgraded)
+            squad.Upgrade();
 
         return true;
     }

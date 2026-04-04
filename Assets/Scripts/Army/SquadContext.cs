@@ -1,4 +1,3 @@
-
 public struct SquadContext
 {
     public Squad Squad;
@@ -10,5 +9,14 @@ public struct SquadContext
         Squad = squad;
         Plan = plan;
         StartCell = startCell;
+        CreateUpgraded = false;
+    }
+
+    public bool CreateUpgraded { get; private set; }
+
+    public void Upgrade()
+    {
+        CreateUpgraded = true;
+        Squad.Upgrade();
     }
 }
