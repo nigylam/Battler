@@ -948,6 +948,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attackRange: 100
   _attackRangeUpgraded: 100
+  _agent: {fileID: -7303164083405069350}
 --- !u!114 &5491905913219757933
 MonoBehaviour:
   m_ObjectHideFlags: 0

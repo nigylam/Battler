@@ -6,9 +6,9 @@ public class Mover : MonoBehaviour
 {
     [SerializeField] private float _attackRange;
     [SerializeField] private float _attackRangeUpgraded;
+    [SerializeField] private NavMeshAgent _agent;
 
     private Transform _target;
-    private NavMeshAgent _agent;
 
     private float _updateRate = 0.2f;
     private float _timer;
@@ -25,7 +25,7 @@ public class Mover : MonoBehaviour
 
     private void Awake()
     {
-        _agent = GetComponent<NavMeshAgent>();
+        _agent.updateRotation = false;
     }
 
     private void Update()
@@ -55,7 +55,7 @@ public class Mover : MonoBehaviour
     {
         _target = target;
         _wentEventSended = false;
-        _agent.enabled = true;
+        _agent.isStopped = false;
         _agent.SetDestination(_target.position);
     }
 
@@ -78,7 +78,7 @@ public class Mover : MonoBehaviour
 
         if (CloseToTarget() == false)
         {
-            _agent.enabled = true;
+            _agent.isStopped = false;
             _agent.SetDestination(_target.position);
 
             if (_leaveEventSended == false)
@@ -89,7 +89,8 @@ public class Mover : MonoBehaviour
         }
         else
         {
-            _agent.enabled = false;
+            _agent.isStopped = true;
+            _agent.velocity = Vector3.zero;
 
             if (_wentEventSended == false)
             {
