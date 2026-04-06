@@ -3,15 +3,13 @@ using UnityEngine;
 
 public class EnemySide : Side
 {
-    [SerializeField] private EnemyLevel _level;
-
     private List<EnemyRound> _rounds = new();
-    private int _currentRound = 0;
+    private int _currentRound;
 
-
-    private void Awake()
+    public void SetRounds(IReadOnlyCollection<EnemyRound> rounds)
     {
-        _rounds.AddRange(_level.Rounds);
+        _rounds.AddRange(rounds);
+        _currentRound = 0;
     }
 
     protected override void SetRound()
