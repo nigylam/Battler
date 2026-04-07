@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,19 +8,25 @@ public class PlayerSide : Side
 
     private List<SquadContext> _survived = new();
 
+    public override void Restart()
+    {
+        base.Restart();
+        _survived.Clear();
+    }
+
     protected override void OnOnEnable()
     {
         _placer.ReadyForBuild += OnReadyForBuild;
     }
 
-    private void OnReadyForBuild(SquadPlan plan, (int x, int y) startCell)
-    {
-        TryCreateSquad(plan, startCell);
-    }
-
     protected override void OnOnDisable()
     {
         _placer.ReadyForBuild -= OnReadyForBuild;
+    }
+
+    private void OnReadyForBuild(SquadPlan plan, (int x, int y) startCell)
+    {
+        TryCreateSquad(plan, startCell);
     }
 
     protected override void SetRound()

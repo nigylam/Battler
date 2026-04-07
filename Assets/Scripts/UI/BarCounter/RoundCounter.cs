@@ -2,15 +2,10 @@ using System;
 
 public class RoundCounter : ICountable
 {
-    private int _count;
+    private int _count = 0;
     private int _maxCount = 99;
 
     public event Action Changed;
-
-    public RoundCounter(int count)
-    {
-        _count = count;
-    }
 
     public float Max => _maxCount;
 
@@ -30,5 +25,10 @@ public class RoundCounter : ICountable
     public void Increase()
     {
         Current++;
+    }
+
+    public void Restart()
+    {
+        Current = 0;
     }
 }

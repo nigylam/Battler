@@ -36,4 +36,9 @@ public class WinsCounter : MonoBehaviour, ICountable
         if (Current == _max)
             Win?.Invoke();
     }
+
+    public void Restart()
+    {
+        Current = 0;
+    }
 }

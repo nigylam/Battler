@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System;
 
 public class BattleState : GameState
 {
@@ -9,15 +7,17 @@ public class BattleState : GameState
     public override void Enter()
     {
         Context.Battle.StartLevel();
+        Context.Battle.End += OnBattleEnd;
     }
 
     public override void Exit()
     {
         Context.Battle.EndLevel();
+        Context.Battle.End -= OnBattleEnd;
     }
 
-    private void StartGame(Level level)
+    private void OnBattleEnd()
     {
-        StateMachine.ChangeState(GameStateType.Battle);
+        StateMachine.PushState(GameStateType.BattleEnd);
     }
 }

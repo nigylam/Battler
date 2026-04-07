@@ -6,28 +6,20 @@ using UnityEngine;
 public abstract class Side : MonoBehaviour
 {
     [SerializeField] private Army _army;
-    [SerializeField] private WinsCounter _winsCounter;
-    [SerializeField] private IconCounter _iconWinsCounter;
     [SerializeField] private Field _field;
     [SerializeField] private SquadCreator _squadCreator;
-    [SerializeField] private int _roundsToWin;
 
     private float _roundPause = 1f;
     private Coroutine _setRound;
     private List<SquadContext> _spawnedSquads = new();
 
-    public event Action WinBattle;
     public event Action WinRound;
     public event Action SquadCreated;
 
     private void OnEnable()
     {
         _army.WinRound += OnWinRound;
-        _winsCounter.Win += OnWinBattle;
         _field.CellTaken += OnCellTaken;
-
-        _winsCounter.Initialize(_roundsToWin);
-        _iconWinsCounter.Initialize(_winsCounter);
         OnOnEnable();
     }
 
@@ -35,7 +27,6 @@ public abstract class Side : MonoBehaviour
     {
         _field.CellTaken -= OnCellTaken;
         _army.WinRound -= OnWinRound;
-        _winsCounter.Win -= OnWinBattle;
         OnOnDisable();
     }
 
@@ -52,6 +43,12 @@ public abstract class Side : MonoBehaviour
     public void Attack()
     {
         _army.Attack();
+    }
+
+    public virtual void Restart()
+    {
+        ClearAfterRound();
+        _spawnedSquads.Clear();
     }
 
     protected abstract void SetRound();
@@ -100,7 +97,6 @@ public abstract class Side : MonoBehaviour
     {
         DoAfterWin(GetSurvived());
         _spawnedSquads.Clear();
-        _winsCounter.Increase();
         WinRound?.Invoke();
     }
 
@@ -114,10 +110,5 @@ public abstract class Side : MonoBehaviour
                     survivedSquads.Add(squadContext);
 
         return survivedSquads;
-    }
-
-    private void OnWinBattle()
-    {
-        WinBattle?.Invoke();
     }
 }
