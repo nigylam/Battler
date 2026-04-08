@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Battle : MonoBehaviour
@@ -11,7 +12,6 @@ public class Battle : MonoBehaviour
     [SerializeField] private CameraMover _cameraMover;
 
     private Coroutine _processRound;
-    private Level _level;
     private int _roundsToWin = 2;
     private float _roundPause = 2f;
     private bool _haveWinner;
@@ -40,15 +40,10 @@ public class Battle : MonoBehaviour
         _roundCountCanvas.EnemyWin -= OnEnemyWin;
     }
 
-    public void SetLevel(Level level)
+    public void StartLevel(IReadOnlyCollection<EnemyRound> rounds)
     {
-        _level = level;
         _haveWinner = false;
-        _enemySide.SetRounds(level.Rounds);
-    }
-
-    public void StartLevel()
-    {
+        _enemySide.SetRounds(rounds);
         ProcessRounds();
         _playerSide.Restart();
         _roundCountCanvas.gameObject.SetActive(true);

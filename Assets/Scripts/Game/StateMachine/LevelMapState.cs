@@ -1,4 +1,6 @@
 
+using UnityEngine;
+
 public class LevelMapState : GameState
 {
     public LevelMapState(GameStateMachine stateMachine, GameContext context) : base(stateMachine, context) { }
@@ -17,7 +19,7 @@ public class LevelMapState : GameState
 
     private void StartGame(Level level)
     {
-        Context.Battle.SetLevel(level);
+        Context.SetLevel(level);
         StateMachine.ChangeState(GameStateType.Battle);
     }
 }

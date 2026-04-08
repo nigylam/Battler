@@ -9,11 +9,16 @@ public class Bootstraper : MonoBehaviour
 
     private GameStateMachine _stateMachine;
     private GameContext _context;
+    private Gold _gold;
 
     private void Awake()
     {
+        _gold = new Gold();
+        _levelMenu.Initialize(_gold);
+
         _context = new GameContext
         (
+            _gold,
             _mainMenu,
             _levelMenu,
             _battleEndScreen,

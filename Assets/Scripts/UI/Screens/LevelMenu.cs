@@ -5,6 +5,7 @@ using UnityEngine;
 public class LevelMenu : MonoBehaviour
 {
     [SerializeField] private List<LevelButton> _levelButtons;
+    [SerializeField] private TextCounter _goldCounter;
 
     public event Action<Level> Start;
 
@@ -18,6 +19,11 @@ public class LevelMenu : MonoBehaviour
     {
         foreach (LevelButton levelButton in _levelButtons)
             levelButton.Clicked -= OnClick;
+    }
+
+    public void Initialize(Gold gold)
+    {
+        _goldCounter.Initialize(gold);
     }
 
     private void OnClick(Level level)

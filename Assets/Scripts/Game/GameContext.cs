@@ -1,16 +1,26 @@
 
-public struct GameContext
+public class GameContext
 {
-    public GameContext(MainMenu mainMenu, LevelMenu levelMenu, BattleEndScreen battleEndScreen, Battle battle)
+    public GameContext(Gold gold, MainMenu mainMenu, LevelMenu levelMenu, BattleEndScreen battleEndScreen, Battle battle)
     {
+        Gold = gold;
         MainMenu = mainMenu;
         LevelMenu = levelMenu;
         BattleEndScreen = battleEndScreen;
         Battle = battle;
     }
 
-    public MainMenu MainMenu { get; private set; }
-    public LevelMenu LevelMenu { get; private set; }
-    public BattleEndScreen BattleEndScreen { get; private set; }
-    public Battle Battle { get; private set; }
+    public Gold Gold { get;  }
+    public MainMenu MainMenu { get;}
+    public LevelMenu LevelMenu { get; }
+    public BattleEndScreen BattleEndScreen { get;}
+    public Battle Battle { get; }
+
+    public Level Level { get; private set; }
+
+    public void SetLevel(Level level)
+    {
+        Level = level;
+    }
+
 }

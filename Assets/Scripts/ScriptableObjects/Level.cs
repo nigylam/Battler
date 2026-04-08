@@ -6,6 +6,8 @@ using UnityEngine;
 public class Level : ScriptableObject
 {
     [SerializeField] private List<EnemyRound> _rounds;
+    [SerializeField] private int _goldReward;
 
     public IReadOnlyCollection<EnemyRound> Rounds => _rounds;
+    public int GoldReward => _goldReward;
 }

@@ -8,9 +8,14 @@ public class BattleEndState : GameState
         Context.BattleEndScreen.gameObject.SetActive(true);
 
         if (Context.Battle.PlayerWin)
-            Context.BattleEndScreen.SetWinText();
+        {
+            Context.Gold.Increase(Context.Level.GoldReward);
+            Context.BattleEndScreen.SetWinText(Context.Level.GoldReward);
+        }
         else
+        {
             Context.BattleEndScreen.SetLoseText();
+        }
 
         Context.BattleEndScreen.End += OnEndClicked;
     }

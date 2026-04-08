@@ -9,6 +9,8 @@ public class BattleEndScreen : MonoBehaviour
     private readonly string YouWinText = "You win";
 
     [SerializeField] private TextMeshProUGUI _title;
+    [SerializeField] private GameObject _rewardBlock;
+    [SerializeField] private TextMeshProUGUI _goldReward;
     [SerializeField] private Button _endButton;
 
     public event Action End;
@@ -25,12 +27,15 @@ public class BattleEndScreen : MonoBehaviour
 
     public void SetLoseText()
     {
+        _rewardBlock.SetActive(false);
         _title.text = YouLoseText;
     }
 
-    public void SetWinText()
+    public void SetWinText(int goldReward)
     {
+        _rewardBlock.SetActive(true);
         _title.text = YouWinText;
+        _goldReward.text = goldReward.ToString();
     }
 
     private void OnClick()

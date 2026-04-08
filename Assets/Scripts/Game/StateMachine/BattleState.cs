@@ -1,4 +1,4 @@
-using System;
+using UnityEngine;
 
 public class BattleState : GameState
 {
@@ -6,7 +6,7 @@ public class BattleState : GameState
 
     public override void Enter()
     {
-        Context.Battle.StartLevel();
+        Context.Battle.StartLevel(Context.Level.Rounds);
         Context.Battle.End += OnBattleEnd;
     }
 
