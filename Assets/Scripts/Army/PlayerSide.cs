@@ -8,7 +8,18 @@ public class PlayerSide : Side
 
     private List<SquadContext> _survived = new();
 
-    public override void Restart()
+    public void SetSquads(SquadKeeper squadKeeper)
+    {
+        Restart();
+        _placer.SetSquads(squadKeeper);
+    }
+
+    public void OnEndLevel()
+    {
+        _placer.ClearSquads();
+    }
+    
+    protected override void Restart()
     {
         base.Restart();
         _survived.Clear();

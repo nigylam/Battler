@@ -1,11 +1,15 @@
 using System;
 using UnityEngine;
 
-public class ItemCounter : MonoBehaviour, ICountable
+public class ItemCounter : ICountable
 {
-    [SerializeField] private int _count;
-
+    private int _count;
     private int _maxCount = 99;
+
+    public ItemCounter(int count)
+    {
+        Current = count;
+    }
 
     public event Action Changed;
     public event Action Ended;

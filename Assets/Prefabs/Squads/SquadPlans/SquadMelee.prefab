@@ -45,6 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitPrefab: {fileID: 5335410890991636213, guid: f7434f1aa402117458f2e31698e1de0a, type: 3}
+  _preview: {fileID: 5896800842004084199, guid: b44be735b206594419e3617fe80fac93, type: 3}
+  _dragImage: {fileID: 3047710035135359583, guid: 72ca208f524aeb34285d5a79b253fdeb, type: 3}
+  _cellIcon: {fileID: 3047710035135359583, guid: 929d8f84cfaa67f49a304d8edff4ee0b, type: 3}
   _unitCount: 3
   _sizeX: 3
   _sizeY: 1

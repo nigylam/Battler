@@ -45,7 +45,7 @@ public abstract class Side : MonoBehaviour
         _army.Attack();
     }
 
-    public virtual void Restart()
+    protected virtual void Restart()
     {
         ClearAfterRound();
         _spawnedSquads.Clear();

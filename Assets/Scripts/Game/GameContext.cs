@@ -1,8 +1,9 @@
 
 public class GameContext
 {
-    public GameContext(Gold gold, MainMenu mainMenu, LevelMenu levelMenu, BattleEndScreen battleEndScreen, Battle battle)
+    public GameContext(SquadKeeper squadKeeper, Gold gold, MainMenu mainMenu, LevelMenu levelMenu, BattleEndScreen battleEndScreen, Battle battle)
     {
+        SquadKeeper = squadKeeper;
         Gold = gold;
         MainMenu = mainMenu;
         LevelMenu = levelMenu;
@@ -10,10 +11,11 @@ public class GameContext
         Battle = battle;
     }
 
-    public Gold Gold { get;  }
-    public MainMenu MainMenu { get;}
+    public SquadKeeper SquadKeeper { get; }
+    public Gold Gold { get; }
+    public MainMenu MainMenu { get; }
     public LevelMenu LevelMenu { get; }
-    public BattleEndScreen BattleEndScreen { get;}
+    public BattleEndScreen BattleEndScreen { get; }
     public Battle Battle { get; }
 
     public Level Level { get; private set; }

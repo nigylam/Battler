@@ -6,7 +6,7 @@ public class BattleState : GameState
 
     public override void Enter()
     {
-        Context.Battle.StartLevel(Context.Level.Rounds);
+        Context.Battle.StartLevel(Context.Level.Rounds, Context.SquadKeeper);
         Context.Battle.End += OnBattleEnd;
     }
 

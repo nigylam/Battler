@@ -6,26 +6,26 @@ public class Bootstraper : MonoBehaviour
     [SerializeField] private LevelMenu _levelMenu;
     [SerializeField] private BattleEndScreen _battleEndScreen;
     [SerializeField] private Battle _battle;
-
-    private GameStateMachine _stateMachine;
-    private GameContext _context;
-    private Gold _gold;
+    [SerializeField] private StartSquadSet _startSquadSet;
 
     private void Awake()
     {
-        _gold = new Gold();
-        _levelMenu.Initialize(_gold);
+        var gold = new Gold();
+        _levelMenu.Initialize(gold);
 
-        _context = new GameContext
+        SquadKeeper squadKeeper = SquadKeeperFabric.Create(_startSquadSet);
+
+        var context = new GameContext
         (
-            _gold,
+            squadKeeper,
+            gold,
             _mainMenu,
             _levelMenu,
             _battleEndScreen,
             _battle
         );
 
-        _stateMachine = new GameStateMachine(_context);
-        _stateMachine.ChangeState(GameStateType.MainMenu);
+        var stateMachine = new GameStateMachine(context);
+        stateMachine.ChangeState(GameStateType.MainMenu);
     }
 }

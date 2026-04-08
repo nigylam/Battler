@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Enemy Squad", menuName = "Enemy / Create new enemy squad", order = 51)]
+[CreateAssetMenu(fileName = "New Enemy Squad", menuName = "Level / Create new enemy squad", order = 51)]
 public class EnemySquad : ScriptableObject
 {
     [SerializeField] private SquadPlan _squad;

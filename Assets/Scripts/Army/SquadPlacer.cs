@@ -8,16 +8,22 @@ public class SquadPlacer : MonoBehaviour
     [SerializeField] private Camera _camera;
     [SerializeField] private LayerMask _groundMask;
     [SerializeField] private LayerMask _thisCanvas;
-    [SerializeField] private DragItem[] _dragItems;
+    [SerializeField] private DragItem _itemPrefab;
 
+    private List<DragItem> _dragItems = new();
     private DragItem _draggingItem;
     private bool _canBuild;
     private (int x, int y) _startCell;
+
+    private bool _subscribed;
 
     public event Action<SquadPlan, (int x, int y)> ReadyForBuild;
 
     private void OnEnable()
     {
+        if (_subscribed)
+            return;
+
         foreach (var item in _dragItems)
         {
             item.DragStarted += OnDragStarted;
@@ -33,6 +39,34 @@ public class SquadPlacer : MonoBehaviour
             item.DragStarted -= OnDragStarted;
             item.DragEnded -= OnDragEnded;
             item.Drag -= OnDrag;
+        }
+
+        _subscribed = false;
+    }
+
+    public void SetSquads(SquadKeeper squadKeeper)
+    {
+        foreach (SquadPlan squad in squadKeeper.Squads)
+        {
+            DragItem item = Instantiate(_itemPrefab, transform);
+            item.Initialize(squad, squadKeeper.GetSquadsCount(squad));
+            _dragItems.Add(item);
+            item.DragStarted += OnDragStarted;
+            item.DragEnded += OnDragEnded;
+            item.Drag += OnDrag;
+        }
+
+        _subscribed = true;
+    }
+
+    public void ClearSquads()
+    {
+        foreach (var item in _dragItems)
+        {
+            item.DragStarted -= OnDragStarted;
+            item.DragEnded -= OnDragEnded;
+            item.Drag -= OnDrag;
+            Destroy(item.gameObject);
         }
     }
 

@@ -40,12 +40,12 @@ public class Battle : MonoBehaviour
         _roundCountCanvas.EnemyWin -= OnEnemyWin;
     }
 
-    public void StartLevel(IReadOnlyCollection<EnemyRound> rounds)
+    public void StartLevel(IReadOnlyCollection<EnemyRound> rounds, SquadKeeper squadKeeper)
     {
         _haveWinner = false;
         _enemySide.SetRounds(rounds);
+        _playerSide.SetSquads(squadKeeper);
         ProcessRounds();
-        _playerSide.Restart();
         _roundCountCanvas.gameObject.SetActive(true);
         _roundCountCanvas.Initialize(_roundsToWin);
         _cameraMover.gameObject.SetActive(true);
@@ -55,6 +55,7 @@ public class Battle : MonoBehaviour
     {
         _roundCountCanvas.gameObject.SetActive(false);
         _cameraMover.gameObject.SetActive(false);
+        _playerSide.OnEndLevel();
     }
 
     private void OnPlayerFirstSquadCreated()
