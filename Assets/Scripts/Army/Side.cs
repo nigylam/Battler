@@ -14,30 +14,29 @@ public abstract class Side : MonoBehaviour
     private List<SquadContext> _spawnedSquads = new();
 
     public event Action WinRound;
-    public event Action SquadCreated;
+    public event Action ReadyForRound;
 
     private void OnEnable()
     {
         _army.WinRound += OnWinRound;
-        _field.CellTaken += OnCellTaken;
-        OnOnEnable();
+        Enable();
     }
 
     private void OnDisable()
     {
-        _field.CellTaken -= OnCellTaken;
         _army.WinRound -= OnWinRound;
-        OnOnDisable();
+        Disable();
     }
 
     public void PrepareToRound()
     {
         ClearAfterRound();
+        SetRoundBeforePause();
 
         if (_setRound != null)
             StopCoroutine(_setRound);
 
-        _setRound = StartCoroutine(SetRoundAfterPause());
+        _setRound = StartCoroutine(SetRoundDelay());
     }
 
     public void Attack()
@@ -45,15 +44,26 @@ public abstract class Side : MonoBehaviour
         _army.Attack();
     }
 
+    protected abstract void SetRoundAfterPause();
+    protected virtual void Enable() { }
+    protected virtual void Disable() { }
+    protected virtual void SetRoundBeforePause() { }
+
+    protected void RaiseReadyForRound()
+    {
+        ReadyForRound?.Invoke();
+    }
+
+    protected virtual void OnRoundEnd()
+    {
+        ClearAfterRound();
+    }
+
     protected virtual void Restart()
     {
         ClearAfterRound();
         _spawnedSquads.Clear();
     }
-
-    protected abstract void SetRound();
-    protected virtual void OnOnEnable() { }
-    protected virtual void OnOnDisable() { }
 
     protected virtual void DoAfterWin(List<SquadContext> survivedSquads) { }
 
@@ -69,18 +79,13 @@ public abstract class Side : MonoBehaviour
         return false;
     }
 
-    private void OnCellTaken()
-    {
-        SquadCreated?.Invoke();
-    }
-
     private void ClearAfterRound()
     {
         _army.Clear();
         _field.Clear();
     }
 
-    private IEnumerator SetRoundAfterPause()
+    private IEnumerator SetRoundDelay()
     {
         float time = 0;
 
@@ -90,7 +95,7 @@ public abstract class Side : MonoBehaviour
             yield return null;
         }
 
-        SetRound();
+        SetRoundAfterPause();
     }
 
     private void OnWinRound()

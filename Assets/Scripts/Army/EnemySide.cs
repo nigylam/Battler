@@ -12,7 +12,7 @@ public class EnemySide : Side
         _currentRound = 0;
     }
 
-    protected override void SetRound()
+    protected override void SetRoundAfterPause()
     {
         SetRound(_rounds[_currentRound++]);
     }
@@ -21,5 +21,7 @@ public class EnemySide : Side
     {
         foreach (EnemySquad enemySquad in round.Squads)
             TryCreateSquad(enemySquad.Squad, (enemySquad.PositionX, enemySquad.PositionY));
+
+        RaiseReadyForRound();
     }
 }

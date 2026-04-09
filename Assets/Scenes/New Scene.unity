@@ -5244,6 +5244,7 @@ MonoBehaviour:
   _field: {fileID: 117877202}
   _squadCreator: {fileID: 1062050773}
   _placer: {fileID: 247386950}
+  _beforeBattleMenu: {fileID: 1810525452}
 --- !u!1 &1079951255
 GameObject:
   m_ObjectHideFlags: 0
@@ -8056,7 +8057,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerSide: {fileID: 1062050775}
   _enemySide: {fileID: 303088311}
-  _beforeBattleMenu: {fileID: 1810525452}
   _roundCountCanvas: {fileID: 1087834949}
   _cameraMover: {fileID: 1298733678}
 --- !u!114 &1462418482

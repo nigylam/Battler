@@ -6,6 +6,8 @@ public class BeforeBattleMenu : MonoBehaviour
 {
     [SerializeField] private Button _playButton;
 
+    private SquadPlacer _squadPlacer;
+
     public event Action PlayButtonClicked;
 
     public void SetPlayButtonActive()

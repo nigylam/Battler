@@ -8,10 +8,6 @@ public class Field : MonoBehaviour
 
     private Dictionary<(int x, int y), Cell> _cellsField;
 
-    private bool _isEmpty = true;
-
-    public event Action CellTaken;
-
     private void Awake()
     {
         _cellsField = new();
@@ -40,12 +36,6 @@ public class Field : MonoBehaviour
     public void TakeCell((int x, int y) cell)
     {
         _cellsField[cell].Take();
-
-        if (_isEmpty)
-        {
-            _isEmpty = false;
-            CellTaken?.Invoke();
-        }
     }
 
     public Vector3 GetCellPosition(int x, int y)
@@ -60,7 +50,5 @@ public class Field : MonoBehaviour
     {
         foreach(var cell in _cells)
             cell.Free();
-
-        _isEmpty = true;
     }
 }

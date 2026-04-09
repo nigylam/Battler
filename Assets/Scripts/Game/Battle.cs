@@ -7,7 +7,6 @@ public class Battle : MonoBehaviour
 {
     [SerializeField] private PlayerSide _playerSide;
     [SerializeField] private EnemySide _enemySide;
-    [SerializeField] private BeforeBattleMenu _beforeBattleMenu;
     [SerializeField] private RoundCountCanvas _roundCountCanvas;
     [SerializeField] private CameraMover _cameraMover;
 
@@ -15,6 +14,8 @@ public class Battle : MonoBehaviour
     private int _roundsToWin = 2;
     private float _roundPause = 2f;
     private bool _haveWinner;
+    private bool _playerReadyForRound;
+    private bool _enemyReadyForRound;
 
     public event Action End;
 
@@ -22,20 +23,18 @@ public class Battle : MonoBehaviour
 
     private void OnEnable()
     {
-        _playerSide.SquadCreated += OnPlayerFirstSquadCreated;
+        _playerSide.ReadyForRound += OnPlayerReadyForRound;
+        _enemySide.ReadyForRound += OnEnemyReadyForRound;
         _playerSide.WinRound += OnPlayerWinRound;
         _enemySide.WinRound += OnEnemyWinRound;
-        _beforeBattleMenu.PlayButtonClicked += OnPlayButtonClicked;
         _roundCountCanvas.PlayerWin += OnPlayerWin;
         _roundCountCanvas.EnemyWin += OnEnemyWin;
     }
 
     private void OnDisable()
     {
-        _playerSide.SquadCreated -= OnPlayerFirstSquadCreated;
         _playerSide.WinRound -= OnPlayerWinRound;
         _enemySide.WinRound -= OnEnemyWinRound;
-        _beforeBattleMenu.PlayButtonClicked -= OnPlayButtonClicked;
         _roundCountCanvas.PlayerWin -= OnPlayerWin;
         _roundCountCanvas.EnemyWin -= OnEnemyWin;
     }
@@ -45,7 +44,7 @@ public class Battle : MonoBehaviour
         _haveWinner = false;
         _enemySide.SetRounds(rounds);
         _playerSide.SetSquads(squadKeeper);
-        ProcessRounds();
+        PrepareToRound();
         _roundCountCanvas.gameObject.SetActive(true);
         _roundCountCanvas.Initialize(_roundsToWin);
         _cameraMover.gameObject.SetActive(true);
@@ -55,12 +54,38 @@ public class Battle : MonoBehaviour
     {
         _roundCountCanvas.gameObject.SetActive(false);
         _cameraMover.gameObject.SetActive(false);
-        _playerSide.OnEndLevel();
+        _playerSide.OnLevelEnd();
     }
 
-    private void OnPlayerFirstSquadCreated()
+    private void PrepareToRound()
     {
-        _beforeBattleMenu.SetPlayButtonActive();
+        if (_haveWinner)
+            return;
+
+        _playerSide.PrepareToRound();
+        _enemySide.PrepareToRound();
+    }
+
+    private void StartRound()
+    {
+        _playerSide.Attack();
+        _enemySide.Attack();
+    }
+
+    private void OnEnemyReadyForRound()
+    {
+        _enemyReadyForRound = true;
+
+        if(_playerReadyForRound)
+            StartRound();
+    }
+
+    private void OnPlayerReadyForRound()
+    {
+        _playerReadyForRound = true;
+
+        if(_enemyReadyForRound)
+            StartRound();
     }
 
     private void OnPlayerWinRound()
@@ -81,16 +106,8 @@ public class Battle : MonoBehaviour
             StopCoroutine(_processRound);
 
         _processRound = StartCoroutine(ProcessRoundAfterPause());
-    }
-
-    private void ProcessRounds()
-    {
-        if (_haveWinner)
-            return;
-
-        _beforeBattleMenu.gameObject.SetActive(true);
-        _playerSide.PrepareToRound();
-        _enemySide.PrepareToRound();
+        _enemyReadyForRound = false;
+        _playerReadyForRound = false;
     }
 
     private void OnPlayerWin()
@@ -107,13 +124,6 @@ public class Battle : MonoBehaviour
         End?.Invoke();
     }
 
-    private void OnPlayButtonClicked()
-    {
-        _beforeBattleMenu.gameObject.SetActive(false);
-        _playerSide.Attack();
-        _enemySide.Attack();
-    }
-
     private IEnumerator ProcessRoundAfterPause()
     {
         float time = 0;
@@ -124,6 +134,6 @@ public class Battle : MonoBehaviour
             yield return null;
         }
 
-        ProcessRounds();
+        PrepareToRound();
     }
 }

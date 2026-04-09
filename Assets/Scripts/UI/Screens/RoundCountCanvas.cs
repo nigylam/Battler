@@ -29,6 +29,7 @@ public class RoundCountCanvas : MonoBehaviour
 
     private void OnDisable()
     {
+        _roundWinnerPannel.gameObject.SetActive(false);
         _roundWinsPannel.EnemyWin -= OnEnemyWin;
         _roundWinsPannel.PlayerWin -= OnPlayerWin;
     }
