@@ -1,14 +1,13 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class DragItem : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class DragItem : Item, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     [SerializeField] private TextCounter _textCounter;
-    [SerializeField] private Image _icon;
-    
-    private SquadPlan _squad;
+
     private ItemCounter _itemsCount;
     private SquadPreview _preview;
     private Image _dragImage;
@@ -16,8 +15,6 @@ public class DragItem : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     public event Action<DragItem> DragStarted;
     public event Action<PointerEventData> DragEnded;
     public event Action<PointerEventData> Drag;
-
-    public SquadPlan Squad => _squad;
 
     private void OnEnable()
     {
@@ -30,12 +27,11 @@ public class DragItem : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         _itemsCount.Ended -= OnItemsEnded;
     }
 
-    public void Initialize(SquadPlan plan, int count)
+    public void Initialize(SquadPlan squad, int count) 
     {
-        _squad = plan;
-        _preview = Instantiate(_squad.Preview, transform);
-        _dragImage = Instantiate(_squad.Image, transform);
-        _icon.color = _squad.CellIcon.color;
+        base.Initialize(squad);
+        _preview = Instantiate(squad.Preview, transform);
+        _dragImage = Instantiate(squad.Image, transform);
         _itemsCount = new ItemCounter(count);
         _textCounter.Initialize(_itemsCount);
     }
@@ -43,7 +39,7 @@ public class DragItem : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     public void OnBeginDrag(PointerEventData eventData)
     {
         DragStarted?.Invoke(this);
-        _squad.Image.raycastTarget = false;
+        _dragImage.raycastTarget = false;
     }
 
     public void OnDrag(PointerEventData eventData)

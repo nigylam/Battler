@@ -29,7 +29,7 @@ public class Army : MonoBehaviour
             squads.Dead -= OnSquadDead;
     }
 
-    public void AddSquad(Squad squad)
+    public void Add(Squad squad)
     {
         _aliveSquads.Add(squad);
         squad.Dead += OnSquadDead;

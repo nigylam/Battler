@@ -3,76 +3,63 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SquadPlacer : MonoBehaviour
+public class SquadPlacer
 {
-    [SerializeField] private Camera _camera;
-    [SerializeField] private LayerMask _groundMask;
-    [SerializeField] private LayerMask _thisCanvas;
-    [SerializeField] private DragItem _itemPrefab;
-
-    private List<DragItem> _dragItems = new();
+    private BeforeBattleMenu _beforeBattleMenu;
+    private Camera _camera;
+    private LayerMask _groundMask;
+    private LayerMask _thisCanvas;
     private DragItem _draggingItem;
     private bool _canBuild;
     private (int x, int y) _startCell;
 
-    private bool _subscribed;
+    public event Action PlayButtonClicked;
+    public event Action<SquadPlan, (int x, int y)> Place;
 
-    public event Action<SquadPlan, (int x, int y)> ReadyForBuild;
-
-    private void OnEnable()
+    public SquadPlacer
+    (
+        BeforeBattleMenu beforeBattleMenu, 
+        Camera camera, 
+        LayerMask groundMask, 
+        LayerMask thisCanvas
+    )
     {
-        if (_subscribed)
-            return;
-
-        foreach (var item in _dragItems)
-        {
-            item.DragStarted += OnDragStarted;
-            item.DragEnded += OnDragEnded;
-            item.Drag += OnDrag;
-        }
-    }
-
-    private void OnDisable()
-    {
-        foreach (var item in _dragItems)
-        {
-            item.DragStarted -= OnDragStarted;
-            item.DragEnded -= OnDragEnded;
-            item.Drag -= OnDrag;
-        }
-
-        _subscribed = false;
+        _beforeBattleMenu = beforeBattleMenu;
+        _camera = camera;
+        _groundMask = groundMask;
+        _thisCanvas = thisCanvas;
     }
 
     public void SetSquads(SquadKeeper squadKeeper)
     {
-        foreach (SquadPlan squad in squadKeeper.Squads)
-        {
-            DragItem item = Instantiate(_itemPrefab, transform);
-            item.Initialize(squad, squadKeeper.GetSquadsCount(squad));
-            _dragItems.Add(item);
-            item.DragStarted += OnDragStarted;
-            item.DragEnded += OnDragEnded;
-            item.Drag += OnDrag;
-        }
-
-        _subscribed = true;
+        _beforeBattleMenu.SetSquads(squadKeeper);
     }
 
-    public void ClearSquads()
+    public void Enable()
     {
-        foreach (var item in _dragItems)
+        _beforeBattleMenu.DragStarted += OnDragStarted;
+        _beforeBattleMenu.PlayButtonClicked += OnPlayButtonClicked;
+        _beforeBattleMenu.gameObject.SetActive(true);
+    }
+
+    public void Disable()
+    {
+        _beforeBattleMenu.DragStarted -= OnDragStarted;
+        _beforeBattleMenu.PlayButtonClicked -= OnPlayButtonClicked;
+        _beforeBattleMenu.gameObject.SetActive(false);
+
+        if (_draggingItem != null)
         {
-            item.DragStarted -= OnDragStarted;
-            item.DragEnded -= OnDragEnded;
-            item.Drag -= OnDrag;
-            Destroy(item.gameObject);
+            _draggingItem.Drag -= OnDrag;
+            _draggingItem.DragEnded -= OnDragEnded;
         }
     }
 
     private void OnDragStarted(DragItem item)
     {
         _draggingItem = item;
+        _draggingItem.DragEnded += OnDragEnded;
+        _draggingItem.Drag += OnDrag;
     }
 
     private void OnDrag(PointerEventData eventData)
@@ -105,10 +92,12 @@ public class SquadPlacer : MonoBehaviour
     {
         if (_canBuild)
         {
-            ReadyForBuild?.Invoke(_draggingItem.Squad, _startCell);
+            Place?.Invoke(_draggingItem.Squad, _startCell);
             _draggingItem.Decrease();
         }
 
+        _draggingItem.DragEnded -= OnDragEnded;
+        _draggingItem.Drag -= OnDrag;
         _draggingItem = null;
     }
 
@@ -119,7 +108,7 @@ public class SquadPlacer : MonoBehaviour
 
         foreach (var result in results)
         {
-            if(IsInLayerMask(result.gameObject))
+            if (IsInLayerMask(result.gameObject))
                 return true;
         }
 
@@ -145,5 +134,10 @@ public class SquadPlacer : MonoBehaviour
     private bool IsInLayerMask(GameObject obj)
     {
         return (_thisCanvas.value & (1 << obj.layer)) != 0;
+    }
+
+    private void OnPlayButtonClicked()
+    {
+        PlayButtonClicked?.Invoke();
     }
 }

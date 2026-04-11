@@ -25,4 +25,12 @@ public class SquadKeeper
 
         return 0;
     }
+
+    public void AddSquad(SquadPlan squad)
+    {
+        if(_squads.ContainsKey(squad))
+            _squads[squad]++;
+        else
+            _squads.Add(squad, 1);
+    }
 }

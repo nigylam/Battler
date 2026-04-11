@@ -8,5 +8,6 @@ public enum GameStateType
     LevelMap,
     Battle,
     BattleEnd,
-    BattlePause
+    BattlePause,
+    Shop
 }

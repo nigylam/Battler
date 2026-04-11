@@ -1,9 +1,5 @@
-public struct SquadContext
+public class SquadContext
 {
-    public Squad Squad;
-    public SquadPlan Plan;
-    public (int x, int y) StartCell;
-
     public SquadContext(Squad squad, SquadPlan plan, (int x, int y) startCell)
     {
         Squad = squad;
@@ -12,6 +8,9 @@ public struct SquadContext
         CreateUpgraded = false;
     }
 
+    public Squad Squad { get; private set; }
+    public SquadPlan Plan { get; private set; }
+    public (int x, int y) StartCell { get; private set; }
     public bool CreateUpgraded { get; private set; }
 
     public void Upgrade()

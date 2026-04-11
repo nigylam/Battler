@@ -1,101 +1,79 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerSide : Side
 {
-    [SerializeField] private SquadPlacer _placer;
     [SerializeField] private BeforeBattleMenu _beforeBattleMenu;
+    [SerializeField] private Camera _camera;
+    [SerializeField] private LayerMask _groundMask;
+    [SerializeField] private LayerMask _thisCanvas;
 
-    private List<SquadContext> _survived = new();
-    private bool _firsSquadCreated;
+    private SquadPlacer _placer;
 
-    public void SetSquads(SquadKeeper squadKeeper)
+    public override void StartLevel(GameContext context)
     {
-        Restart();
-        _placer.SetSquads(squadKeeper);
+        _placer.SetSquads(context.SquadKeeper);
     }
 
-    public void OnLevelEnd()
+    protected override void OnAwake()
     {
-        _placer.ClearSquads();
+        _placer = new SquadPlacer(_beforeBattleMenu, _camera, _groundMask, _thisCanvas);
     }
 
     protected override void Enable()
     {
-        _placer.ReadyForBuild += OnReadyForBuild;
-        _beforeBattleMenu.PlayButtonClicked += OnPlayButtonClicked;
+        _placer.PlayButtonClicked += OnPlayButtonClicked;
+        _placer.Place += OnPlace;
+        Commander.SurvivedUpgraded += OnSurvivedUpgraded;
     }
 
     protected override void Disable()
     {
-        _placer.ReadyForBuild -= OnReadyForBuild;
-        _beforeBattleMenu.PlayButtonClicked -= OnPlayButtonClicked;
-    }
-
-    protected override void OnRoundEnd()
-    {
-        base.OnRoundEnd();
-    }
-
-    protected override void Restart()
-    {
-        base.Restart();
-        _survived.Clear();
+        _placer.PlayButtonClicked -= OnPlayButtonClicked;
+        _placer.Place -= OnPlace;
+        Commander.SurvivedUpgraded -= OnSurvivedUpgraded;
     }
 
     protected override void SetRoundBeforePause()
     {
-        _firsSquadCreated = false;
-        _beforeBattleMenu.gameObject.SetActive(true);
+        _placer.Enable();
     }
 
     protected override void SetRoundAfterPause()
     {
-        RespawnSurvivedSquads();
-    }
+        RespawnSurvived();
+    }   
 
-    protected override void DoAfterWin(List<SquadContext> survivedSquads)
+    protected override void EndRoundPhase1()
     {
-        if (survivedSquads.Count == 0)
-            return;
-
-        foreach (SquadContext squadContext in survivedSquads)
-        {
-            squadContext.Upgrade();
-            _survived.Add(squadContext);
-        }
+        base.EndRoundPhase1();
+        Commander.UpgradeSurvived();
     }
 
-    private void OnReadyForBuild(SquadPlan plan, (int x, int y) startCell)
+    private void OnPlace(SquadPlan plan, (int x, int y) startCell)
     {
         CreateSquad(plan, startCell);
-    }
-
-    private void CreateSquad(SquadPlan plan, (int x, int y) startCell, bool createUpgraded = false)
-    {
-        TryCreateSquad(plan, startCell, createUpgraded);
-
-        if (_firsSquadCreated)
-            return;
-
         _beforeBattleMenu.SetPlayButtonActive();
-        _firsSquadCreated = true;
     }
 
     private void OnPlayButtonClicked()
     {
+        _placer.Disable();
         RaiseReadyForRound();
-        _beforeBattleMenu.gameObject.SetActive(false);
     }
 
-    private void RespawnSurvivedSquads()
+    private void RespawnSurvived()
     {
-        if (_survived.Count == 0)
+        if (Commander.SurvivedSquads.Count == 0)
             return;
 
-        foreach (SquadContext squadContext in _survived)
+        foreach(var squadContext in Commander.SurvivedSquads)
             CreateSquad(squadContext.Plan, squadContext.StartCell, squadContext.CreateUpgraded);
 
-        _survived.Clear();
+        _beforeBattleMenu.SetPlayButtonActive();
+    }
+
+    private void OnSurvivedUpgraded()
+    {
+        EndRoundPhase2();
     }
 }

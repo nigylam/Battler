@@ -1,91 +1,109 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Side : MonoBehaviour
 {
     [SerializeField] private Army _army;
     [SerializeField] private Field _field;
-    [SerializeField] private SquadCreator _squadCreator;
+    [SerializeField] private SquadCreator _creator;
 
     private float _roundPause = 1f;
     private Coroutine _setRound;
-    private List<SquadContext> _spawnedSquads = new();
 
-    public event Action WinRound;
     public event Action ReadyForRound;
+    public event Action RoundEnded;
+    public event Action WinRound;
+
+    protected ArmyCommander Commander { get; private set; }
+
+    private void Awake()
+    {
+        Commander = new ArmyCommander(_army, _field);
+        OnAwake();
+    }
 
     private void OnEnable()
     {
         _army.WinRound += OnWinRound;
+        Commander.FieldCleared += OnFieldCleared;
         Enable();
     }
 
     private void OnDisable()
     {
         _army.WinRound -= OnWinRound;
+        Commander.FieldCleared -= OnFieldCleared;
         Disable();
     }
 
     public void PrepareToRound()
     {
-        ClearAfterRound();
         SetRoundBeforePause();
 
         if (_setRound != null)
             StopCoroutine(_setRound);
 
-        _setRound = StartCoroutine(SetRoundDelay());
+        _setRound = StartCoroutine(RoundSetting());
     }
 
-    public void Attack()
+    public void StartRound()
     {
-        _army.Attack();
+        Commander.Attack();
     }
 
-    protected abstract void SetRoundAfterPause();
+    public void EndRound() 
+    {
+        EndRoundPhase1();
+    }
+
+    public virtual void EndLevel() 
+    {
+        Commander.Clear();
+    }
+
+    public virtual void StartLevel(GameContext context) { }
+
+    protected virtual void OnAwake() { }
     protected virtual void Enable() { }
     protected virtual void Disable() { }
     protected virtual void SetRoundBeforePause() { }
+    protected abstract void SetRoundAfterPause();
+
+    protected virtual void EndRoundPhase1()
+    {
+        Commander.GetSurvived();
+    }
+
+    protected void EndRoundPhase2()
+    {
+        Commander.ClearField();
+    }
 
     protected void RaiseReadyForRound()
     {
         ReadyForRound?.Invoke();
     }
 
-    protected virtual void OnRoundEnd()
+    protected void CreateSquad(SquadPlan plan, (int x, int y) startCell, bool createUpgraded = false)
     {
-        ClearAfterRound();
+        if (_creator.TryCreate(plan, startCell, transform, _field, createUpgraded, out Squad squad) == false)
+            throw new ArgumentOutOfRangeException("not valid cell or squadPlan");
+
+        Commander.Add(squad, plan, startCell);
     }
 
-    protected virtual void Restart()
+    private void OnWinRound() 
     {
-        ClearAfterRound();
-        _spawnedSquads.Clear();
+        WinRound?.Invoke();
     }
 
-    protected virtual void DoAfterWin(List<SquadContext> survivedSquads) { }
-
-    protected bool TryCreateSquad(SquadPlan plan, (int x, int y) startCell, bool createUpgraded = false)
+    private void OnFieldCleared()
     {
-        if (_squadCreator.TryCreate(plan, startCell, gameObject.transform, _field, createUpgraded, out Squad newSquad))
-        {
-            _army.AddSquad(newSquad);
-            _spawnedSquads.Add(new SquadContext(newSquad, plan, startCell));
-            return true;
-        }
-
-        return false;
+        RoundEnded?.Invoke();
     }
 
-    private void ClearAfterRound()
-    {
-        _army.Clear();
-        _field.Clear();
-    }
-
-    private IEnumerator SetRoundDelay()
+    private IEnumerator RoundSetting()
     {
         float time = 0;
 
@@ -96,24 +114,5 @@ public abstract class Side : MonoBehaviour
         }
 
         SetRoundAfterPause();
-    }
-
-    private void OnWinRound()
-    {
-        DoAfterWin(GetSurvived());
-        _spawnedSquads.Clear();
-        WinRound?.Invoke();
-    }
-
-    private List<SquadContext> GetSurvived()
-    {
-        List<SquadContext> survivedSquads = new();
-
-        foreach (var squad in _army.AliveSquads)
-            foreach (var squadContext in _spawnedSquads)
-                if (squad == squadContext.Squad)
-                    survivedSquads.Add(squadContext);
-
-        return survivedSquads;
     }
 }

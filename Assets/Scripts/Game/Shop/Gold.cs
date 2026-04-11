@@ -4,7 +4,10 @@ public class Gold : ICountable
 {
     private int _count;
 
-    public Gold() { }
+    public Gold() 
+    {
+        _count = 100;
+    }
 
     public event Action Changed;
 
@@ -30,5 +33,13 @@ public class Gold : ICountable
 
         if(Current > Max)
             Current = Max;
+    }
+
+    public void Spend(int price)
+    {
+        if(price < 0 || Current - price < 0)
+            throw new ArgumentOutOfRangeException(nameof(price));
+
+        Current -= price;
     }
 }

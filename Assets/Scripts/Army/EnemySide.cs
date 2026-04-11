@@ -1,14 +1,13 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 public class EnemySide : Side
 {
     private List<EnemyRound> _rounds = new();
     private int _currentRound;
 
-    public void SetRounds(IReadOnlyCollection<EnemyRound> rounds)
+    public override void StartLevel(GameContext context)
     {
-        _rounds.AddRange(rounds);
+        _rounds.AddRange(context.Level.Rounds);
         _currentRound = 0;
     }
 
@@ -17,10 +16,16 @@ public class EnemySide : Side
         SetRound(_rounds[_currentRound++]);
     }
 
+    protected override void EndRoundPhase1()
+    {
+        base.EndRoundPhase1();
+        EndRoundPhase2();
+    }
+
     private void SetRound(EnemyRound round)
     {
         foreach (EnemySquad enemySquad in round.Squads)
-            TryCreateSquad(enemySquad.Squad, (enemySquad.PositionX, enemySquad.PositionY));
+            CreateSquad(enemySquad.Squad, (enemySquad.PositionX, enemySquad.PositionY));
 
         RaiseReadyForRound();
     }

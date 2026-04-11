@@ -1,21 +1,18 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Battle : MonoBehaviour
 {
-    [SerializeField] private PlayerSide _playerSide;
-    [SerializeField] private EnemySide _enemySide;
+    [SerializeField] private PlayerSide _player;
+    [SerializeField] private EnemySide _enemy;
     [SerializeField] private RoundCountCanvas _roundCountCanvas;
     [SerializeField] private CameraMover _cameraMover;
 
-    private Coroutine _processRound;
     private int _roundsToWin = 2;
-    private float _roundPause = 2f;
+    private int _sidesCount = 2;
     private bool _haveWinner;
-    private bool _playerReadyForRound;
-    private bool _enemyReadyForRound;
+    private int _sidesReadyForRound;
+    private int _sidesEndRound;
 
     public event Action End;
 
@@ -23,27 +20,30 @@ public class Battle : MonoBehaviour
 
     private void OnEnable()
     {
-        _playerSide.ReadyForRound += OnPlayerReadyForRound;
-        _enemySide.ReadyForRound += OnEnemyReadyForRound;
-        _playerSide.WinRound += OnPlayerWinRound;
-        _enemySide.WinRound += OnEnemyWinRound;
+        _player.ReadyForRound += OnReadyForRound;
+        _enemy.ReadyForRound += OnReadyForRound;
+        _player.RoundEnded += OnRoundEnded;
+        _enemy.RoundEnded += OnRoundEnded;
+        _player.WinRound += OnPlayerWinRound;
+        _enemy.WinRound += OnEnemyWinRound;
         _roundCountCanvas.PlayerWin += OnPlayerWin;
         _roundCountCanvas.EnemyWin += OnEnemyWin;
     }
 
+
     private void OnDisable()
     {
-        _playerSide.WinRound -= OnPlayerWinRound;
-        _enemySide.WinRound -= OnEnemyWinRound;
+        _player.WinRound -= OnPlayerWinRound;
+        _enemy.WinRound -= OnEnemyWinRound;
         _roundCountCanvas.PlayerWin -= OnPlayerWin;
         _roundCountCanvas.EnemyWin -= OnEnemyWin;
     }
 
-    public void StartLevel(IReadOnlyCollection<EnemyRound> rounds, SquadKeeper squadKeeper)
+    public void StartLevel(GameContext context)
     {
         _haveWinner = false;
-        _enemySide.SetRounds(rounds);
-        _playerSide.SetSquads(squadKeeper);
+        _enemy.StartLevel(context);
+        _player.StartLevel(context);
         PrepareToRound();
         _roundCountCanvas.gameObject.SetActive(true);
         _roundCountCanvas.Initialize(_roundsToWin);
@@ -54,7 +54,8 @@ public class Battle : MonoBehaviour
     {
         _roundCountCanvas.gameObject.SetActive(false);
         _cameraMover.gameObject.SetActive(false);
-        _playerSide.OnLevelEnd();
+        _enemy.EndLevel();
+        _player.EndLevel();
     }
 
     private void PrepareToRound()
@@ -62,30 +63,27 @@ public class Battle : MonoBehaviour
         if (_haveWinner)
             return;
 
-        _playerSide.PrepareToRound();
-        _enemySide.PrepareToRound();
+        _player.PrepareToRound();
+        _enemy.PrepareToRound();
     }
 
-    private void StartRound()
+    private void OnRoundEnded()
     {
-        _playerSide.Attack();
-        _enemySide.Attack();
+        if(++_sidesEndRound == _sidesCount)
+        {
+            PrepareToRound();
+            _sidesEndRound = 0;
+        }
     }
 
-    private void OnEnemyReadyForRound()
+    private void OnReadyForRound()
     {
-        _enemyReadyForRound = true;
-
-        if(_playerReadyForRound)
-            StartRound();
-    }
-
-    private void OnPlayerReadyForRound()
-    {
-        _playerReadyForRound = true;
-
-        if(_enemyReadyForRound)
-            StartRound();
+        if(++_sidesReadyForRound == _sidesCount)
+        {
+            _player.StartRound();
+            _enemy.StartRound();
+            _sidesReadyForRound = 0;
+        }
     }
 
     private void OnPlayerWinRound()
@@ -102,12 +100,8 @@ public class Battle : MonoBehaviour
 
     private void OnRoundEnd()
     {
-        if (_processRound != null)
-            StopCoroutine(_processRound);
-
-        _processRound = StartCoroutine(ProcessRoundAfterPause());
-        _enemyReadyForRound = false;
-        _playerReadyForRound = false;
+        _player.EndRound();
+        _enemy.EndRound();
     }
 
     private void OnPlayerWin()
@@ -122,18 +116,5 @@ public class Battle : MonoBehaviour
         PlayerWin = false;
         _haveWinner = true;
         End?.Invoke();
-    }
-
-    private IEnumerator ProcessRoundAfterPause()
-    {
-        float time = 0;
-
-        while (time < _roundPause)
-        {
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        PrepareToRound();
     }
 }
