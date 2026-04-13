@@ -1,8 +1,7 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class Item : MonoBehaviour
+public abstract class Item<TData> : MonoBehaviour, IInitializable<TData>
 {
     [SerializeField] private Image _icon;
 
@@ -10,7 +9,9 @@ public abstract class Item : MonoBehaviour
 
     public SquadPlan Squad => _squad;
 
-    public void Initialize(SquadPlan squad)
+    public abstract void Initialize(TData data);
+
+    protected void SetSquad(SquadPlan squad)
     {
         _squad = squad;
         _icon.color = _squad.CellIcon.color;

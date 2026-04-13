@@ -224,8 +224,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 480a70d71c61d7b499fb89920599ebe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textCounter: {fileID: 7554772272012367348}
   _icon: {fileID: 5132022317452915318}
+  _count: {fileID: 2476088158563555064}
+  _textCounter: {fileID: 7554772272012367348}
 --- !u!114 &7554772272012367348
 MonoBehaviour:
   m_ObjectHideFlags: 0

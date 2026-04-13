@@ -1,35 +1,18 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ShopPannel : MonoBehaviour
+public class ShopPannel : SquadPanel<GoodItem, Good>
 {
-    [SerializeField] private GoodItem _itemPrefab;
-
-    private List<GoodItem> _items = new();
-
     public event Action<Good> Buy;
 
-    private void OnEnable()
+    protected override void SubscribeToItem(GoodItem item)
     {
-        foreach (GoodItem item in _items)
-            item.Buy += OnBuyItem;
+        item.Buy += OnBuyItem;
     }
 
-    private void OnDisable()
+    protected override void UnsubscribeFromItem(GoodItem item)
     {
-        foreach (GoodItem item in _items)
-            item.Buy -= OnBuyItem;
-    }
-
-    public void SetGoods(IReadOnlyCollection<Good> goods)
-    {
-        foreach (Good good in goods) 
-        {
-            GoodItem item = Instantiate(_itemPrefab, transform);
-            item.Initialize(good);
-            _items.Add(item);
-        }
+        item.Buy -= OnBuyItem;
     }
 
     private void OnBuyItem(Good good)

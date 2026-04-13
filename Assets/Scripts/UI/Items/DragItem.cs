@@ -1,10 +1,9 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class DragItem : Item, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class DragItem : ArmyItem, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     [SerializeField] private TextCounter _textCounter;
 
@@ -27,12 +26,12 @@ public class DragItem : Item, IBeginDragHandler, IEndDragHandler, IDragHandler
         _itemsCount.Ended -= OnItemsEnded;
     }
 
-    public void Initialize(SquadPlan squad, int count) 
+    public override void Initialize(SquadData data) 
     {
-        base.Initialize(squad);
-        _preview = Instantiate(squad.Preview, transform);
-        _dragImage = Instantiate(squad.Image, transform);
-        _itemsCount = new ItemCounter(count);
+        base.Initialize(data);
+        _preview = Instantiate(data.Squad.Preview, transform);
+        _dragImage = Instantiate(data.Squad.Image, transform);
+        _itemsCount = new ItemCounter(data.Count);
         _textCounter.Initialize(_itemsCount);
     }
 

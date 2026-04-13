@@ -13,7 +13,17 @@ public class SquadKeeper
             throw new ArgumentNullException(nameof(squads));
     }
 
-    public IReadOnlyCollection<SquadPlan> Squads => _squads.Keys;
+    public List<SquadData> GetSquads()
+    {
+        List<SquadData> squads = new();
+
+        foreach (SquadPlan squad in _squads.Keys)
+        {
+            squads.Add(new SquadData(squad, _squads[squad]));
+        }
+
+        return squads;
+    }
 
     public int GetSquadsCount(SquadPlan squad)
     {

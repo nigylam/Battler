@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,13 +35,12 @@ public class ShopMenu : MonoBehaviour
         _shop = shop;
         _gold = gold;
         _keeper = keeper;
-        _shopPannel.SetGoods(_shop.Goods);
+        _shopPannel.SetItems(_shop.Goods);
     }
 
     private void UpdateArmyPannel()
     {
-        _armyPannel.ClearItems();
-        _armyPannel.SetItems(_keeper);
+        _armyPannel.SetItems(_keeper.GetSquads());
     }
 
     private void OnExitClick()

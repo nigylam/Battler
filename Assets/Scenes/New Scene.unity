@@ -1166,7 +1166,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 247386944}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bb9b503a96763b41a33e92c1d490e76, type: 3}
+  m_Script: {fileID: 11500000, guid: a63a1cb37bc25e642b0dedffd1f70f6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _itemPrefab: {fileID: 3177396255969271668, guid: 7cd1099c7242f904681415d629833a16, type: 3}
@@ -2298,7 +2298,7 @@ GameObject:
   - component: {fileID: 468719220}
   - component: {fileID: 468719223}
   m_Layer: 8
-  m_Name: ArmyPannel
+  m_Name: ArmyPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10307,7 +10307,7 @@ GameObject:
   - component: {fileID: 1700497982}
   - component: {fileID: 1700497985}
   m_Layer: 8
-  m_Name: ShopPannel
+  m_Name: ShopPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

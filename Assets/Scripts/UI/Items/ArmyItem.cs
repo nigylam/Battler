@@ -1,13 +1,13 @@
 using TMPro;
 using UnityEngine;
 
-public class ArmyItem : Item
+public class ArmyItem : Item<SquadData>
 {
     [SerializeField] private TextMeshProUGUI _count;
 
-    public void Initialize(SquadPlan squad, int count)
+    public override void Initialize(SquadData data)
     {
-        Initialize(squad);
-        _count.text = count.ToString();
+        SetSquad(data.Squad);
+        _count.text = data.Count.ToString();
     }
 }

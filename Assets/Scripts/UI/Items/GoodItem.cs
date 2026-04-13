@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GoodItem : Item
+public class GoodItem : Item<Good>
 {
     [SerializeField] private TextMeshProUGUI _price;
     [SerializeField] private Button _buyButton;
@@ -23,10 +23,10 @@ public class GoodItem : Item
         _buyButton.onClick.RemoveListener(OnBuyClick);
     }
 
-    public void Initialize(Good good)
+    public override void Initialize(Good good)
     {
         _good = good;
-        Initialize(good.Squad);
+        SetSquad(good.Squad);
         _price.text = good.Price.ToString();
         _notAvailableMask.gameObject.SetActive(good.Available == false);
     }

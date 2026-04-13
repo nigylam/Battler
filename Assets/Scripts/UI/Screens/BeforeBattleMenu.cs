@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class BeforeBattleMenu : MonoBehaviour
 {
     [SerializeField] private Button _playButton;
-    [SerializeField] private DragArmyPannel _armyPannel;
+    [SerializeField] private DragArmyPanel _armyPannel;
 
     public event Action PlayButtonClicked;
     public event Action<DragItem> DragStarted;
@@ -13,7 +13,7 @@ public class BeforeBattleMenu : MonoBehaviour
     public void SetSquads(SquadKeeper keeper)
     {
         _armyPannel.Clear();
-        _armyPannel.SetItems(keeper);
+        _armyPannel.SetItems(keeper.GetSquads());
     }
 
     public void SetPlayButtonActive()
