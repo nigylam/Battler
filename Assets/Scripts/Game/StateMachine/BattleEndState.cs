@@ -1,3 +1,4 @@
+using UnityEngine;
 
 public class BattleEndState : GameState
 {
@@ -5,18 +6,7 @@ public class BattleEndState : GameState
 
     public override void Enter()
     {
-        Context.BattleEndScreen.gameObject.SetActive(true);
-
-        if (Context.Battle.PlayerWin)
-        {
-            Context.Gold.Increase(Context.Level.GoldReward);
-            Context.BattleEndScreen.SetWinText(Context.Level.GoldReward);
-        }
-        else
-        {
-            Context.BattleEndScreen.SetLoseText();
-        }
-
+        Context.BattleEndScreen.Set(Context.Rewarder.IsPlayerWin, Context.Rewarder.GoldReward, Context.Rewarder.SquadReward);
         Context.BattleEndScreen.End += OnEndClicked;
     }
 

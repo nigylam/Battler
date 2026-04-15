@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7396170ecbb9500489a40b9bbab4e67d, type: 3}
+  m_Script: {fileID: 11500000, guid: cb0633e654ebc6f42b1315d344a6c9a3, type: 3}
   m_Name: Level1
   m_EditorClassIdentifier: 
   _rounds:
@@ -17,3 +17,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e21fabbcfe7587644a0a63caf681557c, type: 2}
   - {fileID: 11400000, guid: e21fabbcfe7587644a0a63caf681557c, type: 2}
   _goldReward: 100
+  _squadReward: {fileID: 11400000, guid: 01b3ed88c1c220f4bb29d7d68133ac33, type: 2}

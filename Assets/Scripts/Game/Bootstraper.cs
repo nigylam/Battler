@@ -8,14 +8,16 @@ public class Bootstraper : MonoBehaviour
     [SerializeField] private ShopMenu _shopMenu;
     [SerializeField] private BattleEndScreen _battleEndScreen;
     [SerializeField] private Battle _battle;
-    [SerializeField] private StartSquadSet _startSquadSet;
+    [SerializeField] private StartSquadsConfig _startSquadSet;
     [SerializeField] private ShopSet _shopSet;
+    [SerializeField] private List<LevelConfig> _levelConfigs;
 
     private void Awake()
     {
         SquadKeeper squadKeeper = SquadKeeperFabric.Create(_startSquadSet);
         var gold = new Gold();
         Shop shop = Create();
+        LevelProgress levelProgress = new LevelProgress(_levelConfigs);
         _levelMenu.Initialize(gold);
         _shopMenu.Initialize(gold, shop, squadKeeper);
 
@@ -24,6 +26,7 @@ public class Bootstraper : MonoBehaviour
             squadKeeper,
             gold,
             shop,
+            levelProgress,
             _mainMenu,
             _levelMenu,
             _shopMenu,
@@ -37,7 +40,7 @@ public class Bootstraper : MonoBehaviour
 
     private Shop Create()
     {
-        List<Good> goods = new();
+        List<SquadGoodConfig> goods = new();
         goods.AddRange(_shopSet.Goods);
         return new Shop(goods);
     }

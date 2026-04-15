@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53e2989046e325341a95ecedee5ae4c5, type: 3}
+  m_Script: {fileID: 11500000, guid: d30c77c16c0ca2e4bb216eb0183c0401, type: 3}
   m_Name: Rifles
   m_EditorClassIdentifier: 
   _squad: {fileID: 8985550516221197739, guid: 661723031e579b843a6cc73b51419ab9, type: 3}
   _price: 70
-  _available: 0
+  _startAvailable: 0

@@ -16,8 +16,9 @@ public class BattleState : GameState
         Context.Battle.End -= OnBattleEnd;
     }
 
-    private void OnBattleEnd()
+    private void OnBattleEnd(bool isPlayerWin)
     {
+        Context.Rewarder.GenerateReward(isPlayerWin, Context);
         StateMachine.PushState(GameStateType.BattleEnd);
     }
 }

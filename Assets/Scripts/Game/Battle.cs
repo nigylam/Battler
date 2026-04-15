@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class Battle : MonoBehaviour
 {
@@ -14,9 +15,7 @@ public class Battle : MonoBehaviour
     private int _sidesReadyForRound;
     private int _sidesEndRound;
 
-    public event Action End;
-
-    public bool PlayerWin {  get; private set; }
+    public event Action<bool> End;
 
     private void OnEnable()
     {
@@ -106,15 +105,13 @@ public class Battle : MonoBehaviour
 
     private void OnPlayerWin()
     {
-        PlayerWin = true;
         _haveWinner = true;
-        End?.Invoke();
+        End?.Invoke(true);
     }
 
     private void OnEnemyWin()
     {
-        PlayerWin = false;
         _haveWinner = true;
-        End?.Invoke();
+        End?.Invoke(false);
     }
 }

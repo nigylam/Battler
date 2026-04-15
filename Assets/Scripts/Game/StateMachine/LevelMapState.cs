@@ -16,7 +16,7 @@ public class LevelMapState : GameState
         Context.LevelMenu.Shop -= OpenShop;
     }
 
-    private void StartGame(Level level)
+    private void StartGame(LevelConfig level)
     {
         Context.SetLevel(level);
         StateMachine.ChangeState(GameStateType.Battle);
