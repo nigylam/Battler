@@ -18,6 +18,9 @@ public class LevelMapState : GameState
 
     private void StartGame(LevelConfig level)
     {
+        if (Context.LevelProgress.Opened(level) == false)
+            return;
+
         Context.SetLevel(level);
         StateMachine.ChangeState(GameStateType.Battle);
     }

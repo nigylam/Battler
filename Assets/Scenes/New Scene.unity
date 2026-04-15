@@ -8228,7 +8228,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 1412588111}
-  _level: {fileID: 11400000, guid: 93f9bb9030df6994793d3feebb4e0552, type: 2}
+  _level: {fileID: 11400000, guid: 14afff9c53e6c5f4186eb71cc399bb4c, type: 2}
 --- !u!1 &1415868787
 GameObject:
   m_ObjectHideFlags: 0
@@ -8854,6 +8854,8 @@ MonoBehaviour:
   _shopSet: {fileID: 11400000, guid: a8b1f17576d36ba488337556616b9938, type: 2}
   _levelConfigs:
   - {fileID: 11400000, guid: 93f9bb9030df6994793d3feebb4e0552, type: 2}
+  - {fileID: 11400000, guid: 12489efff406f0a46a22ff7363233968, type: 2}
+  - {fileID: 11400000, guid: 14afff9c53e6c5f4186eb71cc399bb4c, type: 2}
 --- !u!1 &1487570367
 GameObject:
   m_ObjectHideFlags: 0
@@ -12422,7 +12424,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 2045869221}
-  _level: {fileID: 11400000, guid: 93f9bb9030df6994793d3feebb4e0552, type: 2}
+  _level: {fileID: 11400000, guid: 12489efff406f0a46a22ff7363233968, type: 2}
 --- !u!1 &2096115506
 GameObject:
   m_ObjectHideFlags: 0

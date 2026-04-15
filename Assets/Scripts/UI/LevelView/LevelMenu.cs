@@ -35,9 +35,6 @@ public class LevelMenu : MonoBehaviour
 
     private void OnLevelClick(LevelConfig level)
     {
-        foreach (LevelButton levelButton in _levelButtons)
-            levelButton.Clicked -= OnLevelClick;
-
         Start?.Invoke(level);
     }
 
