@@ -1,8 +1,10 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class RoundCountCanvas : MonoBehaviour
+public class BattleMenu : MonoBehaviour
 {
+    [SerializeField] private Button _pauseButton;
     [SerializeField] private TextCounter _roundTextCounter;
     [SerializeField] private RoundWinnerPannel _roundWinnerPannel;
     [SerializeField] private RoundWinsPannel _roundWinsPannel;
@@ -10,6 +12,7 @@ public class RoundCountCanvas : MonoBehaviour
     private RoundCounter _roundCounter;
     private bool _haveWinner;
 
+    public event Action Pause;
     public event Action PlayerWin;
     public event Action EnemyWin;
 
@@ -25,6 +28,7 @@ public class RoundCountCanvas : MonoBehaviour
         _roundCounter.Increase();
         _roundWinsPannel.EnemyWin += OnEnemyWin;
         _roundWinsPannel.PlayerWin += OnPlayerWin;
+        _pauseButton.onClick.AddListener(OnPauseClick);
     }
 
     private void OnDisable()
@@ -32,6 +36,7 @@ public class RoundCountCanvas : MonoBehaviour
         _roundWinnerPannel.gameObject.SetActive(false);
         _roundWinsPannel.EnemyWin -= OnEnemyWin;
         _roundWinsPannel.PlayerWin -= OnPlayerWin;
+        _pauseButton.onClick.RemoveListener(OnPauseClick);
     }
 
     public void Initialize(int roundsToWin)
@@ -61,6 +66,11 @@ public class RoundCountCanvas : MonoBehaviour
     {
         _roundCounter.Restart();
         _roundWinsPannel.Restart();
+    }
+
+    private void OnPauseClick()
+    {
+        Pause?.Invoke();
     }
 
     private void OnEnemyWin()

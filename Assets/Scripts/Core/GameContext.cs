@@ -1,3 +1,6 @@
+using Battler.Core;
+using Battler.UI.BattleView;
+
 public class GameContext
 {
     public GameContext
@@ -6,10 +9,11 @@ public class GameContext
         Gold gold,
         Shop shop,
         LevelProgress levelProgress,
-        MainMenu mainMenu, 
-        LevelMenu levelMenu, 
-        ShopMenu shopMenu, 
-        BattleEndScreen battleEndScreen, 
+        MainMenu mainMenu,
+        LevelMenu levelMenu,
+        ShopMenu shopMenu,
+        BattleEndScreen battleEndScreen,
+        BattlePauseMenu battlePauseMenu,
         Battle battle
     )
     {
@@ -21,6 +25,7 @@ public class GameContext
         LevelMenu = levelMenu;
         ShopMenu = shopMenu;
         BattleEndScreen = battleEndScreen;
+        BattlePauseMenu = battlePauseMenu;
         Battle = battle;
         Rewarder = new Rewarder();
     }
@@ -33,6 +38,7 @@ public class GameContext
     public LevelMenu LevelMenu { get; }
     public ShopMenu ShopMenu { get; }
     public BattleEndScreen BattleEndScreen { get; }
+    public BattlePauseMenu BattlePauseMenu { get; }
     public Battle Battle { get; }
     public Rewarder Rewarder { get; }
 

@@ -16,7 +16,8 @@ public class GameStateMachine
             {GameStateType.LevelMap, new LevelMapState(this, context) },
             {GameStateType.Battle, new BattleState(this, context) },
             {GameStateType.BattleEnd, new BattleEndState(this, context) },
-            {GameStateType.Shop, new ShopState(this, context) }
+            {GameStateType.Shop, new ShopState(this, context) },
+            {GameStateType.BattlePause, new BattlePauseState(this, context) }
         };
     }
 

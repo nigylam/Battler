@@ -1,47 +1,54 @@
+using Battler.UI.BattleView;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bootstraper : MonoBehaviour
+namespace Battler.Core
 {
-    [SerializeField] private MainMenu _mainMenu;
-    [SerializeField] private LevelMenu _levelMenu;
-    [SerializeField] private ShopMenu _shopMenu;
-    [SerializeField] private BattleEndScreen _battleEndScreen;
-    [SerializeField] private Battle _battle;
-    [SerializeField] private StartSquadsConfig _startSquadSet;
-    [SerializeField] private ShopSet _shopSet;
-    [SerializeField] private List<LevelConfig> _levelConfigs;
-
-    private void Awake()
+    public class Bootstraper : MonoBehaviour
     {
-        SquadKeeper squadKeeper = SquadKeeperFabric.Create(_startSquadSet);
-        var gold = new Gold();
-        Shop shop = Create();
-        LevelProgress levelProgress = new LevelProgress(_levelConfigs);
-        _levelMenu.Initialize(gold);
-        _shopMenu.Initialize(gold, shop, squadKeeper);
+        [SerializeField] private MainMenu _mainMenu;
+        [SerializeField] private LevelMenu _levelMenu;
+        [SerializeField] private ShopMenu _shopMenu;
+        [SerializeField] private BattleEndScreen _battleEndScreen;
+        [SerializeField] private BattlePauseMenu _battlePauseMenu;
+        [SerializeField] private Battle _battle;
+        [SerializeField] private StartSquadsConfig _startSquadSet;
+        [SerializeField] private ShopSet _shopSet;
+        [SerializeField] private List<LevelConfig> _levelConfigs;
 
-        var context = new GameContext
-        (
-            squadKeeper,
-            gold,
-            shop,
-            levelProgress,
-            _mainMenu,
-            _levelMenu,
-            _shopMenu,
-            _battleEndScreen,
-            _battle
-        );
+        private void Awake()
+        {
+            SquadKeeper squadKeeper = SquadKeeperFabric.Create(_startSquadSet);
+            var gold = new Gold();
+            Shop shop = Create();
+            LevelProgress levelProgress = new LevelProgress(_levelConfigs);
+            _levelMenu.Initialize(gold);
+            _shopMenu.Initialize(gold, shop, squadKeeper);
 
-        var stateMachine = new GameStateMachine(context);
-        stateMachine.ChangeState(GameStateType.MainMenu);
-    }
+            var context = new GameContext
+            (
+                squadKeeper,
+                gold,
+                shop,
+                levelProgress,
+                _mainMenu,
+                _levelMenu,
+                _shopMenu,
+                _battleEndScreen,
+                _battlePauseMenu,
+                _battle
+            );
 
-    private Shop Create()
-    {
-        List<SquadGoodConfig> goods = new();
-        goods.AddRange(_shopSet.Goods);
-        return new Shop(goods);
+            var stateMachine = new GameStateMachine(context);
+            stateMachine.ChangeState(GameStateType.MainMenu);
+        }
+
+        private Shop Create()
+        {
+            List<SquadGoodConfig> goods = new();
+            goods.AddRange(_shopSet.Goods);
+            return new Shop(goods);
+        }
     }
 }
+
