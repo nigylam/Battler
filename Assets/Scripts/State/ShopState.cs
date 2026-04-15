@@ -1,3 +1,6 @@
+using Battler;
+using Battler.State;
+
 public class ShopState : GameState
 {
     public ShopState(GameStateMachine stateMachine, GameContext context) : base(stateMachine, context) { }

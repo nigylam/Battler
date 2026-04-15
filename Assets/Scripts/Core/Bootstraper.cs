@@ -1,3 +1,5 @@
+using Battler.State;
+using Battler.UI;
 using Battler.UI.BattleView;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +13,7 @@ namespace Battler.Core
         [SerializeField] private ShopMenu _shopMenu;
         [SerializeField] private BattleEndScreen _battleEndScreen;
         [SerializeField] private BattlePauseMenu _battlePauseMenu;
+        [SerializeField] private SettingsMenu _settingsMenu;
         [SerializeField] private Battle _battle;
         [SerializeField] private StartSquadsConfig _startSquadSet;
         [SerializeField] private ShopSet _shopSet;
@@ -36,6 +39,7 @@ namespace Battler.Core
                 _shopMenu,
                 _battleEndScreen,
                 _battlePauseMenu,
+                _settingsMenu,
                 _battle
             );
 

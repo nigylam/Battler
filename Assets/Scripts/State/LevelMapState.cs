@@ -1,3 +1,6 @@
+using Battler;
+using Battler.State;
+
 public class LevelMapState : GameState
 {
     public LevelMapState(GameStateMachine stateMachine, GameContext context) : base(stateMachine, context) { }

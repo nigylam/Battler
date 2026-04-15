@@ -1,5 +1,7 @@
 using Battler.Core;
+using Battler.UI;
 using Battler.UI.BattleView;
+using Palmmedia.ReportGenerator.Core;
 
 public class GameContext
 {
@@ -14,6 +16,7 @@ public class GameContext
         ShopMenu shopMenu,
         BattleEndScreen battleEndScreen,
         BattlePauseMenu battlePauseMenu,
+        SettingsMenu settingsMenu,
         Battle battle
     )
     {
@@ -26,6 +29,7 @@ public class GameContext
         ShopMenu = shopMenu;
         BattleEndScreen = battleEndScreen;
         BattlePauseMenu = battlePauseMenu;
+        SettingsMenu = settingsMenu;
         Battle = battle;
         Rewarder = new Rewarder();
     }
@@ -39,6 +43,7 @@ public class GameContext
     public ShopMenu ShopMenu { get; }
     public BattleEndScreen BattleEndScreen { get; }
     public BattlePauseMenu BattlePauseMenu { get; }
+    public SettingsMenu SettingsMenu { get; }
     public Battle Battle { get; }
     public Rewarder Rewarder { get; }
 
