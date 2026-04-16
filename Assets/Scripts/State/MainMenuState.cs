@@ -16,6 +16,7 @@ namespace Battler.State
             _mainMenu.gameObject.SetActive(true);
             _mainMenu.Start += OnStartClick;
             _mainMenu.Settings += OnSettingsClick;
+            _mainMenu.Leaderboard += OnLeaderboardClick;
         }
 
         public override void Exit()
@@ -23,6 +24,7 @@ namespace Battler.State
             _mainMenu.gameObject.SetActive(false);
             _mainMenu.Start -= OnStartClick;
             _mainMenu.Settings -= OnSettingsClick;
+            _mainMenu.Leaderboard -= OnLeaderboardClick;
         }
 
         private void OnStartClick()
@@ -33,6 +35,11 @@ namespace Battler.State
         private void OnSettingsClick()
         {
             StateMachine.PushState(GameStateType.Settings);
+        }
+
+        private void OnLeaderboardClick()
+        {
+            StateMachine.PushState(GameStateType.Leaderboard);
         }
     }
 }

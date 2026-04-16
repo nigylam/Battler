@@ -9,13 +9,19 @@ namespace Battler.Core
 {
     public class Bootstraper : MonoBehaviour
     {
+        [Header("Battle")]
+        [SerializeField] private Battle _battle;
+
+        [Header("UI Menu")]
         [SerializeField] private MainMenu _mainMenu;
         [SerializeField] private LevelMenu _levelMenu;
         [SerializeField] private ShopMenu _shopMenu;
         [SerializeField] private BattleEndScreen _battleEndScreen;
         [SerializeField] private BattlePauseMenu _battlePauseMenu;
         [SerializeField] private SettingsMenu _settingsMenu;
-        [SerializeField] private Battle _battle;
+        [SerializeField] private LeaderboardPannel _leaderboardPannel;
+
+        [Header("Configs")]
         [SerializeField] private StartSquadsConfig _startSquadSet;
         [SerializeField] private ShopSet _shopSet;
         [SerializeField] private List<LevelConfig> _levelConfigs;
@@ -46,7 +52,8 @@ namespace Battler.Core
                 _shopMenu, 
                 _battleEndScreen, 
                 _battlePauseMenu, 
-                _settingsMenu
+                _settingsMenu,
+                _leaderboardPannel
             );
 
             stateMachine.ChangeState(GameStateType.MainMenu);

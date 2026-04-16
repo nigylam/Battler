@@ -8,6 +8,7 @@ namespace Battler.State
         BattleEnd,
         BattlePause,
         Shop,
-        Settings
+        Settings,
+        Leaderboard
     }
 }

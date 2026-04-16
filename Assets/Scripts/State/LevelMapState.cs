@@ -17,6 +17,7 @@ namespace Battler.State
             _levelMenu.Start += StartGame;
             _levelMenu.Shop += OnShopClick;
             _levelMenu.Settings += OnSettingsClick;
+            _levelMenu.MainMenu += OnMainMenuClick;
         }
 
         public override void Exit()
@@ -25,6 +26,7 @@ namespace Battler.State
             _levelMenu.Start -= StartGame;
             _levelMenu.Shop -= OnShopClick;
             _levelMenu.Settings -= OnSettingsClick;
+            _levelMenu.MainMenu -= OnMainMenuClick;
         }
 
         private void StartGame(LevelConfig level)
@@ -44,6 +46,11 @@ namespace Battler.State
         private void OnSettingsClick()
         {
             StateMachine.PushState(GameStateType.Settings);
+        }
+
+        private void OnMainMenuClick()
+        {
+            StateMachine.ChangeState(GameStateType.MainMenu);
         }
     }
 }

@@ -16,7 +16,8 @@ namespace Battler.State
             ShopMenu shopMenu, 
             BattleEndScreen battleEndScreen, 
             UI.BattleView.BattlePauseMenu battlePauseMenu, 
-            UI.SettingsMenu settingsMenu
+            UI.SettingsMenu settingsMenu,
+            UI.LeaderboardPannel leaderboardPannel
         )
         {
             _states = new()
@@ -27,7 +28,8 @@ namespace Battler.State
                 {GameStateType.BattleEnd, new BattleEndState(this, context, battleEndScreen) },
                 {GameStateType.Shop, new ShopState(this, context, shopMenu) },
                 {GameStateType.BattlePause, new BattlePauseState(this, context, battlePauseMenu) },
-                {GameStateType.Settings, new SettingsState(this, context, settingsMenu) }
+                {GameStateType.Settings, new SettingsState(this, context, settingsMenu) },
+                {GameStateType.Leaderboard, new LeaderboardState(this, context, leaderboardPannel) }
             };
         }
 
