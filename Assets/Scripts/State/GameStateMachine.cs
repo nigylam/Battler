@@ -29,7 +29,8 @@ namespace Battler.State
                 {GameStateType.Shop, new ShopState(this, context, shopMenu) },
                 {GameStateType.BattlePause, new BattlePauseState(this, context, battlePauseMenu) },
                 {GameStateType.Settings, new SettingsState(this, context, settingsMenu) },
-                {GameStateType.Leaderboard, new LeaderboardState(this, context, leaderboardPannel) }
+                {GameStateType.Leaderboard, new LeaderboardState(this, context, leaderboardPannel) },
+                {GameStateType.WinGame, new WinGameState(this, context, leaderboardPannel) }
             };
         }
 

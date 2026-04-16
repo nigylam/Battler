@@ -19,6 +19,7 @@ namespace Battler.State
 
         public override void Exit()
         {
+            _battleEndScreen.End -= OnEndClicked;
             _battleEndScreen.gameObject.SetActive(false);
         }
 

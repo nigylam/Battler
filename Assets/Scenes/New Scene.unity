@@ -5858,6 +5858,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _resumeButton: {fileID: 57645704}
+  _title: {fileID: 1115769708}
 --- !u!1 &762314891
 GameObject:
   m_ObjectHideFlags: 0
@@ -7398,7 +7399,6 @@ MonoBehaviour:
   _levelButtons:
   - {fileID: 1318697754}
   - {fileID: 2045869224}
-  - {fileID: 1412588114}
   _goldCounter: {fileID: 1602973111}
   _shopButton: {fileID: 1851848620}
   _settingsButton: {fileID: 1047686152}
@@ -13200,7 +13200,6 @@ MonoBehaviour:
   _levelConfigs:
   - {fileID: 11400000, guid: 93f9bb9030df6994793d3feebb4e0552, type: 2}
   - {fileID: 11400000, guid: 12489efff406f0a46a22ff7363233968, type: 2}
-  - {fileID: 11400000, guid: 14afff9c53e6c5f4186eb71cc399bb4c, type: 2}
 --- !u!1 &1487570367
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ namespace Battler.State
         BattlePause,
         Shop,
         Settings,
-        Leaderboard
+        Leaderboard,
+        WinGame
     }
 }

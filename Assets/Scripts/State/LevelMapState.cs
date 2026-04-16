@@ -1,4 +1,5 @@
 using Battler.UI.LevelView;
+using UnityEngine;
 
 namespace Battler.State
 {
@@ -13,8 +14,12 @@ namespace Battler.State
 
         public override void Enter()
         {
-            _levelMenu.gameObject.SetActive(true);
-            _levelMenu.Start += StartGame;
+            _levelMenu.Enable(Context.LevelProgress);
+
+            if (_levelMenu.ShowWinGame)
+                ShowWinGame();
+
+            _levelMenu.Start += OnLevelClick;
             _levelMenu.Shop += OnShopClick;
             _levelMenu.Settings += OnSettingsClick;
             _levelMenu.MainMenu += OnMainMenuClick;
@@ -23,13 +28,13 @@ namespace Battler.State
         public override void Exit()
         {
             _levelMenu.gameObject.SetActive(false);
-            _levelMenu.Start -= StartGame;
+            _levelMenu.Start -= OnLevelClick;
             _levelMenu.Shop -= OnShopClick;
             _levelMenu.Settings -= OnSettingsClick;
             _levelMenu.MainMenu -= OnMainMenuClick;
         }
 
-        private void StartGame(LevelConfig level)
+        private void OnLevelClick(LevelConfig level)
         {
             if (Context.LevelProgress.Opened(level) == false)
                 return;
@@ -51,6 +56,11 @@ namespace Battler.State
         private void OnMainMenuClick()
         {
             StateMachine.ChangeState(GameStateType.MainMenu);
+        }
+
+        private void ShowWinGame()
+        {
+            StateMachine.PushState(GameStateType.WinGame);
         }
     }
 }

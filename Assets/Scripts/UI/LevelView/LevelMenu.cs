@@ -1,3 +1,4 @@
+using Battler.Meta;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,10 +14,14 @@ namespace Battler.UI.LevelView
         [SerializeField] private Button _settingsButton;
         [SerializeField] private Button _mainMenuButton;
 
+        private bool _winGameNotificationShowed;
+
         public event Action<LevelConfig> Start;
         public event Action Shop;
         public event Action Settings;
         public event Action MainMenu;
+
+        public bool ShowWinGame { get; private set; }
 
         private void OnEnable()
         {
@@ -43,6 +48,16 @@ namespace Battler.UI.LevelView
             _goldCounter.Initialize(gold);
         }
 
+        public void Enable(LevelProgress levelProgress)
+        {
+            gameObject.SetActive(true);
+
+            if (levelProgress.AllLevelsCompleted)
+            {
+                ShowNotification();
+            }
+        }
+
         private void OnSettingsClick()
         {
             Settings?.Invoke();
@@ -62,6 +77,18 @@ namespace Battler.UI.LevelView
         private void OnMainMenuClick()
         {
             MainMenu?.Invoke();
+        }
+            
+        private void ShowNotification()
+        {
+            if (_winGameNotificationShowed)
+            {
+                ShowWinGame = false;
+                return;
+            }
+
+            ShowWinGame = true;
+            _winGameNotificationShowed = true;
         }
     }
 }

@@ -1,7 +1,5 @@
 using Battler.Core;
-using Battler.UI;
-using Battler.UI.BattleView;
-using Battler.UI.LevelView;
+using Battler.Meta;
 
 public class GameContext
 {
@@ -28,12 +26,8 @@ public class GameContext
     public LevelProgress LevelProgress { get; }
     public Battle Battle { get; }
     public Rewarder Rewarder { get; }
-
     public LevelConfig Level { get; private set; }
 
     public void SetLevel(LevelConfig level)
-    {
-        Level = level;
-    }
-
+        => Level = level;
 }
