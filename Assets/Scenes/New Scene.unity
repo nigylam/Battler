@@ -2069,7 +2069,7 @@ GameObject:
   - component: {fileID: 303088311}
   - component: {fileID: 303088309}
   - component: {fileID: 303088310}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EnemySide
   m_TagString: Untagged
   m_Icon: {fileID: 0}

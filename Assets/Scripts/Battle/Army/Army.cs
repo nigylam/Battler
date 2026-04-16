@@ -29,6 +29,23 @@ public class Army : MonoBehaviour
             squads.Dead -= OnSquadDead;
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.F))
+        {
+            if(gameObject.layer == 7)
+                KillAll();
+        }
+    }
+
+    private void KillAll()
+    {
+        for(int i = _aliveSquads.Count - 1; i >= 0; i--)
+        {
+            _aliveSquads[i].KillAll();
+        }
+    }
+
     public void Add(Squad squad)
     {
         _aliveSquads.Add(squad);

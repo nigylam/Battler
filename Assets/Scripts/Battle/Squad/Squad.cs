@@ -12,6 +12,14 @@ public class Squad : MonoBehaviour
 
     public event Action<Squad> Dead;
 
+    public void KillAll()
+    {
+        for (int i = _unitsAlive.Count - 1; i >= 0; i--)
+        {
+            _unitsAlive[i].TakeDamage(100);
+        }
+    }
+
     private void OnEnable()
     {
         if (_unitsAlive.Count > 0)
