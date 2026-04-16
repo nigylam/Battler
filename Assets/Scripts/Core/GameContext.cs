@@ -1,7 +1,7 @@
 using Battler.Core;
 using Battler.UI;
 using Battler.UI.BattleView;
-using Palmmedia.ReportGenerator.Core;
+using Battler.UI.LevelView;
 
 public class GameContext
 {

@@ -1,35 +1,42 @@
-using Battler;
-using Battler.State;
-
-public class LevelMapState : GameState
+namespace Battler.State
 {
-    public LevelMapState(GameStateMachine stateMachine, GameContext context) : base(stateMachine, context) { }
-
-    public override void Enter()
+    public class LevelMapState : GameState
     {
-        Context.LevelMenu.gameObject.SetActive(true);
-        Context.LevelMenu.Start += StartGame;
-        Context.LevelMenu.Shop += OpenShop;
-    }
+        public LevelMapState(GameStateMachine stateMachine, GameContext context) : base(stateMachine, context) { }
 
-    public override void Exit()
-    {
-        Context.LevelMenu.gameObject.SetActive(false);
-        Context.LevelMenu.Start -= StartGame;
-        Context.LevelMenu.Shop -= OpenShop;
-    }
+        public override void Enter()
+        {
+            Context.LevelMenu.gameObject.SetActive(true);
+            Context.LevelMenu.Start += StartGame;
+            Context.LevelMenu.Shop += OnShopClick;
+            Context.LevelMenu.Settings += OnSettingsClick;
+        }
 
-    private void StartGame(LevelConfig level)
-    {
-        if (Context.LevelProgress.Opened(level) == false)
-            return;
+        public override void Exit()
+        {
+            Context.LevelMenu.gameObject.SetActive(false);
+            Context.LevelMenu.Start -= StartGame;
+            Context.LevelMenu.Shop -= OnShopClick;
+            Context.LevelMenu.Settings -= OnSettingsClick;
+        }
 
-        Context.SetLevel(level);
-        StateMachine.ChangeState(GameStateType.Battle);
-    }
+        private void StartGame(LevelConfig level)
+        {
+            if (Context.LevelProgress.Opened(level) == false)
+                return;
 
-    private void OpenShop()
-    {
-        StateMachine.ChangeState(GameStateType.Shop);
+            Context.SetLevel(level);
+            StateMachine.ChangeState(GameStateType.Battle);
+        }
+
+        private void OnShopClick()
+        {
+            StateMachine.ChangeState(GameStateType.Shop);
+        }
+
+        private void OnSettingsClick()
+        {
+            StateMachine.PushState(GameStateType.Settings);
+        }
     }
 }

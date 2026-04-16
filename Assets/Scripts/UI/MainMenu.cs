@@ -2,25 +2,37 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainMenu : MonoBehaviour
+namespace Battler.UI
 {
-    [SerializeField] private Button _startButton;
-
-    public event Action Start;
-
-    private void OnEnable()
+    public class MainMenu : MonoBehaviour
     {
-        _startButton.onClick.AddListener(OnClick);
-    }
+        [SerializeField] private Button _startButton;
+        [SerializeField] private Button _settingsButton;
 
-    private void OnDisable()
-    {
-        _startButton.onClick.RemoveListener(OnClick);
-    }
+        public event Action Start;
+        public event Action Settings;
 
-    private void OnClick()
-    {
-        _startButton.onClick.RemoveListener(OnClick);
-        Start?.Invoke();
+        private void OnEnable()
+        {
+            _startButton.onClick.AddListener(OnStartClick);
+            _settingsButton.onClick.AddListener(OnSettingsClick);
+        }
+
+        private void OnDisable()
+        {
+            _startButton.onClick.RemoveListener(OnStartClick);
+            _settingsButton.onClick.RemoveListener(OnSettingsClick);
+        }
+
+        private void OnStartClick()
+        {
+            _startButton.onClick.RemoveListener(OnStartClick);
+            Start?.Invoke();
+        }
+
+        private void OnSettingsClick()
+        {
+            Settings?.Invoke();
+        }
     }
 }

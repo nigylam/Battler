@@ -1,6 +1,7 @@
 using Battler.State;
 using Battler.UI;
 using Battler.UI.BattleView;
+using Battler.UI.LevelView;
 using System.Collections.Generic;
 using UnityEngine;
 
