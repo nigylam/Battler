@@ -1,23 +1,30 @@
+using Battler.UI.LevelView;
+
 namespace Battler.State
 {
     public class LevelMapState : GameState
     {
-        public LevelMapState(GameStateMachine stateMachine, GameContext context) : base(stateMachine, context) { }
+        private readonly LevelMenu _levelMenu;
+
+        public LevelMapState(GameStateMachine stateMachine, GameContext context, LevelMenu levelMenu) : base(stateMachine, context)
+        {
+            _levelMenu = levelMenu;
+        }
 
         public override void Enter()
         {
-            Context.LevelMenu.gameObject.SetActive(true);
-            Context.LevelMenu.Start += StartGame;
-            Context.LevelMenu.Shop += OnShopClick;
-            Context.LevelMenu.Settings += OnSettingsClick;
+            _levelMenu.gameObject.SetActive(true);
+            _levelMenu.Start += StartGame;
+            _levelMenu.Shop += OnShopClick;
+            _levelMenu.Settings += OnSettingsClick;
         }
 
         public override void Exit()
         {
-            Context.LevelMenu.gameObject.SetActive(false);
-            Context.LevelMenu.Start -= StartGame;
-            Context.LevelMenu.Shop -= OnShopClick;
-            Context.LevelMenu.Settings -= OnSettingsClick;
+            _levelMenu.gameObject.SetActive(false);
+            _levelMenu.Start -= StartGame;
+            _levelMenu.Shop -= OnShopClick;
+            _levelMenu.Settings -= OnSettingsClick;
         }
 
         private void StartGame(LevelConfig level)

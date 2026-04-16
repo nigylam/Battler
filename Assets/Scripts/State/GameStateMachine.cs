@@ -5,21 +5,30 @@ namespace Battler.State
 {
     public class GameStateMachine
     {
-        private Stack<GameState> _statesStack = new();
-        private Dictionary<GameStateType, GameState> _states;
+        private readonly Stack<GameState> _statesStack = new();
+        private readonly Dictionary<GameStateType, GameState> _states;
 
-        public GameStateMachine(GameContext context)
+        public GameStateMachine
+        (
+            GameContext context, 
+            UI.MainMenu mainMenu, 
+            UI.LevelView.LevelMenu levelMenu, 
+            ShopMenu shopMenu, 
+            BattleEndScreen battleEndScreen, 
+            UI.BattleView.BattlePauseMenu battlePauseMenu, 
+            UI.SettingsMenu settingsMenu
+        )
         {
             _states = new()
-        {
-            {GameStateType.MainMenu, new MainMenuState(this, context) },
-            {GameStateType.LevelMap, new LevelMapState(this, context) },
-            {GameStateType.Battle, new BattleState(this, context) },
-            {GameStateType.BattleEnd, new BattleEndState(this, context) },
-            {GameStateType.Shop, new ShopState(this, context) },
-            {GameStateType.BattlePause, new BattlePauseState(this, context) },
-            {GameStateType.Settings, new SettingsState(this, context) }
-        };
+            {
+                {GameStateType.MainMenu, new MainMenuState(this, context, mainMenu) },
+                {GameStateType.LevelMap, new LevelMapState(this, context, levelMenu) },
+                {GameStateType.Battle, new BattleState(this, context) },
+                {GameStateType.BattleEnd, new BattleEndState(this, context, battleEndScreen) },
+                {GameStateType.Shop, new ShopState(this, context, shopMenu) },
+                {GameStateType.BattlePause, new BattlePauseState(this, context, battlePauseMenu) },
+                {GameStateType.Settings, new SettingsState(this, context, settingsMenu) }
+            };
         }
 
         public void ChangeState(GameStateType stateType)

@@ -1,20 +1,24 @@
-using Battler;
 using Battler.State;
 
 public class ShopState : GameState
 {
-    public ShopState(GameStateMachine stateMachine, GameContext context) : base(stateMachine, context) { }
+    private ShopMenu _shopMenu;
+
+    public ShopState(GameStateMachine stateMachine, GameContext context, ShopMenu shopMenu) : base(stateMachine, context)
+    {
+        _shopMenu = shopMenu;
+    }
 
     public override void Enter()
     {
-        Context.ShopMenu.gameObject.SetActive(true);
-        Context.ShopMenu.Exit += ExitShop;
+        _shopMenu.gameObject.SetActive(true);
+        _shopMenu.Exit += ExitShop;
     }
 
     public override void Exit()
     {
-        Context.ShopMenu.gameObject.SetActive(false);
-        Context.ShopMenu.Exit -= ExitShop;
+        _shopMenu.gameObject.SetActive(false);
+        _shopMenu.Exit -= ExitShop;
     }
 
     private void ExitShop()

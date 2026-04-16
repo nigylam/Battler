@@ -1,21 +1,28 @@
+using Battler.UI;
+
 namespace Battler.State
 {
     public class MainMenuState : GameState
     {
-        public MainMenuState(GameStateMachine stateMachine, GameContext context) : base(stateMachine, context) { }
+        private MainMenu _mainMenu;
+
+        public MainMenuState(GameStateMachine stateMachine, GameContext context, MainMenu mainMenu) : base(stateMachine, context)
+        {
+            _mainMenu = mainMenu;
+        }
 
         public override void Enter()
         {
-            Context.MainMenu.gameObject.SetActive(true);
-            Context.MainMenu.Start += OnStartClick;
-            Context.MainMenu.Settings += OnSettingsClick;
+            _mainMenu.gameObject.SetActive(true);
+            _mainMenu.Start += OnStartClick;
+            _mainMenu.Settings += OnSettingsClick;
         }
 
         public override void Exit()
         {
-            Context.MainMenu.gameObject.SetActive(false);
-            Context.MainMenu.Start -= OnStartClick;
-            Context.LevelMenu.Settings -= OnSettingsClick;
+            _mainMenu.gameObject.SetActive(false);
+            _mainMenu.Start -= OnStartClick;
+            _mainMenu.Settings -= OnSettingsClick;
         }
 
         private void OnStartClick()

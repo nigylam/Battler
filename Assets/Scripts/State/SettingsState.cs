@@ -1,24 +1,27 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Battler.UI;
 using UnityEngine;
 
 namespace Battler.State
 {
     public class SettingsState : GameState
     {
-        public SettingsState(GameStateMachine stateMachine, GameContext context) : base(stateMachine, context) { }
+        private SettingsMenu _settingsMenu;
+
+        public SettingsState(GameStateMachine stateMachine, GameContext context, SettingsMenu settingsMenu) : base(stateMachine, context)
+        {
+            _settingsMenu = settingsMenu;
+        }
 
         public override void Enter()
         {
-            Context.SettingsMenu.gameObject.SetActive(true);
-            Context.SettingsMenu.Resume += OnResumeClick;
+            _settingsMenu.gameObject.SetActive(true);
+            _settingsMenu.Resume += OnResumeClick;
         }
 
         public override void Exit()
         {
-            Context.SettingsMenu.Resume -= OnResumeClick;
-            Context.SettingsMenu.gameObject.SetActive(false);
+            _settingsMenu.Resume -= OnResumeClick;
+            _settingsMenu.gameObject.SetActive(false);
         }
 
         private void OnResumeClick()

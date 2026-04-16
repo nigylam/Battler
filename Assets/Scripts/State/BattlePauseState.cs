@@ -1,25 +1,31 @@
+using Battler.UI.BattleView;
 using UnityEngine;
 
 namespace Battler.State
 {
     public class BattlePauseState : GameState
     {
-        public BattlePauseState(GameStateMachine stateMachine, GameContext context) : base(stateMachine, context) { }
+        private BattlePauseMenu _battlePauseMenu;
+
+        public BattlePauseState(GameStateMachine stateMachine, GameContext context, BattlePauseMenu battlePauseMenu) : base(stateMachine, context)
+        {
+            _battlePauseMenu = battlePauseMenu;
+        }
 
         public override void Enter()
         {
-            Context.BattlePauseMenu.gameObject.SetActive(true);
-            Context.BattlePauseMenu.Resume += OnResumeClick;
-            Context.BattlePauseMenu.Quit += OnQuitClick;
-            Context.BattlePauseMenu.Settings += OnSettingsClick;
+            _battlePauseMenu.gameObject.SetActive(true);
+            _battlePauseMenu.Resume += OnResumeClick;
+            _battlePauseMenu.Quit += OnQuitClick;
+            _battlePauseMenu.Settings += OnSettingsClick;
         }
 
         public override void Exit()
         {
-            Context.BattlePauseMenu.Resume -= OnResumeClick;
-            Context.BattlePauseMenu.Quit -= OnQuitClick;
-            Context.BattlePauseMenu.Settings -= OnSettingsClick;
-            Context.BattlePauseMenu.gameObject.SetActive(false);
+            _battlePauseMenu.Resume -= OnResumeClick;
+            _battlePauseMenu.Quit -= OnQuitClick;
+            _battlePauseMenu.Settings -= OnSettingsClick;
+            _battlePauseMenu.gameObject.SetActive(false);
         }
 
         private void OnResumeClick()

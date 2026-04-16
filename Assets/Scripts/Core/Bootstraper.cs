@@ -35,16 +35,20 @@ namespace Battler.Core
                 gold,
                 shop,
                 levelProgress,
-                _mainMenu,
-                _levelMenu,
-                _shopMenu,
-                _battleEndScreen,
-                _battlePauseMenu,
-                _settingsMenu,
                 _battle
             );
 
-            var stateMachine = new GameStateMachine(context);
+            var stateMachine = new GameStateMachine
+            (
+                context, 
+                _mainMenu, 
+                _levelMenu, 
+                _shopMenu, 
+                _battleEndScreen, 
+                _battlePauseMenu, 
+                _settingsMenu
+            );
+
             stateMachine.ChangeState(GameStateType.MainMenu);
         }
 
