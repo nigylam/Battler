@@ -49,6 +49,12 @@ public class PlayerSide : Side
         Commander.UpgradeSurvived();
     }
 
+    public override void EndLevel()
+    {
+        base.EndLevel();
+        _placer.Disable();
+    }
+
     private void OnPlace(SquadPlan plan, (int x, int y) startCell)
     {
         CreateSquad(plan, startCell);

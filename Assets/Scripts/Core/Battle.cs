@@ -67,6 +67,10 @@ namespace Battler.Core
             _cameraMover.gameObject.SetActive(false);
             _enemy.EndLevel();
             _player.EndLevel();
+            _sidesReadyForRound = 0;
+            _sidesEndRound = 0;
+            _haveWinner = false;
+            _isBattleActive = false;
         }
 
         public void ResumeGame()

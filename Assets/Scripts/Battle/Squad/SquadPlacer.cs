@@ -37,9 +37,9 @@ public class SquadPlacer
 
     public void Enable()
     {
+        _beforeBattleMenu.gameObject.SetActive(true);
         _beforeBattleMenu.DragStarted += OnDragStarted;
         _beforeBattleMenu.PlayButtonClicked += OnPlayButtonClicked;
-        _beforeBattleMenu.gameObject.SetActive(true);
     }
 
     public void Disable()
