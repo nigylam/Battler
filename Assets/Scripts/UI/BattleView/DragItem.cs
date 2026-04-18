@@ -1,9 +1,10 @@
+using Battler;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class DragItem : ArmyItem, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class DragItem : ArmyItem, IPlacementDrag, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     [SerializeField] private TextCounter _textCounter;
 
@@ -13,7 +14,7 @@ public class DragItem : ArmyItem, IBeginDragHandler, IEndDragHandler, IDragHandl
 
     public event Action<DragItem> DragStarted;
     public event Action<PointerEventData> DragEnded;
-    public event Action<PointerEventData> Drag;
+    public event Action<PointerEventData> Dragged;
 
     private void OnEnable()
     {
@@ -43,12 +44,12 @@ public class DragItem : ArmyItem, IBeginDragHandler, IEndDragHandler, IDragHandl
 
     public void OnDrag(PointerEventData eventData)
     {
-        Drag?.Invoke(eventData);
+        Dragged?.Invoke(eventData);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        DragEnded?.Invoke(eventData);
+        DragEnded?.Invoke(eventData);   
         _preview.gameObject.SetActive(false);
         _dragImage.enabled = false;
         _dragImage.raycastTarget = false;
@@ -88,5 +89,15 @@ public class DragItem : ArmyItem, IBeginDragHandler, IEndDragHandler, IDragHandl
     private void OnItemsEnded()
     {
         gameObject.SetActive(false);
+    }
+
+    public void ConfirmPlacement()
+    {
+        
+    }
+
+    public void CancelPlacement()
+    {
+        
     }
 }

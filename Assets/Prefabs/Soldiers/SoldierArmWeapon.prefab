@@ -780,6 +780,7 @@ GameObject:
   - component: {fileID: -8586990113832629294}
   - component: {fileID: 1963550804781257162}
   - component: {fileID: 1422263508427399357}
+  - component: {fileID: -3398619268635569281}
   m_Layer: 0
   m_Name: SoldierArmWeapon
   m_TagString: Untagged
@@ -919,6 +920,11 @@ MonoBehaviour:
   _targetFinder: {fileID: 1963550804781257162}
   _deadAnimationEventSender: {fileID: 1247464205483539601}
   _meshRenderer: {fileID: 2582408216279078366}
+  _dragger: {fileID: -3398619268635569281}
+  _renderers:
+  - {fileID: 2582408216279078366}
+  - {fileID: 474757043529500180}
+  - {fileID: 3660239056713569341}
   _animator: {fileID: 1422263508427399357}
 --- !u!114 &1247464205483539601
 MonoBehaviour:
@@ -1028,6 +1034,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 2389418485003686422}
+--- !u!114 &-3398619268635569281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4207753064186563347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9eeb977997e26c247ad9a88d7942d2e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4264366966006641668
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using Battler.Battle.DragAndDrop;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,8 @@ public abstract class Unit : MonoBehaviour
     [SerializeField] private TargetFinder _targetFinder;
     [SerializeField] private DeathAnimationEventSender _deadAnimationEventSender;
     [SerializeField] private SkinnedMeshRenderer _meshRenderer;
+    [SerializeField] private UnitDragger _dragger;
+    [SerializeField] private List<SkinnedMeshRenderer> _renderers;
 
     private Unit _target;
     private bool _dead;
@@ -18,17 +21,9 @@ public abstract class Unit : MonoBehaviour
     public event Action<Unit> Dead;
     public event Action<Unit> Free;
 
+    public UnitDragger Dragger => _dragger;
     protected bool IsMoving => _mover.Speed > 0;
     protected abstract UnitAnimator Animator { get; }
-
-    public void Upgrade()
-    {
-        _healthBar.Upgrade();
-        _health.Upgrade();
-        _mover.Upgrade();
-        _attacker.Upgrade();
-        Animator.OnUpgrade();
-    }
 
     private void OnEnable()
     {
@@ -38,7 +33,6 @@ public abstract class Unit : MonoBehaviour
         _attacker.AttackStarted += OnAttackStarted;
         _deadAnimationEventSender.AnimationEnded += OnDeadAnimationPlayed;
         _mover.Disable();
-        
 
         if (_target != null)
             _target.Dead += OnTargetDead;
@@ -47,7 +41,6 @@ public abstract class Unit : MonoBehaviour
     private void OnDisable()
     {
         _mover.Disable();
-
         _health.Dead -= OnDead;
         _mover.WentToTarget -= OnWentToTarget;
         _mover.LeaveTarget -= OnLeaveTarget;
@@ -62,6 +55,15 @@ public abstract class Unit : MonoBehaviour
     {
         _meshRenderer.material = armyMaterial;
         _attacker.Initialize(attackTargets);
+    }
+
+    public void Upgrade()
+    {
+        _healthBar.Upgrade();
+        _health.Upgrade();
+        _mover.Upgrade();
+        _attacker.Upgrade();
+        Animator.OnUpgrade();
     }
 
     public void TakeDamage(int damage)
@@ -101,6 +103,22 @@ public abstract class Unit : MonoBehaviour
         _mover.Disable();
         Animator.OnWin();
         _attacker.StopAttack();
+    }
+
+    public void HideVisual()
+    {
+        foreach(SkinnedMeshRenderer renderer in _renderers)
+            renderer.enabled = false;
+
+        _healthBar.gameObject.SetActive(false);
+    }
+
+    public void ShowVisual()
+    {
+        foreach (SkinnedMeshRenderer renderer in _renderers)
+            renderer.enabled = true;
+
+        _healthBar.gameObject.SetActive(true);
     }
 
     protected virtual void OnAttackStarted() { }

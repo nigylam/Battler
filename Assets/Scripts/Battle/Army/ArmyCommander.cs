@@ -1,3 +1,4 @@
+using Battler.Battle.DragAndDrop;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class ArmyCommander
 
     public event Action SurvivedUpgraded;
     public event Action FieldCleared;
+    public event Action<SquadContext, UnitDragger> DragStarted;
 
     public IReadOnlyCollection<SquadContext> SurvivedSquads => _survivedSquads;
 
@@ -50,8 +52,11 @@ public class ArmyCommander
         if (plan == null)
             throw new ArgumentNullException(nameof(plan));
 
-        _spawnedSquads.Add(new SquadContext(squad, plan, startCell));
+        var squadContext = new SquadContext(squad, plan, startCell);
+        _spawnedSquads.Add(squadContext);
         _army.Add(squad);
+
+        squad.DragStarted += OnDragStarted;
     }
 
     public void UpgradeSurvived()
@@ -71,5 +76,29 @@ public class ArmyCommander
             foreach (var squadContext in _spawnedSquads)
                 if (squad == squadContext.Squad)
                     _survivedSquads.Add(squadContext);
+    }
+
+    public void Remove(SquadContext context)
+    {
+        _spawnedSquads.Remove(context);
+        _army.Remove(context.Squad);
+    }
+
+    private void OnDragStarted(Squad squad, UnitDragger dragger)
+    {
+        DragStarted?.Invoke(Get(squad), dragger);
+    }
+
+    private SquadContext Get(Squad squad)
+    {
+        SquadContext squadContext = null;
+
+        foreach (var context in _spawnedSquads)
+        {
+            if (context.Squad == squad)
+                squadContext = context;
+        }
+
+        return squadContext;
     }
 }

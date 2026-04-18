@@ -6243,7 +6243,9 @@ GameObject:
   - component: {fileID: 796127057}
   - component: {fileID: 796127056}
   - component: {fileID: 796127055}
-  m_Layer: 5
+  - component: {fileID: 796127059}
+  - component: {fileID: 796127060}
+  m_Layer: 9
   m_Name: DragZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6333,6 +6335,34 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!225 &796127059
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 796127054}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &796127060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 796127054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f80c3f073bca6094b8031be4f33dd012, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unitLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  "_\u0441amera": {fileID: 909694701}
 --- !u!1 &804140209
 GameObject:
   m_ObjectHideFlags: 0
@@ -7890,6 +7920,7 @@ GameObject:
   - component: {fileID: 909694702}
   - component: {fileID: 909694701}
   - component: {fileID: 909694700}
+  - component: {fileID: 909694703}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -7971,6 +8002,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 348106959}
   m_LocalEulerAnglesHint: {x: 51.263, y: 0, z: 0}
+--- !u!114 &909694703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 909694699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c49b4cc203aa6414fae5c798d1d0e7d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EventMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_MaxRayIntersections: 0
 --- !u!1 &941174472
 GameObject:
   m_ObjectHideFlags: 0
@@ -10671,7 +10718,7 @@ GameObject:
   - component: {fileID: 1239170706}
   - component: {fileID: 1239170705}
   - component: {fileID: 1239170707}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: BottomEdge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11224,7 +11271,7 @@ GameObject:
   - component: {fileID: 1298733677}
   - component: {fileID: 1298733676}
   - component: {fileID: 1298733678}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13572,7 +13619,7 @@ GameObject:
   - component: {fileID: 1526949729}
   - component: {fileID: 1526949728}
   - component: {fileID: 1526949730}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: TopEdge
   m_TagString: Untagged
   m_Icon: {fileID: 0}

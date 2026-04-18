@@ -614,6 +614,7 @@ GameObject:
   - component: {fileID: 4980490228896326338}
   - component: {fileID: 5487393903947933082}
   - component: {fileID: 7616678023636531462}
+  - component: {fileID: 6900579253388506597}
   m_Layer: 0
   m_Name: Medic
   m_TagString: Untagged
@@ -753,6 +754,11 @@ MonoBehaviour:
   _targetFinder: {fileID: 5487393903947933082}
   _deadAnimationEventSender: {fileID: 6434043615054914057}
   _meshRenderer: {fileID: 4471323225736770862}
+  _dragger: {fileID: 6900579253388506597}
+  _renderers:
+  - {fileID: 4471323225736770862}
+  - {fileID: 2825227934757669589}
+  - {fileID: 7628391344919807713}
   _animator: {fileID: 7616678023636531462}
 --- !u!114 &7369175117944474772
 MonoBehaviour:
@@ -863,6 +869,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 7314640691409281761}
+--- !u!114 &6900579253388506597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4686998562956784609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9eeb977997e26c247ad9a88d7942d2e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4851550282514419532
 GameObject:
   m_ObjectHideFlags: 0

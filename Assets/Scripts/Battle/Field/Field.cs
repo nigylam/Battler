@@ -46,6 +46,44 @@ public class Field : MonoBehaviour
         return _cellsField[(x, y)].transform.position;
     }
 
+    public void Free((int x, int y) startCell, (int x, int y) size)
+    {
+        for (int x = startCell.x; x < size.x + startCell.x; x++)
+        {
+            for (int y = startCell.y; y < size.y + startCell.y; y++)
+            {
+                if (_cellsField.ContainsKey((x, y))
+                    && _cellsField[(x, y)].IsAvailable == false)
+                {
+                    _cellsField[(x, y)].Free();
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException(nameof(startCell), nameof(size));
+                }
+            }
+        }
+    }
+
+    public void Take((int x, int y) startCell, (int x, int y) size)
+    {
+        for (int x = startCell.x; x < size.x + startCell.x; x++)
+        {
+            for (int y = startCell.y; y < size.y + startCell.y; y++)
+            {
+                if (_cellsField.ContainsKey((x, y))
+                    && _cellsField[(x, y)].IsAvailable)
+                {
+                    _cellsField[(x, y)].Take();
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException(nameof(startCell), nameof(size));
+                }
+            }
+        }
+    }
+
     public void Clear()
     {
         foreach(var cell in _cells)

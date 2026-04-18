@@ -15,6 +15,7 @@ public abstract class Side : MonoBehaviour
     public event Action RoundEnded;
     public event Action WinRound;
 
+    protected Field Field => _field;
     protected ArmyCommander Commander { get; private set; }
 
     private void Awake()

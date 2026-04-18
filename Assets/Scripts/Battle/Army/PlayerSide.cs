@@ -1,4 +1,9 @@
+using Battler;
+using Battler.Battle.DragAndDrop;
+using System;
 using UnityEngine;
+using UnityEngine.UI;
+using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class PlayerSide : Side
 {
@@ -14,6 +19,12 @@ public class PlayerSide : Side
         _placer.SetSquads(context.SquadKeeper);
     }
 
+    public override void EndLevel()
+    {
+        base.EndLevel();
+        _placer.Disable();
+    }
+
     protected override void OnAwake()
     {
         _placer = new SquadPlacer(_beforeBattleMenu, _camera, _groundMask, _thisCanvas);
@@ -24,6 +35,7 @@ public class PlayerSide : Side
         _placer.PlayButtonClicked += OnPlayButtonClicked;
         _placer.Place += OnPlace;
         Commander.SurvivedUpgraded += OnSurvivedUpgraded;
+        Commander.DragStarted += OnDragStarted;
     }
 
     protected override void Disable()
@@ -31,6 +43,7 @@ public class PlayerSide : Side
         _placer.PlayButtonClicked -= OnPlayButtonClicked;
         _placer.Place -= OnPlace;
         Commander.SurvivedUpgraded -= OnSurvivedUpgraded;
+        Commander.DragStarted -= OnDragStarted;
     }
 
     protected override void SetRoundBeforePause()
@@ -47,12 +60,6 @@ public class PlayerSide : Side
     {
         base.EndRoundPhase1();
         Commander.UpgradeSurvived();
-    }
-
-    public override void EndLevel()
-    {
-        base.EndLevel();
-        _placer.Disable();
     }
 
     private void OnPlace(SquadPlan plan, (int x, int y) startCell)
@@ -81,5 +88,48 @@ public class PlayerSide : Side
     private void OnSurvivedUpgraded()
     {
         EndRoundPhase2();
+    }
+
+    private void OnDragStarted(SquadContext context, UnitDragger dragger)
+    {
+        Image icon = Instantiate(context.Plan.DragIcon, context.Squad.transform);
+        SquadPreview preview = Instantiate(context.Plan.Preview, context.Squad.transform);
+        FieldDragContext fieldDrag = new(context, dragger, icon, preview);
+        _placer.StartFieldDrag(fieldDrag);
+        SubscribeFieldDrag(fieldDrag);
+        Field.Free(context.StartCell, context.Plan.Size);
+    }
+
+    private void SubscribeFieldDrag(FieldDragContext fieldDrag)
+    {
+        fieldDrag.AddItem += AddArmyItem;
+        fieldDrag.CanceDrag += CancelDrag;
+        fieldDrag.MoveSquad += MoveSquad;
+    }
+
+    private void UnsubscribeFieldDrag(FieldDragContext fieldDrag)
+    {
+        fieldDrag.AddItem -= AddArmyItem;
+        fieldDrag.CanceDrag -= CancelDrag;
+        fieldDrag.MoveSquad -= MoveSquad;
+    }
+
+    private void AddArmyItem(FieldDragContext fieldDrag)
+    {
+        Commander.Remove(fieldDrag.Context);
+        _beforeBattleMenu.Add(fieldDrag.Squad);
+        UnsubscribeFieldDrag(fieldDrag);
+    }
+
+    private void CancelDrag(FieldDragContext fieldDrag)
+    {
+        Field.Take(fieldDrag.Context.StartCell, fieldDrag.Context.Plan.Size);
+        UnsubscribeFieldDrag(fieldDrag);
+    }
+
+    private void MoveSquad(FieldDragContext fieldDrag)
+    {
+        Commander.Remove(fieldDrag.Context);
+        UnsubscribeFieldDrag(fieldDrag);
     }
 }

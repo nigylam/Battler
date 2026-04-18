@@ -779,6 +779,7 @@ GameObject:
   - component: {fileID: 9211808200915473453}
   - component: {fileID: 707059883383069609}
   - component: {fileID: 4035927440205319950}
+  - component: {fileID: -2959226055001573414}
   m_Layer: 0
   m_Name: SoldierMortar
   m_TagString: Untagged
@@ -919,6 +920,7 @@ MonoBehaviour:
   _targetFinder: {fileID: 9211808200915473453}
   _deadAnimationEventSender: {fileID: 6860497008804336249}
   _meshRenderer: {fileID: 2582408216279078366}
+  _dragger: {fileID: -2959226055001573414}
   _animator: {fileID: 4035927440205319950}
 --- !u!114 &2858756706154115267
 MonoBehaviour:
@@ -1014,6 +1016,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 2389418485003686422}
+--- !u!114 &-2959226055001573414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4207753064186563347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9eeb977997e26c247ad9a88d7942d2e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4264366966006641668
 GameObject:
   m_ObjectHideFlags: 0
