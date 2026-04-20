@@ -1,3 +1,4 @@
+using Battler.Battle.Armies;
 using Battler.Battle.DragAndDrop;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ public class Squad : MonoBehaviour
 
     public event Action<Squad> Dead;
     public event Action<Squad, UnitDragger> DragStarted;
+
+    public IReadOnlyCollection<Unit> Units => _units;
 
     public void KillAll()
     {

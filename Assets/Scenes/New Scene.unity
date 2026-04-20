@@ -8934,6 +8934,7 @@ GameObject:
   - component: {fileID: 1062050775}
   - component: {fileID: 1062050773}
   - component: {fileID: 1062050774}
+  - component: {fileID: 1062050776}
   m_Layer: 0
   m_Name: PlayerSide
   m_TagString: Untagged
@@ -9005,6 +9006,7 @@ MonoBehaviour:
   _field: {fileID: 117877202}
   _creator: {fileID: 1062050773}
   _beforeBattleMenu: {fileID: 1810525452}
+  _dragVisualSpawner: {fileID: 1062050776}
   _camera: {fileID: 909694701}
   _groundMask:
     serializedVersion: 2
@@ -9012,6 +9014,20 @@ MonoBehaviour:
   _thisCanvas:
     serializedVersion: 2
     m_Bits: 256
+--- !u!114 &1062050776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062050770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 114daa70d6e809341bd1b2df6856029c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uiDragContainer: {fileID: 247386945}
+  _worldContainer: {fileID: 1062050771}
 --- !u!1 &1064355662
 GameObject:
   m_ObjectHideFlags: 0

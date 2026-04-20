@@ -1,57 +1,59 @@
-using Battler;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BeforeBattleMenu : MonoBehaviour
+namespace Battler.UI.BattleView
 {
-    [SerializeField] private Button _playButton;
-    [SerializeField] private DragArmyPanel _armyPannel;
-
-    public event Action PlayButtonClicked;
-    public event Action<IPlacementDrag> DragStarted;
-
-    public void SetSquads(SquadKeeper keeper)
+    public class BeforeBattleMenu : MonoBehaviour
     {
-        _armyPannel.Clear();
-        _armyPannel.SetItems(keeper.GetSquads());
-    }
+        [SerializeField] private Button _playButton;
+        [SerializeField] private DragArmyPanel _armyPannel;
 
-    public void SetPlayButtonActive()
-    {
-        if (_playButton.gameObject.activeSelf)
-            return;
+        public event Action PlayButtonClicked;
+        public event Action<DragItem> DragStarted;
 
-        _playButton.gameObject.SetActive(true);
-        _playButton.onClick.AddListener(OnClick);
-    }
+        public void SetSquads(SquadKeeper keeper)
+        {
+            _armyPannel.Clear();
+            _armyPannel.SetItems(keeper.GetSquads());
+        }
 
-    public void Add(SquadPlan plan)
-    {
-        Debug.Log("itme add");
-    }
+        public void SetPlayButtonActive()
+        {
+            if (_playButton.gameObject.activeSelf)
+                return;
 
-    private void OnEnable()
-    {
-        _armyPannel.DragStarted += OnDragStarted;
-    }
+            _playButton.gameObject.SetActive(true);
+            _playButton.onClick.AddListener(OnClick);
+        }
 
-    private void OnDisable()
-    {
-        _armyPannel.DragStarted -= OnDragStarted;
-        _playButton.onClick.RemoveListener(OnClick);
-        _playButton.gameObject.SetActive(false);
-        
-    }
+        public void Add(SquadPlan plan)
+        {
+            Debug.Log("itme add");
+        }
 
-    private void OnClick()
-    {
-        _playButton.onClick.RemoveListener(OnClick);
-        PlayButtonClicked?.Invoke();
-    }
+        private void OnEnable()
+        {
+            _armyPannel.DragStarted += OnDragStarted;
+        }
 
-    private void OnDragStarted(IPlacementDrag item)
-    {
-        DragStarted?.Invoke(item);
+        private void OnDisable()
+        {
+            _armyPannel.DragStarted -= OnDragStarted;
+            _playButton.onClick.RemoveListener(OnClick);
+            _playButton.gameObject.SetActive(false);
+
+        }
+
+        private void OnClick()
+        {
+            _playButton.onClick.RemoveListener(OnClick);
+            PlayButtonClicked?.Invoke();
+        }
+
+        private void OnDragStarted(DragItem item)
+        {
+            DragStarted?.Invoke(item);
+        }
     }
 }

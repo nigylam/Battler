@@ -14,6 +14,7 @@ public abstract class Unit : MonoBehaviour
     [SerializeField] private SkinnedMeshRenderer _meshRenderer;
     [SerializeField] private UnitDragger _dragger;
     [SerializeField] private List<SkinnedMeshRenderer> _renderers;
+    [SerializeField] private GameObject _weapon;
 
     private Unit _target;
     private bool _dead;
@@ -110,6 +111,7 @@ public abstract class Unit : MonoBehaviour
         foreach(SkinnedMeshRenderer renderer in _renderers)
             renderer.enabled = false;
 
+        _weapon.gameObject.SetActive(false);
         _healthBar.gameObject.SetActive(false);
     }
 
@@ -118,6 +120,7 @@ public abstract class Unit : MonoBehaviour
         foreach (SkinnedMeshRenderer renderer in _renderers)
             renderer.enabled = true;
 
+        _weapon.SetActive(true);
         _healthBar.gameObject.SetActive(true);
     }
 

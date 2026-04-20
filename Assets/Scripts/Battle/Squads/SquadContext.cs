@@ -8,8 +8,8 @@ public class SquadContext
         CreateUpgraded = false;
     }
 
-    public Squad Squad { get; private set; }
-    public SquadPlan Plan { get; private set; }
+    public Squad Squad { get; }
+    public SquadPlan Plan { get; }
     public (int x, int y) StartCell { get; private set; }
     public bool CreateUpgraded { get; private set; }
 
@@ -17,5 +17,10 @@ public class SquadContext
     {
         CreateUpgraded = true;
         Squad.Upgrade();
+    }
+
+    internal void UpdatePosition((int x, int y) startCell)
+    {
+        StartCell = startCell;
     }
 }

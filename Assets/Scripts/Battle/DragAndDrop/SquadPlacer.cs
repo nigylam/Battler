@@ -7,62 +7,29 @@ namespace Battler.Battle.DragAndDrop
 {
     public class SquadPlacer 
     {
-        private BeforeBattleMenu _beforeBattleMenu;
         private Camera _camera;
         private LayerMask _groundMask;
-        private LayerMask _thisCanvas;
-        private bool _canBuild;
-        private (int x, int y) _startCell;
+        private LayerMask _armyPannel;
         private IPlacementDrag _draggingItem;
+        private (int x, int y) _startCell;
+        private bool _canBuild;
+        private bool _isOverUI;
 
-        public event Action PlayButtonClicked;
-        public event Action<SquadPlan, (int x, int y)> Place;
+        public event Action<IPlacementDrag, (int x, int y)> DropSuccess;
+        public event Action<IPlacementDrag> DropToUI;
+        public event Action<IPlacementDrag> DropFail;
 
-        public SquadPlacer
-        (
-            BeforeBattleMenu beforeBattleMenu,
-            Camera camera,
+        public SquadPlacer (Camera camera,
             LayerMask groundMask,
             LayerMask thisCanvas
         )
         {
-            _beforeBattleMenu = beforeBattleMenu;
             _camera = camera;
             _groundMask = groundMask;
-            _thisCanvas = thisCanvas;
+            _armyPannel = thisCanvas;
         }
 
-        public void SetSquads(SquadKeeper squadKeeper)
-        {
-            _beforeBattleMenu.SetSquads(squadKeeper);
-        }
-
-        public void Enable()
-        {
-            _beforeBattleMenu.gameObject.SetActive(true);
-            _beforeBattleMenu.DragStarted += OnDragStarted;
-            _beforeBattleMenu.PlayButtonClicked += OnPlayButtonClicked;
-        }
-
-        public void Disable()
-        {
-            _beforeBattleMenu.DragStarted -= OnDragStarted;
-            _beforeBattleMenu.PlayButtonClicked -= OnPlayButtonClicked;
-            _beforeBattleMenu.gameObject.SetActive(false);
-
-            if (_draggingItem != null)
-            {
-                _draggingItem.Dragged -= OnDrag;
-                _draggingItem.DragEnded -= OnDragEnded;
-            }
-        }
-
-        public void StartFieldDrag(IPlacementDrag fieldDragTarget)
-        {
-            OnDragStarted(fieldDragTarget);
-        }
-
-        private void OnDragStarted(IPlacementDrag item)
+        public void StartDrag(IPlacementDrag item)
         {
             _draggingItem = item;
             _draggingItem.Dragged += OnDrag;
@@ -71,7 +38,9 @@ namespace Battler.Battle.DragAndDrop
 
         private void OnDrag(PointerEventData eventData)
         {
-            if (IsPointerOverUI(eventData))
+            _isOverUI = IsPointerOverUI(eventData);
+
+            if (_isOverUI)
             {
                 _canBuild = false;
                 _draggingItem.HandleUIDrag(eventData);
@@ -97,13 +66,19 @@ namespace Battler.Battle.DragAndDrop
 
         private void OnDragEnded(PointerEventData eventData)
         {
-            if (_canBuild)
+            if (_isOverUI)
             {
-                _draggingItem.ConfirmPlacement();
-                Place?.Invoke(_draggingItem.Squad, _startCell);
+                DropToUI?.Invoke(_draggingItem);
+            }
+            else if (_canBuild)
+            {
+                DropSuccess?.Invoke(_draggingItem, _startCell);
+            }
+            else
+            {
+                DropFail?.Invoke(_draggingItem);
             }
 
-            _draggingItem.CancelPlacement();
             _draggingItem.Dragged -= OnDragEnded;
             _draggingItem.DragEnded -= OnDrag;
             _draggingItem = null;
@@ -141,12 +116,7 @@ namespace Battler.Battle.DragAndDrop
 
         private bool IsInLayerMask(GameObject obj)
         {
-            return (_thisCanvas.value & 1 << obj.layer) != 0;
-        }
-
-        private void OnPlayButtonClicked()
-        {
-            PlayButtonClicked?.Invoke();
+            return (_armyPannel.value & 1 << obj.layer) != 0;
         }
     }
 }

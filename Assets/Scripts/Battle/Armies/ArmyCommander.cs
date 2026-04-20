@@ -1,3 +1,4 @@
+using Battler.Battle.Armies;
 using Battler.Battle.DragAndDrop;
 using System;
 using System.Collections.Generic;
@@ -82,6 +83,11 @@ public class ArmyCommander
     {
         _spawnedSquads.Remove(context);
         _army.Remove(context.Squad);
+    }
+
+    public void UpdateSquadPosition(SquadContext context, (int x, int y) startCell)
+    {
+        context.UpdatePosition(startCell);
     }
 
     private void OnDragStarted(Squad squad, UnitDragger dragger)

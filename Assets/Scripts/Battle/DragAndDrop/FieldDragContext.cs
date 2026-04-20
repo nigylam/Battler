@@ -1,27 +1,23 @@
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Battler.Battle.DragAndDrop;
-using UnityEngine.UI;
 
-namespace Battler
+namespace Battler.Battle.DragAndDrop
 {
     public class FieldDragContext : IPlacementDrag, IDisposable
     {
         private readonly UnitDragger _unitDragger;
-        private readonly Image _squadIcon;
-        private readonly SquadPreview _preview;
+        private readonly DragVisual _visual;
+        private readonly DragVisualSpawner _spawner;
 
-        private bool _isOverUI;
-
-        public FieldDragContext(SquadContext squad, UnitDragger dragger, Image squadIcon, SquadPreview preview)
+        public FieldDragContext(SquadContext squad, UnitDragger dragger, DragVisual visual, DragVisualSpawner visualSpawner)
         {
             Context = squad;
             Squad = squad.Plan;
             _unitDragger = dragger;
+            _visual = visual;
+            _spawner = visualSpawner;
             Subscribe();
-            _squadIcon = squadIcon;
-            _preview = preview;
         }
 
         public SquadContext Context { get; }
@@ -29,56 +25,46 @@ namespace Battler
 
         public event Action<PointerEventData> Dragged;
         public event Action<PointerEventData> DragEnded;
-        public event Action<FieldDragContext> AddItem;
-        public event Action<FieldDragContext> MoveSquad;
-        public event Action<FieldDragContext> CanceDrag;
 
         public void Dispose()
         {
-            _squadIcon.gameObject.SetActive(false);
-            _preview.gameObject.SetActive(false);
+            _spawner.Despawn(_visual);
             Unsubscribe();
         }
 
         public void CancelPlacement()
         {
             Dispose();
-
-            if (_isOverUI)
-                AddItem?.Invoke(this);
-            else
-                CanceDrag?.Invoke(this);
         }
 
         public void ConfirmPlacement()
         {
             Dispose();
-            MoveSquad?.Invoke(this);
         }
 
         public void HandleBuildAvailable(Vector3 position)
         {
-            _preview.SetAvailable();
-            _preview.transform.position = position;
+            _visual.Preview.SetAvailable();
+            _visual.Preview.transform.position = position;
         }
 
         public void HandleBuildBlocked(Vector3 position)
         {
-            _preview.SetBlocked();
-            _preview.transform.position = position;
+            _visual.Preview.SetBlocked();
+            _visual.Preview.transform.position = position;
         }
 
         public void HandleUIDrag(PointerEventData eventData)
         {
-            _isOverUI = true;
-            _squadIcon.gameObject.SetActive(true);
-            _squadIcon.transform.position = eventData.position;
+            _visual.Preview.gameObject.SetActive(false);
+            _visual.Icon.gameObject.SetActive(true);
+            _visual.Icon.transform.position = eventData.position;
         }
 
         public void HandleWorldDrag()
         {
-            _isOverUI = false;
-            _preview.gameObject.SetActive(true);
+            _visual.Icon.gameObject.SetActive(false);
+            _visual.Preview.gameObject.SetActive(true);
         }
 
         private void Subscribe()
@@ -96,7 +82,6 @@ namespace Battler
         private void OnDragEnd(PointerEventData data)
         {
             DragEnded?.Invoke(data);
-            Unsubscribe();
         }
 
         private void OnDrag(PointerEventData data)

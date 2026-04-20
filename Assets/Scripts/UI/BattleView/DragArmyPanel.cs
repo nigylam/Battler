@@ -1,9 +1,10 @@
 using Battler;
+using Battler.UI.BattleView;
 using System;
 
 public class DragArmyPanel : SquadPanel<DragItem, SquadData>
 {
-    public event Action<IPlacementDrag> DragStarted;
+    public event Action<DragItem> DragStarted;
 
     protected override void SubscribeToItem(DragItem item)
     {
@@ -15,5 +16,5 @@ public class DragArmyPanel : SquadPanel<DragItem, SquadData>
         item.DragStarted -= OnDragStarted;
     }
 
-    private void OnDragStarted(IPlacementDrag item) => DragStarted?.Invoke(item);
+    private void OnDragStarted(DragItem item) => DragStarted?.Invoke(item);
 }
