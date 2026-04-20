@@ -1,10 +1,11 @@
+using Battler.Battle.DragAndDrop;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Battler.UI.BattleView
 {
-    public class DragItem : ArmyItem, IBeginDragHandler, IEndDragHandler, IDragHandler
+    public class DragItem : ArmyItem, IDragable, IBeginDragHandler, IEndDragHandler, IDragHandler
     {
         [SerializeField] private TextCounter _textCounter;
 

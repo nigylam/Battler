@@ -6,7 +6,7 @@ namespace Battler
 {
     public interface IPlacementDrag
     {
-        SquadPlan Squad { get; }
+        SquadPlan SquadPlan { get; }
 
         event Action<PointerEventData> Dragged;
         event Action<PointerEventData> DragEnded;

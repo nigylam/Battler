@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +12,6 @@ namespace Battler.Battle.DragAndDrop
         {
             Image icon = Instantiate(plan.DragIcon, _uiDragContainer);
             SquadPreview preview = Instantiate(plan.Preview, _worldContainer);
-            icon.gameObject.SetActive(false);
             preview.gameObject.SetActive(false);
 
             return new DragVisual { Icon = icon, Preview = preview };

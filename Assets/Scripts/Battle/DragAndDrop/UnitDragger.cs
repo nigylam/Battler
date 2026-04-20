@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 namespace Battler.Battle.DragAndDrop
 {
-    public class UnitDragger : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
+    public class UnitDragger : MonoBehaviour, IDragable, IDragHandler, IBeginDragHandler, IEndDragHandler
     {
         public event Action<UnitDragger> DragStarted;
         public event Action<PointerEventData> Dragged;

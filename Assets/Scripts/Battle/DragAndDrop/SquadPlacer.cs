@@ -51,7 +51,7 @@ namespace Battler.Battle.DragAndDrop
             {
                 _draggingItem.HandleWorldDrag();
 
-                if (cell != null && cell.Field.HavePlace((cell.X, cell.Y), _draggingItem.Squad.Size))
+                if (cell != null && cell.Field.HavePlace((cell.X, cell.Y), _draggingItem.SquadPlan.Size))
                 {
                     _draggingItem.HandleBuildAvailable(cell.transform.position);
                     _startCell = (cell.X, cell.Y);

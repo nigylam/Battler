@@ -1,6 +1,5 @@
 using Battler.Battle.Armies;
 using Battler.UI.BattleView;
-using System;
 using UnityEngine;
 
 namespace Battler.Battle.DragAndDrop
@@ -71,7 +70,7 @@ namespace Battler.Battle.DragAndDrop
         {
             Field.Free(context.StartCell, context.Plan.Size);
             DragVisual visual = _visualSpawner.Spawn(context.Plan);
-            FieldDragContext fieldDrag = new FieldDragContext(context, dragger, visual, _visualSpawner);
+            FieldDragContext fieldDrag = new FieldDragContext(context, visual, _visualSpawner, dragger);
             _placer.StartDrag(fieldDrag);
         }
 
@@ -91,7 +90,7 @@ namespace Battler.Battle.DragAndDrop
             }
             else
             {
-                CreateSquad(item.Squad, startCell);
+                CreateSquad(item.SquadPlan, startCell);
             }
 
             ValidatePlayButton();
@@ -102,9 +101,7 @@ namespace Battler.Battle.DragAndDrop
             item.CancelPlacement();
 
             if (item is FieldDragContext fieldItem)
-            {
-                Field.Take(fieldItem.Context.StartCell, item.Squad.Size);
-            }
+                Field.Take(fieldItem.Context.StartCell, item.SquadPlan.Size);
         }
 
         private void OnDropToUI(IPlacementDrag item)
@@ -114,7 +111,7 @@ namespace Battler.Battle.DragAndDrop
             if (item is FieldDragContext fieldItem)
             {
                 Commander.Remove(fieldItem.Context);
-                _menu.Add(item.Squad);
+                _menu.Add(item.SquadPlan);
             }
         }
 
