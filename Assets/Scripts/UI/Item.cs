@@ -7,7 +7,7 @@ public abstract class Item<TData> : MonoBehaviour, IInitializable<TData>
 
     private SquadPlan _squad;
 
-    public SquadPlan Squad => _squad;
+    public SquadPlan SquadPlan => _squad;
 
     public abstract void Initialize(TData data);
 

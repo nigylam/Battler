@@ -61,7 +61,7 @@ namespace Battler.Battle.DragAndDrop
 
         private void OnMenuDragStarted(DragItem uiItem)
         {
-            DragVisual visuals = _visualSpawner.Spawn(uiItem.Squad);
+            DragVisual visuals = _visualSpawner.Spawn(uiItem.SquadPlan);
             MenuDragContext menuDrag = new (uiItem, visuals, _visualSpawner);
             _placer.StartDrag(menuDrag);
         }
@@ -70,7 +70,7 @@ namespace Battler.Battle.DragAndDrop
         {
             Field.Free(context.StartCell, context.Plan.Size);
             DragVisual visual = _visualSpawner.Spawn(context.Plan);
-            FieldDragContext fieldDrag = new FieldDragContext(context, visual, _visualSpawner, dragger);
+            FieldDragContext fieldDrag = new (context, visual, _visualSpawner, dragger);
             _placer.StartDrag(fieldDrag);
         }
 
@@ -81,7 +81,7 @@ namespace Battler.Battle.DragAndDrop
 
         private void OnDropSuccess(IPlacementDrag item, (int x, int y) startCell)
         {
-            item.ConfirmPlacement();
+            item.Dispose();
 
             if (item is FieldDragContext fieldItem)
             {
@@ -90,6 +90,7 @@ namespace Battler.Battle.DragAndDrop
             }
             else
             {
+                _menu.ArmyPannel.Remove(item.SquadPlan);
                 CreateSquad(item.SquadPlan, startCell);
             }
 
@@ -98,7 +99,7 @@ namespace Battler.Battle.DragAndDrop
 
         private void OnDropFail(IPlacementDrag item)
         {
-            item.CancelPlacement();
+            item.Dispose();
 
             if (item is FieldDragContext fieldItem)
                 Field.Take(fieldItem.Context.StartCell, item.SquadPlan.Size);
@@ -106,12 +107,12 @@ namespace Battler.Battle.DragAndDrop
 
         private void OnDropToUI(IPlacementDrag item)
         {
-            item.CancelPlacement();
+            item.Dispose();
 
             if (item is FieldDragContext fieldItem)
             {
                 Commander.Remove(fieldItem.Context);
-                _menu.Add(item.SquadPlan);
+                _menu.ArmyPannel.Add(item.SquadPlan);
             }
         }
 

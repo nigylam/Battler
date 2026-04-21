@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 namespace Battler
 {
-    public interface IPlacementDrag
+    public interface IPlacementDrag : IDisposable
     {
         SquadPlan SquadPlan { get; }
 
@@ -15,7 +15,5 @@ namespace Battler
         public void HandleWorldDrag();
         public void HandleBuildAvailable(Vector3 position);
         public void HandleBuildBlocked(Vector3 position);
-        public void ConfirmPlacement();
-        public void CancelPlacement();
     }
 }

@@ -15,12 +15,16 @@ namespace Battler.UI.BattleView
         public event Action<PointerEventData> Dragged;
         public event Action<PointerEventData> DragEnded;
 
-        private void OnEnable() => _itemsCount.Ended += OnItemsEnded;
+        private void OnEnable()
+        {
+            _textCounter.Enable();
+            _itemsCount.Ended += OnEnded;
+        }
 
         private void OnDisable()
         {
             _textCounter.Disable();
-            _itemsCount.Ended -= OnItemsEnded;
+            _itemsCount.Ended -= OnEnded;
         }
 
         public override void Initialize(SquadData data)
@@ -36,6 +40,8 @@ namespace Battler.UI.BattleView
 
         public void Decrease() => _itemsCount.Decrease();
 
-        private void OnItemsEnded() => gameObject.SetActive(false);
+        public void Increase() => _itemsCount.Increase();
+
+        private void OnEnded() => gameObject.SetActive(false);
     }
 }

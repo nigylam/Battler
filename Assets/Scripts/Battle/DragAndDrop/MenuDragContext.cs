@@ -11,17 +11,11 @@ namespace Battler.Battle.DragAndDrop
             DragItem sourceItem,
             DragVisual visual,
             DragVisualSpawner spawner
-        ) : base(sourceItem.Squad, visual, spawner, sourceItem)
+        ) : base(sourceItem.SquadPlan, visual, spawner, sourceItem)
         {
             _dragItem = sourceItem;
         }
 
         public SquadPlan Squad { get; }
-
-        public override void ConfirmPlacement()
-        {
-            _dragItem.Decrease();
-            base.ConfirmPlacement();
-        }
     }
 }

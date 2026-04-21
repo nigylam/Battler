@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 namespace Battler.Battle.DragAndDrop
 {
-    public abstract class DragContext : IPlacementDrag, IDisposable
+    public abstract class DragContext : IPlacementDrag
     {
         private readonly DragVisual _visual;
         private readonly DragVisualSpawner _spawner;
@@ -24,20 +24,10 @@ namespace Battler.Battle.DragAndDrop
 
         public SquadPlan SquadPlan { get; }
 
-        public virtual void ConfirmPlacement()
-        {
-            Dispose();
-        }
-
         public void Dispose()
         {
             Unsubscribe();
             _spawner.Despawn(_visual);
-        }
-
-        public void CancelPlacement()
-        {
-            Dispose();
         }
 
         public void HandleBuildAvailable(Vector3 position)

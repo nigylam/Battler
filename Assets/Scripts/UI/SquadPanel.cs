@@ -9,6 +9,8 @@ public abstract class SquadPanel<TItem, TData> : MonoBehaviour where TItem : Ite
 
     private bool _subscribed;
 
+    public IReadOnlyCollection<TItem> Items => _items;
+
     private void OnEnable()
     {
         SubscribeToItems();
@@ -28,11 +30,7 @@ public abstract class SquadPanel<TItem, TData> : MonoBehaviour where TItem : Ite
         Clear();
 
         foreach (TData data in itemsData)
-        {
-            TItem item = Instantiate(_itemPrefab, transform);
-            item.Initialize(data);
-            _items.Add(item);
-        }
+            AddItem(data);
 
         SubscribeToItems();
     }
@@ -55,6 +53,13 @@ public abstract class SquadPanel<TItem, TData> : MonoBehaviour where TItem : Ite
 
     protected virtual void SubscribeToItem(TItem item) { }
     protected virtual void UnsubscribeFromItem(TItem item) { }
+
+    protected void AddItem(TData data) 
+    {
+        TItem item = Instantiate(_itemPrefab, transform);
+        item.Initialize(data);
+        _items.Add(item);
+    }
 
     private void SubscribeToItems()
     {

@@ -1,12 +1,12 @@
 
 public struct SquadData
 {
-    public SquadPlan Squad;
+    public SquadPlan SquadPlan;
     public int Count;
 
     public SquadData(SquadPlan squad, int count)
     {
-        Squad = squad;
+        SquadPlan = squad;
         Count = count;
     }
 }

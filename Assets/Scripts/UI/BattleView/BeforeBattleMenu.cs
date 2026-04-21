@@ -12,6 +12,8 @@ namespace Battler.UI.BattleView
         public event Action PlayButtonClicked;
         public event Action<DragItem> DragStarted;
 
+        public DragArmyPanel ArmyPannel => _armyPannel;
+
         public void SetSquads(SquadKeeper keeper)
         {
             _armyPannel.Clear();
@@ -25,11 +27,6 @@ namespace Battler.UI.BattleView
 
             _playButton.gameObject.SetActive(true);
             _playButton.onClick.AddListener(OnClick);
-        }
-
-        public void Add(SquadPlan plan)
-        {
-            Debug.Log("itme add");
         }
 
         private void OnEnable()

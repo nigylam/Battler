@@ -7,9 +7,10 @@ namespace Battler.Battle.DragAndDrop
 {
     public class SquadPlacer 
     {
-        private Camera _camera;
-        private LayerMask _groundMask;
-        private LayerMask _armyPannel;
+        private readonly Camera _camera;
+        private readonly LayerMask _groundMask;
+        private readonly LayerMask _armyPannel;
+
         private IPlacementDrag _draggingItem;
         private (int x, int y) _startCell;
         private bool _canBuild;

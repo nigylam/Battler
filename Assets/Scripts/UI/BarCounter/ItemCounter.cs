@@ -13,6 +13,7 @@ public class ItemCounter : ICountable
 
     public event Action Changed;
     public event Action Ended;
+    public event Action BackInStock;
 
     public float Max => _maxCount;
 
@@ -35,5 +36,16 @@ public class ItemCounter : ICountable
 
         if(Current == 0)
             Ended?.Invoke();
+    }
+
+    internal void Increase()
+    {
+        Current++;
+
+        if(Current == 1)
+            BackInStock?.Invoke();
+
+        if (Current > Max)
+            Current = Max;
     }
 }

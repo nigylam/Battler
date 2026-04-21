@@ -7,7 +7,7 @@ public class ArmyItem : Item<SquadData>
 
     public override void Initialize(SquadData data)
     {
-        SetSquad(data.Squad);
+        SetSquad(data.SquadPlan);
         _count.text = data.Count.ToString();
     }
 }
