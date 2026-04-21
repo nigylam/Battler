@@ -41,6 +41,7 @@ namespace Battler.Battle.Armies
             _army.WinRound -= OnWinRound;
             Commander.FieldCleared -= OnFieldCleared;
             ArmyDeployer.DeploymentFinished -= OnDeploymentFinished;
+            Commander.ClearLevel();
             Disable();
         }
 
@@ -66,7 +67,7 @@ namespace Battler.Battle.Armies
 
         public virtual void EndLevel()
         {
-            Commander.Clear();
+            Commander.ClearLevel();
         }
 
         public virtual void StartLevel(GameContext context) { }
@@ -84,7 +85,7 @@ namespace Battler.Battle.Armies
 
         protected void EndRoundPhase2()
         {
-            Commander.ClearField();
+            Commander.ClearRound();
         }
 
         private void OnDeploymentFinished()

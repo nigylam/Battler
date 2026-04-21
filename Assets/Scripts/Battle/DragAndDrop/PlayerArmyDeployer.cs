@@ -72,6 +72,7 @@ namespace Battler.Battle.DragAndDrop
 
         private void OnFieldDragStarted(SquadContext context, UnitDragger dragger)
         {
+            context.Squad.HideVisuals();
             Field.Free(context.StartCell, context.Plan.Size);
             DragVisual visual = _visualSpawner.Spawn(context.Plan);
             FieldDragContext fieldDrag = new (context, visual, _visualSpawner, dragger);
@@ -90,6 +91,7 @@ namespace Battler.Battle.DragAndDrop
 
             if (item is FieldDragContext fieldItem)
             {
+                fieldItem.Context.Squad.ShowVisuals();
                 Commander.UpdateSquadPosition(fieldItem.Context, startCell);
                 Creator.ChangePlace(fieldItem.Context.Plan, fieldItem.Context.Squad, startCell, Field);
             }
@@ -108,7 +110,10 @@ namespace Battler.Battle.DragAndDrop
             item.Dispose();
 
             if (item is FieldDragContext fieldItem)
+            {
+                fieldItem.Context.Squad.ShowVisuals();
                 Field.Take(fieldItem.Context.StartCell, item.SquadPlan.Size);
+            }
         }
 
         private void OnDropToUI(DragContext item)

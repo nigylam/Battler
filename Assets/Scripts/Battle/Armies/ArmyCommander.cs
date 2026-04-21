@@ -29,19 +29,19 @@ public class ArmyCommander
         _army.Attack();
     }
 
-    public void Clear()
+    public void ClearLevel()
     {
         _army.Clear();
         _field.Clear();
+        ClearSpawned();
         _survivedSquads.Clear();
-        _spawnedSquads.Clear();
     }
 
-    public void ClearField()
+    public void ClearRound()
     {
         _army.Clear();
         _field.Clear();
-        _spawnedSquads.Clear();
+        ClearSpawned();
         FieldCleared?.Invoke();
     }
 
@@ -56,7 +56,6 @@ public class ArmyCommander
         var squadContext = new SquadContext(squad, plan, startCell);
         _spawnedSquads.Add(squadContext);
         _army.Add(squad);
-
         squad.DragStarted += OnDragStarted;
     }
 
@@ -83,11 +82,22 @@ public class ArmyCommander
     {
         _spawnedSquads.Remove(context);
         _army.Remove(context.Squad);
+        context.Squad.DragStarted -= OnDragStarted;
     }
 
     public void UpdateSquadPosition(SquadContext context, (int x, int y) startCell)
     {
         context.UpdatePosition(startCell);
+    }
+
+    private void ClearSpawned()
+    {
+        foreach(SquadContext squadContext in _spawnedSquads)
+        {
+            squadContext.Squad.DragStarted -= OnDragStarted;
+        }
+
+        _spawnedSquads.Clear();
     }
 
     private void OnDragStarted(Squad squad, UnitDragger dragger)

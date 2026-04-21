@@ -72,6 +72,18 @@ public class Squad : MonoBehaviour
             unit.SetTarget(_enemyArmy.GetTargets());
     }
 
+    public void HideVisuals()
+    {
+        foreach (Unit unit in _units)
+            unit.HideVisual();
+    }
+
+    public void ShowVisuals()
+    {
+        foreach (Unit unit in _units)
+            unit.ShowVisual();
+    }
+
     private void OnUnitDead(Unit unit)
     {
         _unitsAlive.Remove(unit);
@@ -87,24 +99,6 @@ public class Squad : MonoBehaviour
     private void OnUnitDragStarted(UnitDragger dragger)
     {
         DragStarted.Invoke(this, dragger);
-        HideVisuals();
-    }
-
-    private void OnUnitDragEnded(PointerEventData data)
-    {
-        ShowVisuals();
-    }
-
-    private void HideVisuals()
-    {
-        foreach (Unit unit in _units)
-            unit.HideVisual();
-    }
-
-    private void ShowVisuals()
-    {
-        foreach (Unit unit in _units)
-            unit.ShowVisual();
     }
 
     private void OnUnitFree(Unit unit)
@@ -120,7 +114,6 @@ public class Squad : MonoBehaviour
         unit.Dead += OnUnitDead;
         unit.Free += OnUnitFree;
         unit.Dragger.DragStarted += OnUnitDragStarted;
-        unit.Dragger.DragEnded += OnUnitDragEnded;
     }
 
     private void Unsubscribe(Unit unit)
@@ -128,6 +121,5 @@ public class Squad : MonoBehaviour
         unit.Dead -= OnUnitDead;
         unit.Free -= OnUnitFree;
         unit.Dragger.DragStarted -= OnUnitDragStarted;
-        unit.Dragger.DragEnded -= OnUnitDragEnded;
     }
 }
