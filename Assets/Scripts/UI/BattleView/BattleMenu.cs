@@ -24,6 +24,7 @@ public class BattleMenu : MonoBehaviour
     private void OnEnable()
     {
         _roundTextCounter.Initialize(_roundCounter);
+        _roundTextCounter.Enable();
         Restart();
         _roundCounter.Increase();
         _roundWinsPannel.EnemyWin += OnEnemyWin;
@@ -33,10 +34,11 @@ public class BattleMenu : MonoBehaviour
 
     private void OnDisable()
     {
-        _roundWinnerPannel.gameObject.SetActive(false);
+        _roundTextCounter.Disable();
         _roundWinsPannel.EnemyWin -= OnEnemyWin;
         _roundWinsPannel.PlayerWin -= OnPlayerWin;
         _pauseButton.onClick.RemoveListener(OnPauseClick);
+        _roundWinnerPannel.gameObject.SetActive(false);
     }
 
     public void Initialize(int roundsToWin)

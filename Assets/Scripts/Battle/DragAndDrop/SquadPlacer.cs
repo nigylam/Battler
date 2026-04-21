@@ -11,14 +11,16 @@ namespace Battler.Battle.DragAndDrop
         private readonly LayerMask _groundMask;
         private readonly LayerMask _armyPannel;
 
-        private IPlacementDrag _draggingItem;
+        private DragContext _draggingItem;
         private (int x, int y) _startCell;
         private bool _canBuild;
         private bool _isOverUI;
 
-        public event Action<IPlacementDrag, (int x, int y)> DropSuccess;
-        public event Action<IPlacementDrag> DropToUI;
-        public event Action<IPlacementDrag> DropFail;
+        public event Action<DragContext, (int x, int y)> DropSuccess;
+        public event Action<DragContext> DropToUI;
+        public event Action<DragContext> DropFail;
+        public event Action<DragContext> UIHover;
+        public event Action<DragContext> WorldHover;
 
         public SquadPlacer (Camera camera,
             LayerMask groundMask,
@@ -30,7 +32,7 @@ namespace Battler.Battle.DragAndDrop
             _armyPannel = thisCanvas;
         }
 
-        public void StartDrag(IPlacementDrag item)
+        public void StartDrag(DragContext item)
         {
             _draggingItem = item;
             _draggingItem.Dragged += OnDrag;
@@ -45,11 +47,13 @@ namespace Battler.Battle.DragAndDrop
             {
                 _canBuild = false;
                 _draggingItem.HandleUIDrag(eventData);
+                UIHover?.Invoke(_draggingItem);
                 return;
             }
 
             if (IsOnWorld(eventData.position, out Vector3 worldPoint, out Cell cell))
             {
+                WorldHover?.Invoke(_draggingItem);
                 _draggingItem.HandleWorldDrag();
 
                 if (cell != null && cell.Field.HavePlace((cell.X, cell.Y), _draggingItem.SquadPlan.Size))

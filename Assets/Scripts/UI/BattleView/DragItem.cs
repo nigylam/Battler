@@ -10,6 +10,7 @@ namespace Battler.UI.BattleView
         [SerializeField] private TextCounter _textCounter;
 
         private ItemCounter _itemsCount;
+        private bool _counterSubscribed;
 
         public event Action<DragItem> DragStarted;
         public event Action<PointerEventData> Dragged;
@@ -17,14 +18,12 @@ namespace Battler.UI.BattleView
 
         private void OnEnable()
         {
-            _textCounter.Enable();
-            _itemsCount.Ended += OnEnded;
+            SubscribeCounter();
         }
 
         private void OnDisable()
         {
-            _textCounter.Disable();
-            _itemsCount.Ended -= OnEnded;
+            UnsubscribeCounter();
         }
 
         public override void Initialize(SquadData data)
@@ -32,6 +31,7 @@ namespace Battler.UI.BattleView
             base.Initialize(data);
             _itemsCount = new ItemCounter(data.Count);
             _textCounter.Initialize(_itemsCount);
+            SubscribeCounter();
         }
 
         public void OnBeginDrag(PointerEventData eventData) => DragStarted?.Invoke(this);
@@ -43,5 +43,25 @@ namespace Battler.UI.BattleView
         public void Increase() => _itemsCount.Increase();
 
         private void OnEnded() => gameObject.SetActive(false);
+
+        private void SubscribeCounter()
+        {
+            if (_itemsCount == null)
+                return;
+
+            if (_counterSubscribed)
+                return;
+
+            _textCounter.Enable();
+            _itemsCount.Ended += OnEnded;
+            _counterSubscribed = true;
+        }
+
+        private void UnsubscribeCounter()
+        {
+            _textCounter.Disable();
+            _itemsCount.Ended -= OnEnded;
+            _counterSubscribed = false;
+        }
     }
 }

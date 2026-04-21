@@ -1,5 +1,6 @@
 using Battler.Battle.Armies;
 using Battler.UI.BattleView;
+using System;
 using UnityEngine;
 
 namespace Battler.Battle.DragAndDrop
@@ -13,7 +14,7 @@ namespace Battler.Battle.DragAndDrop
         public PlayerArmyDeployer
         (
             BeforeBattleMenu menu, 
-            SquadPlacer placement, 
+            SquadPlacer placer, 
             Field field, 
             ArmyCommander commander, 
             DragVisualSpawner visualSpawner, 
@@ -22,7 +23,7 @@ namespace Battler.Battle.DragAndDrop
         ) : base(field, commander, creator, squadsParrent)
         {
             _menu = menu;
-            _placer = placement;
+            _placer = placer;
             _visualSpawner = visualSpawner;
         }
 
@@ -35,6 +36,8 @@ namespace Battler.Battle.DragAndDrop
             _placer.DropSuccess += OnDropSuccess;
             _placer.DropFail += OnDropFail;
             _placer.DropToUI += OnDropToUI;
+            _placer.UIHover += OnUIHover;
+            _placer.WorldHover += OnWorldHover;
         }
 
         public void DisablePlacing()
@@ -45,6 +48,7 @@ namespace Battler.Battle.DragAndDrop
             _placer.DropSuccess -= OnDropSuccess;
             _placer.DropFail -= OnDropFail;
             _placer.DropToUI -= OnDropToUI;
+            _placer.WorldHover -= OnWorldHover;
             _menu.gameObject.SetActive(false);
         }
 
@@ -79,8 +83,9 @@ namespace Battler.Battle.DragAndDrop
             _menu.SetPlayButtonActive();
         }
 
-        private void OnDropSuccess(IPlacementDrag item, (int x, int y) startCell)
+        private void OnDropSuccess(DragContext item, (int x, int y) startCell)
         {
+            _menu.SetPlacingUnavailable();
             item.Dispose();
 
             if (item is FieldDragContext fieldItem)
@@ -97,16 +102,18 @@ namespace Battler.Battle.DragAndDrop
             ValidatePlayButton();
         }
 
-        private void OnDropFail(IPlacementDrag item)
+        private void OnDropFail(DragContext item)
         {
+            _menu.SetPlacingUnavailable();
             item.Dispose();
 
             if (item is FieldDragContext fieldItem)
                 Field.Take(fieldItem.Context.StartCell, item.SquadPlan.Size);
         }
 
-        private void OnDropToUI(IPlacementDrag item)
+        private void OnDropToUI(DragContext item)
         {
+            _menu.SetPlacingUnavailable();
             item.Dispose();
 
             if (item is FieldDragContext fieldItem)
@@ -114,6 +121,17 @@ namespace Battler.Battle.DragAndDrop
                 Commander.Remove(fieldItem.Context);
                 _menu.ArmyPannel.Add(item.SquadPlan);
             }
+        }
+
+        private void OnUIHover(DragContext item)
+        {
+            if (item is FieldDragContext)
+                _menu.SetPlacingAvailable();
+        }
+
+        private void OnWorldHover(DragContext context)
+        {
+            _menu.SetPlacingUnavailable();
         }
 
         private void OnPlayClicked() => RaiseDeploymentFinished();

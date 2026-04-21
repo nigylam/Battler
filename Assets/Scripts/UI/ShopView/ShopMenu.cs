@@ -20,12 +20,14 @@ public class ShopMenu : MonoBehaviour
         _exitButton.onClick.AddListener(OnExitClick);
         _shopPanel.Buy += OnBuyGood;
         UpdateShopPanel();
+        _goldCounter.Enable();
     }
 
     private void OnDisable()
     {
         _exitButton.onClick.RemoveListener(OnExitClick);
         _shopPanel.Buy -= OnBuyGood;
+        _goldCounter.Disable();
     }
 
     public void Initialize(Gold gold, Shop shop, SquadKeeper keeper)

@@ -9,7 +9,6 @@ public class TextCounter : Counter
     public override void Initialize(ICountable stat)
     {
         base.Initialize(stat);
-        Enable();
     }
 
     public override void ChangeValue()

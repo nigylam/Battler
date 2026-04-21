@@ -31,6 +31,7 @@ namespace Battler.UI.LevelView
             _shopButton.onClick.AddListener(OnShopClick);
             _settingsButton.onClick.AddListener(OnSettingsClick);
             _mainMenuButton.onClick.AddListener(OnMainMenuClick);
+            _goldCounter.Enable();
         }
 
         private void OnDisable()
@@ -41,6 +42,7 @@ namespace Battler.UI.LevelView
             _shopButton.onClick.RemoveListener(OnShopClick);
             _settingsButton.onClick.RemoveListener(OnSettingsClick);
             _mainMenuButton.onClick.RemoveListener(OnMainMenuClick);
+            _goldCounter.Disable();
         }
 
         public void Initialize(Gold gold)

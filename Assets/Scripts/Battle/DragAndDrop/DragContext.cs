@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 namespace Battler.Battle.DragAndDrop
 {
-    public abstract class DragContext : IPlacementDrag
+    public abstract class DragContext
     {
         private readonly DragVisual _visual;
         private readonly DragVisualSpawner _spawner;
