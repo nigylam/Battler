@@ -1,66 +1,60 @@
+using Battler.Core.SquadKeeping;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShopMenu : MonoBehaviour
+namespace Battler.UI.ShopView
 {
-    [SerializeField] private ArmyPannel _armyPanel;
-    [SerializeField] private ShopPanel _shopPanel;
-    [SerializeField] private TextCounter _goldCounter;
-    [SerializeField] private Button _exitButton;
-
-    private Shop _shop;
-    private Gold _gold;
-    private SquadKeeper _keeper;
-
-    public event Action Exit;
-
-    private void OnEnable()
+    public class ShopMenu : MonoBehaviour
     {
-        _exitButton.onClick.AddListener(OnExitClick);
-        _shopPanel.Buy += OnBuyGood;
-        UpdateShopPanel();
-        _goldCounter.Enable();
-    }
+        [SerializeField] private ArmyPanel _armyPanel;
+        [SerializeField] private ShopPanel _shopPanel;
+        [SerializeField] private TextCounter _goldCounter;
+        [SerializeField] private Button _exitButton;
 
-    private void OnDisable()
-    {
-        _exitButton.onClick.RemoveListener(OnExitClick);
-        _shopPanel.Buy -= OnBuyGood;
-        _goldCounter.Disable();
-    }
+        private Shop _shop;
+        private Gold _gold;
+        private GameSquadKeeper _keeper;
 
-    public void Initialize(Gold gold, Shop shop, SquadKeeper keeper)
-    {
-        _goldCounter.Initialize(gold);
-        _shop = shop;
-        _gold = gold;
-        _keeper = keeper;
-        UpdateArmyPanel();
-    }
+        public event Action Exit;
 
-    private void UpdateArmyPanel()
-    {
-        _armyPanel.SetItems(_keeper.GetSquads());
-    }
-
-    private void UpdateShopPanel()
-    {
-        _shopPanel.SetItems(_shop.Goods);
-    }
-
-    private void OnExitClick()
-    {
-        _exitButton.onClick.RemoveListener(OnExitClick);
-        Exit?.Invoke();
-    }
-
-    private void OnBuyGood(SquadGood good)
-    {
-        if (_shop.TryBuy(good, _gold, out SquadPlan squad))
+        private void OnEnable()
         {
-            _keeper.AddSquad(squad);
-            UpdateArmyPanel();
+            _exitButton.onClick.AddListener(OnExitClick);
+            _shopPanel.Buy += OnBuyGood;
+            _goldCounter.Enable();
+        }
+
+        private void OnDisable()
+        {
+            _exitButton.onClick.RemoveListener(OnExitClick);
+            _shopPanel.Buy -= OnBuyGood;
+            _goldCounter.Disable();
+        }
+
+        public void Initialize(Gold gold, Shop shop, GameSquadKeeper keeper)
+        {
+            _goldCounter.Initialize(gold);
+            _shop = shop;
+            _gold = gold;
+            _keeper = keeper;
+            _armyPanel.SetItems(_keeper);
+            _shopPanel.SetItems(_shop);
+        }
+
+        private void OnExitClick()
+        {
+            _exitButton.onClick.RemoveListener(OnExitClick);
+            Exit?.Invoke();
+        }
+
+        private void OnBuyGood(SquadGood good)
+        {
+            if (_shop.TryBuy(good, _gold, out SquadPlan squad))
+            {
+                GameSquadCell squadCell = new(squad, 1);
+                _keeper.AddSquad(squadCell);
+            }
         }
     }
 }

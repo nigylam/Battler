@@ -1,46 +1,46 @@
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class SquadKeeper
+namespace Battler
 {
-    private Dictionary<SquadPlan, int> _squads;
-
-    public SquadKeeper(Dictionary<SquadPlan, int> squads) 
-    {  
-        _squads = squads;
-
-        if(squads == null)
-            throw new ArgumentNullException(nameof(squads));
-    }
-
-    public List<SquadData> GetSquads()
+    public abstract class SquadKeeper<TSquad> : Keeper<TSquad> where TSquad : SquadCell
     {
-        List<SquadData> squads = new();
+        public SquadKeeper(List<TSquad> squads) : base(squads) { }
 
-        foreach (SquadPlan squad in _squads.Keys)
+        public override void AddSquad(TSquad squad)
         {
-            squads.Add(new SquadData(squad, _squads[squad]));
+            if (squad == null)  
+                throw new ArgumentNullException(nameof(squad));
+
+            if (Contains(squad, out TSquad containingSquad))
+                containingSquad.Increase(squad.Count);
+            else
+                Add(squad);
+
+            RaiseChanged();
         }
 
-        return squads;
-    }
+        public override void RemoveSquad(TSquad squad)
+        {
+            if (squad == null)
+                throw new ArgumentNullException(nameof(squad));
 
-    public int GetSquadsCount(SquadPlan squad)
-    {
-        if(squad == null)
-            throw new ArgumentNullException(nameof(squad));
+            if (Contains(squad, out TSquad squadContext) == false)
+                throw new InvalidOperationException(nameof(RemoveSquad));
 
-        if(_squads.TryGetValue(squad, out int squadsCount))
-            return squadsCount;
+            if (squadContext.Count == 1)
+            {
+                Remove(squadContext);
+            }
+            else
+            {
+                squadContext.Decrease();
+            }
 
-        return 0;
-    }
+            RaiseChanged();
+        }
 
-    public void AddSquad(SquadPlan squad)
-    {
-        if(_squads.ContainsKey(squad))
-            _squads[squad]++;
-        else
-            _squads.Add(squad, 1);
+        protected abstract bool Contains(TSquad squad, out TSquad containingSquad);
     }
 }

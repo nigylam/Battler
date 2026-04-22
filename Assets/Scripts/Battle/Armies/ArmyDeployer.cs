@@ -34,7 +34,7 @@ namespace Battler.Battle.Armies
             if (Creator.TryCreate(plan, startCell, SquadsParrent, Field, createUpgraded, out Squad squad) == false)
                 throw new ArgumentOutOfRangeException(nameof(startCell));
 
-            Commander.Add(squad, plan, startCell);
+            Commander.Add(squad, plan, startCell, createUpgraded);
         }
 
         protected void RaiseDeploymentFinished()

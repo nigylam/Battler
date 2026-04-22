@@ -1,11 +1,12 @@
 using Battler.Core;
+using Battler.Core.SquadKeeping;
 using Battler.Meta;
 
 public class GameContext
 {
     public GameContext
     (
-        SquadKeeper squadKeeper,
+        GameSquadKeeper squadKeeper,
         Gold gold,
         Shop shop,
         LevelProgress levelProgress,
@@ -20,7 +21,7 @@ public class GameContext
         Rewarder = new Rewarder();
     }
 
-    public SquadKeeper SquadKeeper { get; }
+    public GameSquadKeeper SquadKeeper { get; }
     public Gold Gold { get; }
     public Shop Shop { get; }
     public LevelProgress LevelProgress { get; }

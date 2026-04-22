@@ -20,7 +20,9 @@ namespace Battler.Battle.Armies
 
         public override void StartLevel(GameContext context)
         {
-            _beforeBattleMenu.SetSquads(context.SquadKeeper);
+            BattleSquadKeeper battleSquadKeeper = new(context.SquadKeeper);
+            _beforeBattleMenu.SetSquads(battleSquadKeeper);
+            _deployer.Set(battleSquadKeeper);
         }
 
         protected override void OnAwake()

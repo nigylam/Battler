@@ -1,8 +1,10 @@
+using Battler.Core.SquadKeeping;
 using Battler.Meta;
 using Battler.State;
 using Battler.UI;
 using Battler.UI.BattleView;
 using Battler.UI.LevelView;
+using Battler.UI.ShopView;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,7 +31,7 @@ namespace Battler.Core
 
         private void Awake()
         {
-            SquadKeeper squadKeeper = SquadKeeperFabric.Create(_startSquadSet);
+            GameSquadKeeper squadKeeper = SquadKeeperFabric.Create(_startSquadSet);
             var gold = new Gold();
             Shop shop = Create();
             LevelProgress levelProgress = new LevelProgress(_levelConfigs);

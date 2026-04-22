@@ -1,4 +1,5 @@
 using Battler.State;
+using Battler.UI.ShopView;
 
 public class ShopState : GameState
 {

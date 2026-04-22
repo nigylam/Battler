@@ -1,12 +1,18 @@
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using Battler;
+using Battler.UI.SquadView;
 
-public class Shop
+public class Shop : ISquadViewable<SquadGood>
 {
-    private Dictionary<SquadGoodConfig, SquadGood> _goods;
+    private readonly Dictionary<SquadGoodConfig, SquadGood> _goods;
 
-    public Shop(List<SquadGoodConfig> goods)
+    public event Action Changed;
+
+    public IReadOnlyList<SquadGood> Squads => _goods.Values.ToList();
+
+    public Shop(List<SquadGoodConfig> goods) : base()
     {
         if(goods == null)
             throw new ArgumentNullException(nameof(goods));
@@ -21,8 +27,6 @@ public class Shop
             _goods.Add(good, new SquadGood(good));
         }
     }
-
-    public IReadOnlyCollection<SquadGood> Goods => _goods.Values;
 
     public bool TryBuy(SquadGood good, Gold gold, out SquadPlan squad)
     {
@@ -54,5 +58,6 @@ public class Shop
             throw new InvalidOperationException(nameof(Unlock));
 
         _goods[goodConfig].Unlock();
+        Changed?.Invoke();
     }
 }

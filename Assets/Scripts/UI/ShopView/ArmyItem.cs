@@ -1,13 +1,6 @@
-using TMPro;
 using UnityEngine;
 
-public class ArmyItem : Item<SquadData>
+namespace Battler.UI.ShopView
 {
-    [SerializeField] private TextMeshProUGUI _count;
-
-    public override void Initialize(SquadData data)
-    {
-        SetSquad(data.SquadPlan);
-        _count.text = data.Count.ToString();
-    }
+    public class ArmyItem : SquadItem<GameSquadCell> { }
 }

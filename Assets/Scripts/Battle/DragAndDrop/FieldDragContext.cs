@@ -1,3 +1,4 @@
+using Battler.Battle.Squads;
 using UnityEngine;
 
 namespace Battler.Battle.DragAndDrop
@@ -6,15 +7,15 @@ namespace Battler.Battle.DragAndDrop
     {
         public FieldDragContext
         (
-            SquadContext squad, 
+            SquadFieldContext squadContext, 
             DragVisual visual, 
             DragVisualSpawner visualSpawner,
             UnitDragger drager
-        ) :base(squad.Plan, visual, visualSpawner, drager)
+        ) :base(squadContext.Plan, squadContext.CreateUpgraded, visual, visualSpawner, drager)
         {
-            Context = squad;
+            Context = squadContext;
         }
 
-        public SquadContext Context { get; }
+        public SquadFieldContext Context { get; }
     }
 }

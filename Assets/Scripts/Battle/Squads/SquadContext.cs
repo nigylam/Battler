@@ -1,26 +1,21 @@
-public class SquadContext
+using UnityEngine;
+
+namespace Battler.Battle.Squads
 {
-    public SquadContext(Squad squad, SquadPlan plan, (int x, int y) startCell)
+    public class SquadContext
     {
-        Squad = squad;
-        Plan = plan;
-        StartCell = startCell;
-        CreateUpgraded = false;
-    }
+        public SquadContext(SquadPlan plan, bool createUpgraded = false)
+        {
+            Plan = plan;
+            CreateUpgraded = createUpgraded;
+        }
 
-    public Squad Squad { get; }
-    public SquadPlan Plan { get; }
-    public (int x, int y) StartCell { get; private set; }
-    public bool CreateUpgraded { get; private set; }
+        public SquadPlan Plan { get; }
+        public bool CreateUpgraded { get; private set; }
 
-    public void Upgrade()
-    {
-        CreateUpgraded = true;
-        Squad.Upgrade();
-    }
-
-    internal void UpdatePosition((int x, int y) startCell)
-    {
-        StartCell = startCell;
+        public void Upgrade()
+        {
+            CreateUpgraded = true;
+        }
     }
 }

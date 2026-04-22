@@ -1,14 +1,16 @@
+using Battler;
+using Battler.Core.SquadKeeping;
 using System.Collections.Generic;
 
 public static class SquadKeeperFabric
 {
-    public static SquadKeeper Create(StartSquadsConfig squadSet)
+    public static GameSquadKeeper Create(StartSquadsConfig squadSet)
     {
-        Dictionary<SquadPlan, int> squads = new Dictionary<SquadPlan, int>();
+        List<GameSquadCell> squads = new();
 
         foreach(SquadConfig cell in squadSet.Squads)
-            squads.Add(cell.Squad, cell.Count);
+            squads.Add(new GameSquadCell(cell.Squad, cell.Count));
 
-        return new SquadKeeper(squads);
+        return new GameSquadKeeper(squads);
     }
 }

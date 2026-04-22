@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 4577850399818397731}
   - component: {fileID: 4955084011917354379}
   - component: {fileID: 6583803916449000111}
-  - component: {fileID: 6136518528993041733}
+  - component: {fileID: 4205314028690771474}
   m_Layer: 8
   m_Name: ArmyItem
   m_TagString: Untagged
@@ -211,7 +211,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6136518528993041733
+--- !u!114 &4205314028690771474
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -220,7 +220,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8490059260683201319}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16b1511350f55464694bc7e6dafd5e2b, type: 3}
+  m_Script: {fileID: 11500000, guid: 444a4d5bf8d99284d9edfece2396ac54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _icon: {fileID: 6583803916449000111}

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class Item<TData> : MonoBehaviour, IInitializable<TData>
+public abstract class Item<TSquad> : MonoBehaviour
 {
     [SerializeField] private Image _icon;
 
@@ -9,7 +9,7 @@ public abstract class Item<TData> : MonoBehaviour, IInitializable<TData>
 
     public SquadPlan SquadPlan => _squad;
 
-    public abstract void Initialize(TData data);
+    public abstract void Initialize(TSquad squad);
 
     protected void SetSquad(SquadPlan squad)
     {

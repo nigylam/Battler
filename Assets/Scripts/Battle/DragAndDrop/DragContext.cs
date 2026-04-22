@@ -1,3 +1,4 @@
+using Battler.Battle.Squads;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -10,9 +11,10 @@ namespace Battler.Battle.DragAndDrop
         private readonly DragVisualSpawner _spawner;
         private readonly IDragable _dragable;
 
-        public DragContext(SquadPlan plan, DragVisual visual, DragVisualSpawner visualSpawner, IDragable dragable)
+        public DragContext(SquadPlan squadPlan, bool createUpgraded, DragVisual visual, DragVisualSpawner visualSpawner, IDragable dragable)
         {
-            SquadPlan = plan;
+            SquadPlan = squadPlan;
+            CreateUpgraded = createUpgraded;
             _visual = visual;
             _spawner = visualSpawner;
             _dragable = dragable;
@@ -23,6 +25,7 @@ namespace Battler.Battle.DragAndDrop
         public event Action<PointerEventData> DragEnded;
 
         public SquadPlan SquadPlan { get; }
+        public bool CreateUpgraded { get; }
 
         public void Dispose()
         {

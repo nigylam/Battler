@@ -1,4 +1,5 @@
 using Battler.Battle.Armies;
+using Battler.Battle.Squads;
 using Battler.UI.BattleView;
 using System;
 using UnityEngine;
@@ -10,6 +11,8 @@ namespace Battler.Battle.DragAndDrop
         private readonly BeforeBattleMenu _menu;
         private readonly SquadPlacer _placer;
         private readonly DragVisualSpawner _visualSpawner;
+
+        private BattleSquadKeeper _keeper;
 
         public PlayerArmyDeployer
         (
@@ -25,6 +28,11 @@ namespace Battler.Battle.DragAndDrop
             _menu = menu;
             _placer = placer;
             _visualSpawner = visualSpawner;
+        }
+
+        public void Set(BattleSquadKeeper keeper)
+        {
+            _keeper = keeper;
         }
 
         public void EnablePlacing()
@@ -70,7 +78,7 @@ namespace Battler.Battle.DragAndDrop
             _placer.StartDrag(menuDrag);
         }
 
-        private void OnFieldDragStarted(SquadContext context, UnitDragger dragger)
+        private void OnFieldDragStarted(SquadFieldContext context, UnitDragger dragger)
         {
             context.Squad.HideVisuals();
             Field.Free(context.StartCell, context.Plan.Size);
@@ -97,8 +105,8 @@ namespace Battler.Battle.DragAndDrop
             }
             else
             {
-                _menu.ArmyPannel.Remove(item.SquadPlan);
-                CreateSquad(item.SquadPlan, startCell);
+                _keeper.RemoveSquad(new BattleSquadCell(item.SquadPlan, 1, item.CreateUpgraded));
+                CreateSquad(item.SquadPlan, startCell, item.CreateUpgraded);
             }
 
             ValidatePlayButton();
@@ -124,7 +132,7 @@ namespace Battler.Battle.DragAndDrop
             if (item is FieldDragContext fieldItem)
             {
                 Commander.Remove(fieldItem.Context);
-                _menu.ArmyPannel.Add(item.SquadPlan);
+                _keeper.AddSquad(new BattleSquadCell(item.SquadPlan, 1, item.CreateUpgraded));
             }
         }
 

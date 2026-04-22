@@ -1,3 +1,4 @@
+using Battler.Battle.Squads;
 using Battler.UI.BattleView;
 
 namespace Battler.Battle.DragAndDrop
@@ -11,7 +12,7 @@ namespace Battler.Battle.DragAndDrop
             DragItem sourceItem,
             DragVisual visual,
             DragVisualSpawner spawner
-        ) : base(sourceItem.SquadPlan, visual, spawner, sourceItem)
+        ) : base(sourceItem.SquadPlan, sourceItem.CreateUpgraded, visual, spawner, sourceItem)
         {
             _dragItem = sourceItem;
         }

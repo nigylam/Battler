@@ -1,3 +1,5 @@
+using Battler.Battle.Squads;
+using Battler.Core.SquadKeeping;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,10 +17,9 @@ namespace Battler.UI.BattleView
 
         public DragArmyPanel ArmyPannel => _armyPanel;
 
-        public void SetSquads(SquadKeeper keeper)
+        public void SetSquads(Keeper<BattleSquadCell> keeper)
         {
-            _armyPanel.Clear();
-            _armyPanel.SetItems(keeper.GetSquads());
+            _armyPanel.SetItems(keeper);
         }
 
         public void SetPlayButtonActive()
