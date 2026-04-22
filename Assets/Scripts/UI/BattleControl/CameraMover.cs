@@ -7,10 +7,12 @@ using UnityEngine.EventSystems;
 public class CameraMover : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
     [SerializeField] private Transform _camera;
+    [SerializeField] private EdgePannel _bottomEdgePannel;
+    [SerializeField] private EdgePannel _topEdgePannel;
     [SerializeField] private float _dragSensitivity;
     [SerializeField] private float _edgePannelSpeed;
-    [SerializeField] private EdgePannel _topEdgePannel;
-    [SerializeField] private EdgePannel _bottomEdgePannel;
+    [SerializeField] private float _zMin;
+    [SerializeField] private float _zMax;
 
     private bool _isDragging = false;
     private float _currentEdgeDirection = 0f;
@@ -52,9 +54,16 @@ public class CameraMover : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         if (_isDragging == false && _currentEdgeDirection != 0f)
         {
+            //Vector3 moveDirection = new(0, 0, Mathf.Clamp(_currentEdgeDirection, _zMin, _zMax));
             Vector3 moveDirection = new(0, 0, _currentEdgeDirection);
             _camera.Translate(moveDirection * _edgePannelSpeed * Time.deltaTime, Space.World);
         }
+
+        if(_camera.position.z < _zMin)
+            _camera.position = new Vector3(_camera.position.x, _camera.position.y, _zMin);
+
+        if (_camera.position.z > _zMax)
+            _camera.position = new Vector3(_camera.position.x, _camera.position.y, _zMax);
     }
 
     public void OnPointerDown(PointerEventData eventData)
