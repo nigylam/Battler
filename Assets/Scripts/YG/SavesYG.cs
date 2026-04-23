@@ -1,6 +1,3 @@
-using Battler;
-using Battler.Core.SquadKeeping;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
