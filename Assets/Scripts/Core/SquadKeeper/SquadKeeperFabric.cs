@@ -1,6 +1,8 @@
 using Battler;
 using Battler.Core.SquadKeeping;
 using System.Collections.Generic;
+using UnityEngine;
+using YG;
 
 public static class SquadKeeperFabric
 {
@@ -11,6 +13,13 @@ public static class SquadKeeperFabric
         foreach(SquadConfig cell in squadSet.Squads)
             squads.Add(new GameSquadCell(cell.Squad, cell.Count));
 
-        return new GameSquadKeeper(squads);
+        GameSquadKeeper gameSquadKeeper = new(squads);
+
+        foreach (SquadPlan squad in YG2.saves.boughtSquads)
+        {
+            gameSquadKeeper.AddSquad(new GameSquadCell(squad, 1));
+        }
+
+        return gameSquadKeeper;
     }
 }

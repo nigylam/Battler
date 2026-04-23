@@ -54,7 +54,6 @@ public class CameraMover : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         if (_isDragging == false && _currentEdgeDirection != 0f)
         {
-            //Vector3 moveDirection = new(0, 0, Mathf.Clamp(_currentEdgeDirection, _zMin, _zMax));
             Vector3 moveDirection = new(0, 0, _currentEdgeDirection);
             _camera.Translate(moveDirection * _edgePannelSpeed * Time.deltaTime, Space.World);
         }

@@ -1,4 +1,5 @@
 using System;
+using YG;
 
 public class Gold : ICountable
 {
@@ -6,7 +7,7 @@ public class Gold : ICountable
 
     public Gold() 
     {
-        _count = 100;
+        _count = YG2.saves.gold;
     }
 
     public event Action Changed;
@@ -22,6 +23,8 @@ public class Gold : ICountable
         private set
         {
             _count = (int)value;
+            YG2.saves.gold = (int)Current;
+            YG2.SaveProgress();
             Changed?.Invoke();
         }
 

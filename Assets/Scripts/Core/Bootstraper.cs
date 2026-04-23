@@ -7,6 +7,7 @@ using Battler.UI.LevelView;
 using Battler.UI.ShopView;
 using System.Collections.Generic;
 using UnityEngine;
+using YG;
 
 namespace Battler.Core
 {
@@ -34,7 +35,7 @@ namespace Battler.Core
             GameSquadKeeper squadKeeper = SquadKeeperFabric.Create(_startSquadSet);
             var gold = new Gold();
             Shop shop = Create();
-            LevelProgress levelProgress = new LevelProgress(_levelConfigs);
+            LevelProgress levelProgress = new (_levelConfigs, YG2.saves.openedLevels);
             _levelMenu.Initialize(gold);
             _shopMenu.Initialize(gold, shop, squadKeeper);
 
@@ -49,12 +50,12 @@ namespace Battler.Core
 
             var stateMachine = new GameStateMachine
             (
-                context, 
-                _mainMenu, 
-                _levelMenu, 
-                _shopMenu, 
-                _battleEndScreen, 
-                _battlePauseMenu, 
+                context,
+                _mainMenu,
+                _levelMenu,
+                _shopMenu,
+                _battleEndScreen,
+                _battlePauseMenu,
                 _settingsMenu,
                 _leaderboardPannel
             );

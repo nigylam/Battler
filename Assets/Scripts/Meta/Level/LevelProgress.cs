@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using YG;
 
 namespace Battler.Meta
 {
@@ -10,7 +11,7 @@ namespace Battler.Meta
         private readonly Dictionary<LevelConfig, Level> _levels = new Dictionary<LevelConfig, Level>();
         private readonly List<LevelConfig> _levelConfigs = new();
 
-        public LevelProgress(List<LevelConfig> levels)
+        public LevelProgress(List<LevelConfig> levels, List<LevelConfig> openedLevels)
         {
             if (levels == null)
                 throw new ArgumentNullException(nameof(levels));
@@ -26,6 +27,15 @@ namespace Battler.Meta
             }
 
             _levels[_levelConfigs[0]].SetOpened();
+
+            foreach (LevelConfig level in openedLevels)
+            {
+                _levels[level].SetOpened();
+                int previousLevelIndex = _levelConfigs.IndexOf(level) - 1;
+
+                if (previousLevelIndex >= 0)
+                    _levels[_levelConfigs[previousLevelIndex]].SetCompleted();
+            }
         }
 
         public bool AllLevelsCompleted { get; private set; }
@@ -46,6 +56,8 @@ namespace Battler.Meta
             {
                 LevelConfig nextLevel = _levelConfigs[nextLevelIndex];
                 _levels[nextLevel].SetOpened();
+                YG2.saves.openedLevels.Add(nextLevel);
+                YG2.SaveProgress();
             }
             else
             {

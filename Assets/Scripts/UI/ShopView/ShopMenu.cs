@@ -1,7 +1,9 @@
 using Battler.Core.SquadKeeping;
+using Battler.Meta;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using YG;
 
 namespace Battler.UI.ShopView
 {
@@ -54,6 +56,8 @@ namespace Battler.UI.ShopView
             {
                 GameSquadCell squadCell = new(squad, 1);
                 _keeper.AddSquad(squadCell);
+                YG2.saves.boughtSquads.Add(squadCell.Plan);
+                YG2.SaveProgress();
             }
         }
     }
