@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using Battler.UI.SquadView;
 using YG;
+using UnityEngine;
 
 namespace Battler.Meta
 {

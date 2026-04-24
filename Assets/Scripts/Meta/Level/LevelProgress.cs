@@ -16,6 +16,9 @@ namespace Battler.Meta
             if (levels == null)
                 throw new ArgumentNullException(nameof(levels));
 
+            if(openedLevels == null)
+                throw new ArgumentNullException(nameof(openedLevels));
+
             _levelConfigs.AddRange(levels);
 
             foreach (LevelConfig level in levels)
@@ -30,6 +33,9 @@ namespace Battler.Meta
 
             foreach (LevelConfig level in openedLevels)
             {
+                if(level == null)
+                    throw new ArgumentNullException(nameof(level));
+
                 _levels[level].SetOpened();
                 int previousLevelIndex = _levelConfigs.IndexOf(level) - 1;
 

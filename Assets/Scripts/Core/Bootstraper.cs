@@ -1,4 +1,5 @@
 using Battler.Core.SquadKeeping;
+using Battler.Localization;
 using Battler.Meta;
 using Battler.State;
 using Battler.UI;
@@ -30,6 +31,8 @@ namespace Battler.Core
         [SerializeField] private ShopSet _shopSet;
         [SerializeField] private List<LevelConfig> _levelConfigs;
 
+        private Language _language;
+
         private void Awake()
         {
             GameSquadKeeper squadKeeper = SquadKeeperFabric.Create(_startSquadSet);
@@ -38,6 +41,7 @@ namespace Battler.Core
             LevelProgress levelProgress = new (_levelConfigs, YG2.saves.openedLevels);
             _levelMenu.Initialize(gold);
             _shopMenu.Initialize(gold, shop, squadKeeper);
+            _settingsMenu.Initialize(new Language("en", "ru", "tr"));
 
             var context = new GameContext
             (

@@ -15,7 +15,7 @@ public static class SquadKeeperFabric
 
         GameSquadKeeper gameSquadKeeper = new(squads);
 
-        foreach (SquadPlan squad in YG2.saves.boughtSquads)
+        foreach(SquadPlan squad in YG2.saves.boughtSquads)
         {
             gameSquadKeeper.AddSquad(new GameSquadCell(squad, 1));
         }
