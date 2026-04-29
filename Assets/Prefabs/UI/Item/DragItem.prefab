@@ -496,6 +496,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 480a70d71c61d7b499fb89920599ebe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _icon: {fileID: 0}
-  _count: {fileID: 0}
+  _icon: {fileID: 868018585039899997}
+  _count: {fileID: 8781548689614480581}
   _upgradeMark: {fileID: 3315079670729176746}

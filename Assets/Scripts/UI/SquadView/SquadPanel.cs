@@ -1,11 +1,11 @@
 using Battler.UI.SquadView;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public abstract class SquadPanel<TItem, TSquad> : MonoBehaviour where TItem : Item<TSquad>
 {
     [SerializeField] private TItem _itemPrefab;
+    [SerializeField] private Transform _itemParrent;
 
     private readonly List<TItem> _items = new();
 
@@ -60,7 +60,7 @@ public abstract class SquadPanel<TItem, TSquad> : MonoBehaviour where TItem : It
 
     private void AddItem(TSquad data)
     {
-        TItem item = Instantiate(_itemPrefab, transform);
+        TItem item = Instantiate(_itemPrefab, _itemParrent);
         item.Initialize(data);
         _items.Add(item);
     }

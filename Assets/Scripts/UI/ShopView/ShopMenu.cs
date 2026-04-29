@@ -40,8 +40,8 @@ namespace Battler.UI.ShopView
             _shop = shop;
             _gold = gold;
             _keeper = keeper;
-            _armyPanel.SetItems(_keeper);
             _shopPanel.SetItems(_shop);
+            _armyPanel.SetItems(_keeper);
         }
 
         private void OnExitClick()

@@ -1,3 +1,4 @@
+using Battler.UI.BattleView;
 using System;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ public class RoundWinsPannel : MonoBehaviour
     [SerializeField] private IconCounter _enemyWinsIcons;
     [SerializeField] private WinsCounter _playerWinsCounter;
     [SerializeField] private IconCounter _playerWinsIcons;
+    [SerializeField] private Canvas _canvas;
 
     public event Action PlayerWin;
     public event Action EnemyWin;
@@ -29,6 +31,7 @@ public class RoundWinsPannel : MonoBehaviour
         _enemyWinsIcons.Initialize(_enemyWinsCounter);
         _playerWinsCounter.Initialize(roundsToWin);
         _playerWinsIcons.Initialize(_playerWinsCounter);
+
     }
 
     public void PlayerIncrease()

@@ -5,8 +5,8 @@ public class SquadPlan : MonoBehaviour
 {
     [SerializeField] private Unit _unitPrefab;
     [SerializeField] private SquadPreview _preview;
-    [SerializeField] private Image _dragIcon;
-    [SerializeField] private Image _uiIcon;
+    [SerializeField] private Sprite _dragIcon;
+    [SerializeField] private Sprite _uiIcon;
     [SerializeField] private int _unitCount;
     [SerializeField] private int _sizeX;
     [SerializeField] private int _sizeY;
@@ -14,7 +14,7 @@ public class SquadPlan : MonoBehaviour
     public (int x, int y) Size => (_sizeX, _sizeY);
     public int Count => _unitCount;
     public Unit Unit => _unitPrefab;
-    public Image DragIcon => _dragIcon;
-    public Image UiIcon => _uiIcon;
+    public Sprite DragIcon => _dragIcon;
+    public Sprite UiIcon => _uiIcon;
     public SquadPreview Preview => _preview;
 }

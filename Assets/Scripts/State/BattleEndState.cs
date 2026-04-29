@@ -1,3 +1,4 @@
+using Battler.UI.BattleView;
 using UnityEngine;
 
 namespace Battler.State

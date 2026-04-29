@@ -1,4 +1,5 @@
 using Battler;
+using Battler.UI.SquadView;
 using TMPro;
 using UnityEngine;
 

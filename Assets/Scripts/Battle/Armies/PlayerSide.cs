@@ -1,4 +1,3 @@
-using Battler;
 using Battler.Battle.DragAndDrop;
 using Battler.UI.BattleView;
 using UnityEngine;
@@ -7,7 +6,7 @@ namespace Battler.Battle.Armies
 {
     public class PlayerSide : Side
     {
-        [SerializeField] private BeforeBattleMenu _beforeBattleMenu;
+        [SerializeField] private BattleMenu _battleMenu;
         [SerializeField] private DragVisualSpawner _dragVisualSpawner;
         [SerializeField] private Camera _camera;
         [SerializeField] private LayerMask _groundMask;
@@ -21,14 +20,14 @@ namespace Battler.Battle.Armies
         public override void StartLevel(GameContext context)
         {
             BattleSquadKeeper battleSquadKeeper = new(context.SquadKeeper);
-            _beforeBattleMenu.SetSquads(battleSquadKeeper);
+            _battleMenu.SetSquads(battleSquadKeeper);
             _deployer.Set(battleSquadKeeper);
         }
 
         protected override void OnAwake()
         {
             _placer = new SquadPlacer(_camera, _groundMask, _thisCanvas);
-            _deployer = new PlayerArmyDeployer(_beforeBattleMenu, _placer, Field, Commander, _dragVisualSpawner, Creator, transform);
+            _deployer = new PlayerArmyDeployer(_battleMenu, _placer, Field, Commander, _dragVisualSpawner, Creator, transform);
         }
 
         protected override void Enable()

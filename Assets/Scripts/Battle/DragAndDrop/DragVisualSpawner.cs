@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,10 +8,12 @@ namespace Battler.Battle.DragAndDrop
     {
         [SerializeField] private Transform _uiDragContainer;
         [SerializeField] private Transform _worldContainer;
+        [SerializeField] private Image _dragImage;
 
         public DragVisual Spawn(SquadPlan plan)
         {
-            Image icon = Instantiate(plan.DragIcon, _uiDragContainer);
+            Image icon = Instantiate(_dragImage, _uiDragContainer);
+            icon.sprite = plan.DragIcon;
             SquadPreview preview = Instantiate(plan.Preview, _worldContainer);
             preview.gameObject.SetActive(false);
 

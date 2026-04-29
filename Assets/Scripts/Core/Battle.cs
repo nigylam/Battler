@@ -1,4 +1,5 @@
 using Battler.Battle.Armies;
+using Battler.UI.BattleView;
 using System;
 using UnityEngine;
 

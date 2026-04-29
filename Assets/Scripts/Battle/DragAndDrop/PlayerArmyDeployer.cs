@@ -8,7 +8,7 @@ namespace Battler.Battle.DragAndDrop
 {
     public class PlayerArmyDeployer : ArmyDeployer
     {
-        private readonly BeforeBattleMenu _menu;
+        private readonly BattleMenu _menu;
         private readonly SquadPlacer _placer;
         private readonly DragVisualSpawner _visualSpawner;
 
@@ -16,7 +16,7 @@ namespace Battler.Battle.DragAndDrop
 
         public PlayerArmyDeployer
         (
-            BeforeBattleMenu menu, 
+            BattleMenu menu, 
             SquadPlacer placer, 
             Field field, 
             ArmyCommander commander, 
@@ -37,9 +37,9 @@ namespace Battler.Battle.DragAndDrop
 
         public void EnablePlacing()
         {
-            _menu.gameObject.SetActive(true);
-            _menu.DragStarted += OnMenuDragStarted;
-            _menu.PlayButtonClicked += OnPlayClicked;
+            _menu.ArmyPannel.gameObject.SetActive(true);
+            _menu.ArmyPannel.DragStarted += OnMenuDragStarted;
+            _menu.StartButtonClicked += OnPlayClicked;
             Commander.DragStarted += OnFieldDragStarted;
             _placer.DropSuccess += OnDropSuccess;
             _placer.DropFail += OnDropFail;
@@ -50,14 +50,14 @@ namespace Battler.Battle.DragAndDrop
 
         public void DisablePlacing()
         {
-            _menu.DragStarted -= OnMenuDragStarted;
-            _menu.PlayButtonClicked -= OnPlayClicked;
+            _menu.ArmyPannel.DragStarted -= OnMenuDragStarted;
+            _menu.StartButtonClicked -= OnPlayClicked;
             Commander.DragStarted -= OnFieldDragStarted;
             _placer.DropSuccess -= OnDropSuccess;
             _placer.DropFail -= OnDropFail;
             _placer.DropToUI -= OnDropToUI;
             _placer.WorldHover -= OnWorldHover;
-            _menu.gameObject.SetActive(false);
+            _menu.ArmyPannel.gameObject.SetActive(false);
         }
 
         public void RespawnSurvived()

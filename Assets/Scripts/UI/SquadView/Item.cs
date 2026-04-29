@@ -1,19 +1,22 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class Item<TSquad> : MonoBehaviour
+namespace Battler.UI.SquadView
 {
-    [SerializeField] private Image _icon;
-
-    private SquadPlan _squad;
-
-    public SquadPlan SquadPlan => _squad;
-
-    public abstract void Initialize(TSquad squad);
-
-    protected void SetSquad(SquadPlan squad)
+    public abstract class Item<TSquad> : MonoBehaviour
     {
-        _squad = squad;
-        _icon.color = _squad.UiIcon.color;
+        [SerializeField] private Image _icon;
+
+        private SquadPlan _squad;
+
+        public SquadPlan SquadPlan => _squad;
+
+        public abstract void Initialize(TSquad squad);
+
+        protected void SetSquad(SquadPlan squad)
+        {
+            _squad = squad;
+            _icon.sprite = _squad.UiIcon;
+        }
     }
 }

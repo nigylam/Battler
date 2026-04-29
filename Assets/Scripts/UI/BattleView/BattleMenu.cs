@@ -2,88 +2,133 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BattleMenu : MonoBehaviour
+namespace Battler.UI.BattleView
 {
-    [SerializeField] private Button _pauseButton;
-    [SerializeField] private TextCounter _roundTextCounter;
-    [SerializeField] private RoundWinnerPannel _roundWinnerPannel;
-    [SerializeField] private RoundWinsPannel _roundWinsPannel;
-
-    private RoundCounter _roundCounter;
-    private bool _haveWinner;
-
-    public event Action Pause;
-    public event Action PlayerWin;
-    public event Action EnemyWin;
-
-    private void Awake()
+    public class BattleMenu : MonoBehaviour
     {
-        _roundCounter = new RoundCounter();
-    }
+        [SerializeField] private Button _pauseButton;
+        [SerializeField] private TextCounter _roundTextCounter;
+        [SerializeField] private RoundWinnerPannel _roundWinnerPannel;
+        [SerializeField] private RoundWinsPannel _roundWinsPannel;
+        [SerializeField] private Button _startButton;
+        [SerializeField] private DragArmyPanel _armyPanel;
+        [SerializeField] private Image _armyPanelImage;
+        [SerializeField] private Color _armyPanelDefaultColor;
+        [SerializeField] private Color _armyPanelPlacingColor;
 
-    private void OnEnable()
-    {
-        _roundTextCounter.Initialize(_roundCounter);
-        _roundTextCounter.Enable();
-        Restart();
-        _roundCounter.Increase();
-        _roundWinsPannel.EnemyWin += OnEnemyWin;
-        _roundWinsPannel.PlayerWin += OnPlayerWin;
-        _pauseButton.onClick.AddListener(OnPauseClick);
-    }
+        private RoundCounter _roundCounter;
+        private bool _haveWinner;
 
-    private void OnDisable()
-    {
-        _roundTextCounter.Disable();
-        _roundWinsPannel.EnemyWin -= OnEnemyWin;
-        _roundWinsPannel.PlayerWin -= OnPlayerWin;
-        _pauseButton.onClick.RemoveListener(OnPauseClick);
-        _roundWinnerPannel.gameObject.SetActive(false);
-    }
+        public event Action Pause;
+        public event Action PlayerWin;
+        public event Action EnemyWin;
+        public event Action StartButtonClicked;
 
-    public void Initialize(int roundsToWin)
-    {
-        _roundWinsPannel.Initialize(roundsToWin);
-    }
+        public DragArmyPanel ArmyPannel => _armyPanel;
 
-    public void OnPlayerWinRound()
-    {
-        _roundWinnerPannel.SetPlayerWinner();
-        _roundWinsPannel.PlayerIncrease();
 
-        if (_haveWinner == false)
+        private void Awake()
+        {
+            _roundCounter = new RoundCounter();
+        }
+
+        private void OnEnable()
+        {
+            _roundTextCounter.Initialize(_roundCounter);
+            _roundTextCounter.Enable();
+            Restart();
             _roundCounter.Increase();
-    }
+            _roundWinsPannel.EnemyWin += OnEnemyWin;
+            _roundWinsPannel.PlayerWin += OnPlayerWin;
+            _pauseButton.onClick.AddListener(OnPauseClick);
+        }
 
-    public void OnEnemyWinRound()
-    {
-        _roundWinnerPannel.SetEnemyWinner();
-        _roundWinsPannel.EnemyIncrease();
+        private void OnDisable()
+        {
+            _roundTextCounter.Disable();
+            _roundWinsPannel.EnemyWin -= OnEnemyWin;
+            _roundWinsPannel.PlayerWin -= OnPlayerWin;
+            _pauseButton.onClick.RemoveListener(OnPauseClick);
+            _startButton.onClick.RemoveListener(OnStartClick);
+            _startButton.gameObject.SetActive(false);
+            _roundWinnerPannel.gameObject.SetActive(false);
+        }
 
-        if (_haveWinner == false)
-            _roundCounter.Increase();
-    }
+        public void SetSquads(Keeper<BattleSquadCell> keeper)
+        {
+            _armyPanel.SetItems(keeper);
+        }
 
-    private void Restart()
-    {
-        _roundCounter.Restart();
-        _roundWinsPannel.Restart();
-    }
+        public void SetPlayButtonActive()
+        {
+            if (_startButton.gameObject.activeSelf)
+                return;
 
-    private void OnPauseClick()
-    {
-        Pause?.Invoke();
-    }
+            _startButton.gameObject.SetActive(true);
+            _startButton.onClick.AddListener(OnStartClick);
+        }
 
-    private void OnEnemyWin()
-    {
-        _haveWinner = true;
-        EnemyWin?.Invoke();
-    }
+        public void SetPlacingAvailable()
+        {
+            _armyPanelImage.color = _armyPanelPlacingColor;
+        }
 
-    private void OnPlayerWin()
-    {
-        _haveWinner = true;
-        PlayerWin?.Invoke();
+        public void SetPlacingUnavailable()
+        {
+            _armyPanelImage.color = _armyPanelDefaultColor;
+        }
+
+        public void Initialize(int roundsToWin)
+        {
+            _roundWinsPannel.Initialize(roundsToWin);
+        }
+
+        public void OnPlayerWinRound()
+        {
+            _roundWinnerPannel.SetPlayerWinner();
+            _roundWinsPannel.PlayerIncrease();
+
+            if (_haveWinner == false)
+                _roundCounter.Increase();
+        }
+
+        public void OnEnemyWinRound()
+        {
+            _roundWinnerPannel.SetEnemyWinner();
+            _roundWinsPannel.EnemyIncrease();
+
+            if (_haveWinner == false)
+                _roundCounter.Increase();
+        }
+
+        private void Restart()
+        {
+            _roundCounter.Restart();
+            _roundWinsPannel.Restart();
+        }
+
+        private void OnStartClick()
+        {
+            StartButtonClicked?.Invoke();
+            _startButton.onClick.RemoveListener(OnStartClick);
+            _startButton.gameObject.SetActive(false);   
+        }
+
+        private void OnPauseClick()
+        {
+            Pause?.Invoke();
+        }
+
+        private void OnEnemyWin()
+        {
+            _haveWinner = true;
+            EnemyWin?.Invoke();
+        }
+
+        private void OnPlayerWin()
+        {
+            _haveWinner = true;
+            PlayerWin?.Invoke();
+        }
     }
 }

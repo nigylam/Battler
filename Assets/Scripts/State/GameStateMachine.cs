@@ -1,3 +1,4 @@
+using Battler.UI.BattleView;
 using Battler.UI.ShopView;
 using System.Collections.Generic;
 using UnityEngine;
