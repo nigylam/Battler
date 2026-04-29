@@ -19,9 +19,7 @@ namespace Battler.UI
 
         void Awake()
         {
-            _audioSource = GetComponent<AudioSource>();
             _audioSource.ignoreListenerPause = true;
-            _button = GetComponent<Button>();
         }
 
         private void OnEnable()
@@ -44,7 +42,8 @@ namespace Battler.UI
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            _audioSource.PlayOneShot(_clickSound);
+            if (_clickSound != null)
+                _audioSource.PlayOneShot(_clickSound);
         }
 
         public void SetInteractable(bool isInteractable)
@@ -69,10 +68,13 @@ namespace Battler.UI
         {
             float t = 0;
 
-            while (t < _clickSound.length)
+            if (_clickSound != null)
             {
-                t += Time.unscaledDeltaTime;
-                yield return null;
+                while (t < _clickSound.length)
+                {
+                    t += Time.unscaledDeltaTime;
+                    yield return null;
+                }
             }
 
             Clicked?.Invoke();

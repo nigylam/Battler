@@ -2,7 +2,6 @@ using Battler.Core.SquadKeeping;
 using Battler.Meta;
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 using YG;
 
 namespace Battler.UI.ShopView
@@ -13,6 +12,9 @@ namespace Battler.UI.ShopView
         [SerializeField] private ShopPanel _shopPanel;
         [SerializeField] private TextCounter _goldCounter;
         [SerializeField] private UIButton _exitButton;
+        [SerializeField] private AudioSource _audioSource;
+        [SerializeField] private AudioClip _buySound;
+        [SerializeField] private AudioClip _cancelBuySound;
 
         private Shop _shop;
         private Gold _gold;
@@ -58,7 +60,17 @@ namespace Battler.UI.ShopView
                 _keeper.AddSquad(squadCell);
                 YG2.saves.boughtSquads.Add(squadCell.Plan);
                 YG2.SaveProgress();
+                PlayBuySound(_buySound);
             }
+            else
+            {
+                PlayBuySound(_cancelBuySound);
+            }
+        }
+
+        private void PlayBuySound(AudioClip clip)
+        {
+            _audioSource.PlayOneShot(clip);
         }
     }
 }

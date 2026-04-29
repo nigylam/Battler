@@ -12,8 +12,12 @@ namespace Battler.UI.LevelView
         [SerializeField] private UIButton _shopButton;
         [SerializeField] private UIButton _settingsButton;
         [SerializeField] private UIButton _mainMenuButton;
+        [SerializeField] private AudioSource _audioSource;
+        [SerializeField] private AudioClip _buySound;
+        [SerializeField] private AudioClip _cancelBuySound;
 
         private bool _winGameNotificationShowed;
+        private LevelProgress _levelProgress;
 
         public event Action<LevelConfig> Start;
         public event Action Shop;
@@ -25,7 +29,10 @@ namespace Battler.UI.LevelView
         private void OnEnable()
         {
             foreach (LevelButton levelButton in _levelButtons)
+            {
                 levelButton.Clicked += OnLevelClick;
+                levelButton.SetInteractable(_levelProgress.Opened(levelButton.Level));
+            }
 
             _shopButton.Clicked += OnShopClick;
             _settingsButton.Clicked += OnSettingsClick;
@@ -44,9 +51,10 @@ namespace Battler.UI.LevelView
             _goldCounter.Disable();
         }
 
-        public void Initialize(Gold gold)
+        public void Initialize(Gold gold, LevelProgress progress)
         {
             _goldCounter.Initialize(gold);
+            _levelProgress = progress;
         }
 
         public void Enable(LevelProgress levelProgress)

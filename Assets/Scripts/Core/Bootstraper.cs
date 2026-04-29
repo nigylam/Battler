@@ -39,7 +39,7 @@ namespace Battler.Core
             var gold = new Gold();
             Shop shop = Create();
             LevelProgress levelProgress = new (_levelConfigs, YG2.saves.openedLevels);
-            _levelMenu.Initialize(gold);
+            _levelMenu.Initialize(gold, levelProgress);
             _shopMenu.Initialize(gold, shop, squadKeeper);
             _settingsMenu.Initialize(new Language("en", "ru", "tr"));
 
