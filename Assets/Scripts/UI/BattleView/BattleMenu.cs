@@ -6,11 +6,11 @@ namespace Battler.UI.BattleView
 {
     public class BattleMenu : MonoBehaviour
     {
-        [SerializeField] private Button _pauseButton;
+        [SerializeField] private UIButton _pauseButton;
         [SerializeField] private TextCounter _roundTextCounter;
         [SerializeField] private RoundWinnerPannel _roundWinnerPannel;
         [SerializeField] private RoundWinsPannel _roundWinsPannel;
-        [SerializeField] private Button _startButton;
+        [SerializeField] private UIButton _startButton;
         [SerializeField] private DragArmyPanel _armyPanel;
         [SerializeField] private Image _armyPanelImage;
         [SerializeField] private Color _armyPanelDefaultColor;
@@ -26,7 +26,6 @@ namespace Battler.UI.BattleView
 
         public DragArmyPanel ArmyPannel => _armyPanel;
 
-
         private void Awake()
         {
             _roundCounter = new RoundCounter();
@@ -40,7 +39,7 @@ namespace Battler.UI.BattleView
             _roundCounter.Increase();
             _roundWinsPannel.EnemyWin += OnEnemyWin;
             _roundWinsPannel.PlayerWin += OnPlayerWin;
-            _pauseButton.onClick.AddListener(OnPauseClick);
+            _pauseButton.Clicked += OnPauseClick;
         }
 
         private void OnDisable()
@@ -48,8 +47,8 @@ namespace Battler.UI.BattleView
             _roundTextCounter.Disable();
             _roundWinsPannel.EnemyWin -= OnEnemyWin;
             _roundWinsPannel.PlayerWin -= OnPlayerWin;
-            _pauseButton.onClick.RemoveListener(OnPauseClick);
-            _startButton.onClick.RemoveListener(OnStartClick);
+            _pauseButton.Clicked += OnPauseClick;
+            _startButton.Clicked -= OnStartClick;
             _startButton.gameObject.SetActive(false);
             _roundWinnerPannel.gameObject.SetActive(false);
         }
@@ -65,7 +64,7 @@ namespace Battler.UI.BattleView
                 return;
 
             _startButton.gameObject.SetActive(true);
-            _startButton.onClick.AddListener(OnStartClick);
+            _startButton.Clicked += OnStartClick;
         }
 
         public void SetPlacingAvailable()
@@ -110,7 +109,7 @@ namespace Battler.UI.BattleView
         private void OnStartClick()
         {
             StartButtonClicked?.Invoke();
-            _startButton.onClick.RemoveListener(OnStartClick);
+            _startButton.Clicked -= OnStartClick;
             _startButton.gameObject.SetActive(false);   
         }
 

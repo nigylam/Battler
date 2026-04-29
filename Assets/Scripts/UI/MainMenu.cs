@@ -1,14 +1,13 @@
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Battler.UI
 {
     public class MainMenu : MonoBehaviour
     {
-        [SerializeField] private Button _startButton;
-        [SerializeField] private Button _settingsButton;
-        [SerializeField] private Button _leaderboardButton;
+        [SerializeField] private UIButton _startButton;
+        [SerializeField] private UIButton _settingsButton;
+        [SerializeField] private UIButton _leaderboardButton;
 
         public event Action Start;
         public event Action Settings;
@@ -16,21 +15,20 @@ namespace Battler.UI
 
         private void OnEnable()
         {
-            _startButton.onClick.AddListener(OnStartClick);
-            _settingsButton.onClick.AddListener(OnSettingsClick);
-            _leaderboardButton.onClick.AddListener(OnLeaderboardClick);
+            _startButton.Clicked += OnStartClick;
+            _settingsButton.Clicked += OnSettingsClick;
+            _leaderboardButton.Clicked += OnLeaderboardClick;
         }
 
         private void OnDisable()
         {
-            _startButton.onClick.RemoveListener(OnStartClick);
-            _settingsButton.onClick.RemoveListener(OnSettingsClick);
-            _leaderboardButton.onClick.RemoveListener(OnLeaderboardClick);
+            _startButton.Clicked -= OnStartClick;
+            _settingsButton.Clicked -= OnSettingsClick;
+            _leaderboardButton.Clicked -= OnLeaderboardClick;
         }
 
         private void OnStartClick()
         {
-            _startButton.onClick.RemoveListener(OnStartClick);
             Start?.Invoke();
         }
 

@@ -2,7 +2,6 @@ using Battler.Meta;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Battler.UI.LevelView
 {
@@ -10,9 +9,9 @@ namespace Battler.UI.LevelView
     {
         [SerializeField] private List<LevelButton> _levelButtons;
         [SerializeField] private TextCounter _goldCounter;
-        [SerializeField] private Button _shopButton;
-        [SerializeField] private Button _settingsButton;
-        [SerializeField] private Button _mainMenuButton;
+        [SerializeField] private UIButton _shopButton;
+        [SerializeField] private UIButton _settingsButton;
+        [SerializeField] private UIButton _mainMenuButton;
 
         private bool _winGameNotificationShowed;
 
@@ -28,9 +27,9 @@ namespace Battler.UI.LevelView
             foreach (LevelButton levelButton in _levelButtons)
                 levelButton.Clicked += OnLevelClick;
 
-            _shopButton.onClick.AddListener(OnShopClick);
-            _settingsButton.onClick.AddListener(OnSettingsClick);
-            _mainMenuButton.onClick.AddListener(OnMainMenuClick);
+            _shopButton.Clicked += OnShopClick;
+            _settingsButton.Clicked += OnSettingsClick;
+            _mainMenuButton.Clicked += OnMainMenuClick;
             _goldCounter.Enable();
         }
 
@@ -39,9 +38,9 @@ namespace Battler.UI.LevelView
             foreach (LevelButton levelButton in _levelButtons)
                 levelButton.Clicked -= OnLevelClick;
 
-            _shopButton.onClick.RemoveListener(OnShopClick);
-            _settingsButton.onClick.RemoveListener(OnSettingsClick);
-            _mainMenuButton.onClick.RemoveListener(OnMainMenuClick);
+            _shopButton.Clicked -= OnShopClick;
+            _settingsButton.Clicked -= OnSettingsClick;
+            _mainMenuButton.Clicked -= OnMainMenuClick;
             _goldCounter.Disable();
         }
 
@@ -72,7 +71,7 @@ namespace Battler.UI.LevelView
 
         private void OnShopClick()
         {
-            _shopButton.onClick.RemoveListener(OnShopClick);
+            _shopButton.Clicked -= OnShopClick;
             Shop?.Invoke();
         }
 

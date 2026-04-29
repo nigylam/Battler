@@ -1,24 +1,23 @@
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Battler.UI
 {
     public abstract class PopupMenu : MonoBehaviour
     {
-        [SerializeField] private Button _resumeButton;
+        [SerializeField] private UIButton _resumeButton;
 
         public event Action Resume;
 
         private void OnEnable()
         {
-            _resumeButton.onClick.AddListener(OnResumeClick);
+            _resumeButton.Clicked += OnResumeClick;
             Enable();
         }
 
         private void OnDisable()
         {
-            _resumeButton.onClick.RemoveListener(OnResumeClick);
+            _resumeButton.Clicked -= OnResumeClick;
             Disable();
         }
 

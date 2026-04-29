@@ -12,7 +12,7 @@ namespace Battler.UI.ShopView
         [SerializeField] private ArmyPanel _armyPanel;
         [SerializeField] private ShopPanel _shopPanel;
         [SerializeField] private TextCounter _goldCounter;
-        [SerializeField] private Button _exitButton;
+        [SerializeField] private UIButton _exitButton;
 
         private Shop _shop;
         private Gold _gold;
@@ -22,14 +22,14 @@ namespace Battler.UI.ShopView
 
         private void OnEnable()
         {
-            _exitButton.onClick.AddListener(OnExitClick);
+            _exitButton.Clicked += OnExitClick;
             _shopPanel.Buy += OnBuyGood;
             _goldCounter.Enable();
         }
 
         private void OnDisable()
         {
-            _exitButton.onClick.RemoveListener(OnExitClick);
+            _exitButton.Clicked -= OnExitClick;
             _shopPanel.Buy -= OnBuyGood;
             _goldCounter.Disable();
         }
@@ -46,7 +46,7 @@ namespace Battler.UI.ShopView
 
         private void OnExitClick()
         {
-            _exitButton.onClick.RemoveListener(OnExitClick);
+            _exitButton.Clicked -= OnExitClick;
             Exit?.Invoke();
         }
 

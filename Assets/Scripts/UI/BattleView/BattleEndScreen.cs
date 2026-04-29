@@ -15,18 +15,18 @@ namespace Battler.UI.BattleView
         [SerializeField] private GameObject _squadRewardBlock;
         [SerializeField] private Image _squadReward;
         [SerializeField] private TextMeshProUGUI _goldReward;
-        [SerializeField] private Button _endButton;
+        [SerializeField] private UIButton _endButton;
 
         public event Action End;
 
         private void OnEnable()
         {
-            _endButton.onClick.AddListener(OnClick);
+            _endButton.Clicked += OnClick;
         }
 
         private void OnDisable()
         {
-            _endButton.onClick.RemoveListener(OnClick);
+            _endButton.Clicked -= OnClick;
         }
 
         public void Set(bool isPlayerWin, int goldReward, SquadGoodConfig squadReward = null)
@@ -71,7 +71,7 @@ namespace Battler.UI.BattleView
 
         private void OnClick()
         {
-            _endButton.onClick.RemoveListener(OnClick);
+            _endButton.Clicked -= OnClick;
             End?.Invoke();
         }
     }

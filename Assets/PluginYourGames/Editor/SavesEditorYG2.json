@@ -7,8 +7,8 @@
         false,
         false
     ],
-    "idSave": 10,
-    "gold": 110,
+    "idSave": 5,
+    "gold": 150,
     "openedLevels": [
         {
             "instanceID": 26656
@@ -20,12 +20,6 @@
         }
     ],
     "boughtSquads": [
-        {
-            "instanceID": 28928
-        },
-        {
-            "instanceID": 28928
-        },
         {
             "instanceID": 28930
         }

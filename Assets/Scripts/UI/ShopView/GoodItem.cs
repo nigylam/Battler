@@ -2,14 +2,13 @@ using Battler.UI.SquadView;
 using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Battler.UI.ShopView
 {
     public class GoodItem : Item<SquadGood>
     {
         [SerializeField] private TextMeshProUGUI _price;
-        [SerializeField] private Button _buyButton;
+        [SerializeField] private UIButton _buyButton;
         [SerializeField] private GameObject _notAvailableMask;
 
         private SquadGood _good;
@@ -18,12 +17,12 @@ namespace Battler.UI.ShopView
 
         private void OnEnable()
         {
-            _buyButton.onClick.AddListener(OnBuyClick);
+            _buyButton.Clicked += OnBuyClick;
         }
 
         private void OnDisable()
         {
-            _buyButton.onClick.RemoveListener(OnBuyClick);
+            _buyButton.Clicked -= OnBuyClick;
         }
 
         public override void Initialize(SquadGood good)
@@ -31,8 +30,8 @@ namespace Battler.UI.ShopView
             _good = good;
             SetSquad(good.Squad);
             _price.text = good.Price.ToString();
-            _notAvailableMask.gameObject.SetActive(good.Available == false);
-            _buyButton.interactable = good.Available;
+            _notAvailableMask.SetActive(good.Available == false);
+            _buyButton.SetInteractable(good.Available);
         }
 
         private void OnBuyClick()
