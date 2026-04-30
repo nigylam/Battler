@@ -12,6 +12,8 @@ namespace Battler.UI.BattleView
         [SerializeField] private AudioClip _hoverSound;
         [SerializeField] private float _hoverScale;
 
+        private bool _isActive;
+
         public event Action<DragItem> DragStarted;
         public event Action<PointerEventData> Dragged;
         public event Action<PointerEventData> DragEnded;
@@ -23,7 +25,18 @@ namespace Battler.UI.BattleView
             base.Initialize(squadCell);
             CreateUpgraded = squadCell.CreateUpgraded;
             _upgradeMark.SetActive(CreateUpgraded);
-        }   
+            Activate();
+        }
+
+        public void Activate()
+        {
+            _isActive = true;
+        }
+
+        public void Deactivate()
+        {
+            _isActive = false;
+        }
 
         public void OnBeginDrag(PointerEventData eventData)
         {
@@ -39,6 +52,9 @@ namespace Battler.UI.BattleView
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            if(_isActive == false) 
+                return;
+
             transform.localScale = Vector3.one * _hoverScale;
             _audioSource.PlayOneShot(_hoverSound);
         }
