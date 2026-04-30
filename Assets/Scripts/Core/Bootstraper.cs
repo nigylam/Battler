@@ -25,6 +25,7 @@ namespace Battler.Core
         [SerializeField] private BattlePauseMenu _battlePauseMenu;
         [SerializeField] private SettingsMenu _settingsMenu;
         [SerializeField] private LeaderboardPannel _leaderboardPannel;
+        [SerializeField] private ApprovePopup _quitApprovePopup;
 
         [Header("Configs")]
         [SerializeField] private StartSquadsConfig _startSquadSet;
@@ -59,7 +60,8 @@ namespace Battler.Core
                 _battleEndScreen,
                 _battlePauseMenu,
                 _settingsMenu,
-                _leaderboardPannel
+                _leaderboardPannel,
+                _quitApprovePopup
             );
 
             stateMachine.ChangeState(GameStateType.MainMenu);

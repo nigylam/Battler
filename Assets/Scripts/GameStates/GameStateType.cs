@@ -10,6 +10,7 @@ namespace Battler.State
         Shop,
         Settings,
         Leaderboard,
-        WinGame
+        WinGame,
+        QuitApprove
     }
 }

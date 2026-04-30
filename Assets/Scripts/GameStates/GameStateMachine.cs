@@ -19,7 +19,8 @@ namespace Battler.State
             BattleEndScreen battleEndScreen, 
             UI.BattleView.BattlePauseMenu battlePauseMenu, 
             UI.SettingsMenu settingsMenu,
-            UI.LeaderboardPannel leaderboardPannel
+            UI.LeaderboardPannel leaderboardPannel,
+            UI.ApprovePopup quitApprovePopup
         )
         {
             _states = new()
@@ -32,7 +33,8 @@ namespace Battler.State
                 {GameStateType.BattlePause, new BattlePauseState(this, context, battlePauseMenu) },
                 {GameStateType.Settings, new SettingsState(this, context, settingsMenu) },
                 {GameStateType.Leaderboard, new LeaderboardState(this, context, leaderboardPannel) },
-                {GameStateType.WinGame, new WinGameState(this, context, leaderboardPannel) }
+                {GameStateType.WinGame, new WinGameState(this, context, leaderboardPannel) },
+                {GameStateType.QuitApprove, new QuitApproveState(this, context, quitApprovePopup) }
             };
         }
 

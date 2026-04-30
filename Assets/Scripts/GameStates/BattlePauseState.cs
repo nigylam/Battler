@@ -1,15 +1,16 @@
 using Battler.UI.BattleView;
+using System;
 using UnityEngine;
 
 namespace Battler.State
 {
     public class BattlePauseState : GameState
     {
-        private BattlePauseMenu _battlePauseMenu;
+        private readonly BattlePauseMenu _battlePauseMenu;
 
         public BattlePauseState(GameStateMachine stateMachine, GameContext context, BattlePauseMenu battlePauseMenu) : base(stateMachine, context)
         {
-            _battlePauseMenu = battlePauseMenu;
+            _battlePauseMenu = battlePauseMenu ?? throw new ArgumentNullException(nameof(battlePauseMenu));
         }
 
         public override void Enter()
@@ -36,7 +37,7 @@ namespace Battler.State
 
         private void OnQuitClick()
         {
-            StateMachine.ChangeState(GameStateType.LevelMap);
+            StateMachine.PushState(GameStateType.QuitApprove);
         }
 
         private void OnSettingsClick()
