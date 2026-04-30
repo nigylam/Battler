@@ -34,11 +34,13 @@ namespace Battler.Battle
 
         public void PlayWinLevelSound()
         {
+            _audioSource.Stop();
             _audioSource.PlayOneShot(_winLevelSound);
         }
 
         public void PlayLoseLevelSound() 
         {
+            _audioSource.Stop();
             _audioSource.PlayOneShot(_loseLevelSound);
         }
     }

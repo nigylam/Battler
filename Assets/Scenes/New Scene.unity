@@ -8095,7 +8095,7 @@ Transform:
   m_GameObject: {fileID: 909694699}
   serializedVersion: 2
   m_LocalRotation: {x: 0.43258494, y: -0, z: -0, w: 0.9015932}
-  m_LocalPosition: {x: 2.3968072, y: 14.327202, z: -15.466694}
+  m_LocalPosition: {x: 2.6, y: 14.327202, z: -15.466694}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9577,8 +9577,8 @@ MonoBehaviour:
     m_Bits: 256
   _audioSource: {fileID: 1062050777}
   _startDragSound: {fileID: 8300000, guid: 6ae1f849aec030841b64e59020774c83, type: 3}
-  _fieldPlaceSound: {fileID: 8300000, guid: f7a5c0e0d228cc247af992fadd1e48a4, type: 3}
-  _menuPlaceSound: {fileID: 8300000, guid: 0d554f1c75275694bbc099667997e4a3, type: 3}
+  _fieldPlaceSound: {fileID: 8300000, guid: 37632785baf8ad34c96b33b41f804164, type: 3}
+  _menuPlaceSound: {fileID: 8300000, guid: ca58a3057a4cca44786211a2f7e91f89, type: 3}
 --- !u!114 &1062050776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12893,7 +12893,7 @@ PrefabInstance:
     - target: {fileID: 7987302438590791863, guid: 1c171ea677c939d4db4d287095b4d1ee, type: 3}
       propertyPath: _clickSound
       value: 
-      objectReference: {fileID: 8300000, guid: 0d554f1c75275694bbc099667997e4a3, type: 3}
+      objectReference: {fileID: 8300000, guid: 263a3d628f94c984e9818c3de800a20b, type: 3}
     m_RemovedComponents:
     - {fileID: 5448906258363160190, guid: 1c171ea677c939d4db4d287095b4d1ee, type: 3}
     m_RemovedGameObjects: []
@@ -14327,7 +14327,7 @@ MonoBehaviour:
   _battleMenu: {fileID: 1087834949}
   _cameraMover: {fileID: 1298733678}
   _audioSource: {fileID: 1462418483}
-  _winRoundSound: {fileID: 8300000, guid: f7a5c0e0d228cc247af992fadd1e48a4, type: 3}
+  _winRoundSound: {fileID: 8300000, guid: d89925fd76a99d04e9b1698b4ceead81, type: 3}
   _loseRoundSound: {fileID: 8300000, guid: e00718d3188e54c4f9a7282e20e4b2e8, type: 3}
   _winLevelSound: {fileID: 8300000, guid: aeb3373eac3983f4688c9ca1c17eda9d, type: 3}
   _loseLevelSound: {fileID: 8300000, guid: 042ce558d52297a489e03bc715b77387, type: 3}
@@ -16391,8 +16391,8 @@ MonoBehaviour:
   _goldCounter: {fileID: 1971134702}
   _exitButton: {fileID: 1468388985}
   _audioSource: {fileID: 1656432632}
-  _buySound: {fileID: 8300000, guid: f7a5c0e0d228cc247af992fadd1e48a4, type: 3}
-  _cancelBuySound: {fileID: 8300000, guid: 0d554f1c75275694bbc099667997e4a3, type: 3}
+  _buySound: {fileID: 8300000, guid: e1bf8245b771f2645a6403ed755cac0e, type: 3}
+  _cancelBuySound: {fileID: 8300000, guid: 6aa6e97c3bbc07143bbd2110830d7147, type: 3}
 --- !u!114 &1656432628
 MonoBehaviour:
   m_ObjectHideFlags: 0

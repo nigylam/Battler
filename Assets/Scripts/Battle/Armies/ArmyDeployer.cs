@@ -1,3 +1,4 @@
+using Battler.Battle.Squads;
 using System;
 using UnityEngine;
 

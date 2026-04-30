@@ -5,121 +5,124 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Squad : MonoBehaviour
+namespace Battler.Battle.Squads
 {
-    private List<Unit> _units = new();
-    private List<Unit> _unitsAlive = new();
-    private Army _enemyArmy;
-
-    private bool _isBattleEnded;
-
-    public event Action<Squad> Dead;
-    public event Action<Squad, UnitDragger> DragStarted;
-
-    public IReadOnlyCollection<Unit> Units => _units;
-
-    public void KillAll()
+    public class Squad : MonoBehaviour
     {
-        for (int i = _unitsAlive.Count - 1; i >= 0; i--)
-            _unitsAlive[i].TakeDamage(100);
-    }
+        private List<Unit> _units = new();
+        private List<Unit> _unitsAlive = new();
+        private Army _enemyArmy;
 
-    private void OnEnable()
-    {
-        if (_unitsAlive.Count > 0)
-            foreach (Unit unit in _unitsAlive)
-                Subscribe(unit);
-    }
+        private bool _isBattleEnded;
 
-    private void OnDisable()
-    {
-        if (_unitsAlive.Count > 0)
-            foreach (Unit unit in _unitsAlive)
-                Unsubscribe(unit);
-    }
+        public event Action<Squad> Dead;
+        public event Action<Squad, UnitDragger> DragStarted;
 
-    public void AddUnit(Unit unit)
-    {
-        _units.Add(unit);
-        _unitsAlive.Add(unit);
-        Subscribe(unit);
-    }
+        public IReadOnlyCollection<Unit> Units => _units;
 
-    public void Win()
-    {
-        _isBattleEnded = true;
+        public void KillAll()
+        {
+            for (int i = _unitsAlive.Count - 1; i >= 0; i--)
+                _unitsAlive[i].TakeDamage(100);
+        }
 
-        foreach (var unit in _unitsAlive)
-            unit.Win();
-    }
+        private void OnEnable()
+        {
+            if (_unitsAlive.Count > 0)
+                foreach (Unit unit in _unitsAlive)
+                    Subscribe(unit);
+        }
 
-    public void Upgrade()
-    {
-        foreach (var unit in _unitsAlive)
-            unit.Upgrade();
-    }
+        private void OnDisable()
+        {
+            if (_unitsAlive.Count > 0)
+                foreach (Unit unit in _unitsAlive)
+                    Unsubscribe(unit);
+        }
 
-    public List<Unit> GetAliveMembers()
-    {
-        return _unitsAlive;
-    }
+        public void AddUnit(Unit unit)
+        {
+            _units.Add(unit);
+            _unitsAlive.Add(unit);
+            Subscribe(unit);
+        }
 
-    public void Attack(Army army)
-    {
-        _enemyArmy = army;
-
-        foreach (Unit unit in _unitsAlive)
-            unit.SetTarget(_enemyArmy.GetTargets());
-    }
-
-    public void HideVisuals()
-    {
-        foreach (Unit unit in _units)
-            unit.HideVisual();
-    }
-
-    public void ShowVisuals()
-    {
-        foreach (Unit unit in _units)
-            unit.ShowVisual();
-    }
-
-    private void OnUnitDead(Unit unit)
-    {
-        _unitsAlive.Remove(unit);
-        Unsubscribe(unit);
-
-        if (_unitsAlive.Count == 0)
+        public void Win()
         {
             _isBattleEnded = true;
-            Dead?.Invoke(this);
+
+            foreach (var unit in _unitsAlive)
+                unit.Win();
         }
-    }
 
-    private void OnUnitDragStarted(UnitDragger dragger)
-    {
-        DragStarted.Invoke(this, dragger);
-    }
+        public void Upgrade()
+        {
+            foreach (var unit in _unitsAlive)
+                unit.Upgrade();
+        }
 
-    private void OnUnitFree(Unit unit)
-    {
-        if (_isBattleEnded)
-            return;
+        public List<Unit> GetAliveMembers()
+        {
+            return _unitsAlive;
+        }
 
-        unit.SetTarget(_enemyArmy.GetTargets());
-    }
+        public void Attack(Army army)
+        {
+            _enemyArmy = army;
 
-    private void Subscribe(Unit unit)
-    {
-        unit.Dead += OnUnitDead;
-        unit.Free += OnUnitFree;
-        unit.Dragger.DragStarted += OnUnitDragStarted;
-    }
+            foreach (Unit unit in _unitsAlive)
+                unit.SetTarget(_enemyArmy.GetTargets());
+        }
 
-    private void Unsubscribe(Unit unit)
-    {
-        unit.Dead -= OnUnitDead;
-        unit.Free -= OnUnitFree;
-        unit.Dragger.DragStarted -= OnUnitDragStarted;
+        public void HideVisuals()
+        {
+            foreach (Unit unit in _units)
+                unit.HideVisual();
+        }
+
+        public void ShowVisuals()
+        {
+            foreach (Unit unit in _units)
+                unit.ShowVisual();
+        }
+
+        private void OnUnitDead(Unit unit)
+        {
+            _unitsAlive.Remove(unit);
+            Unsubscribe(unit);
+
+            if (_unitsAlive.Count == 0)
+            {
+                _isBattleEnded = true;
+                Dead?.Invoke(this);
+            }
+        }
+
+        private void OnUnitDragStarted(UnitDragger dragger)
+        {
+            DragStarted.Invoke(this, dragger);
+        }
+
+        private void OnUnitFree(Unit unit)
+        {
+            if (_isBattleEnded)
+                return;
+
+            unit.SetTarget(_enemyArmy.GetTargets());
+        }
+
+        private void Subscribe(Unit unit)
+        {
+            unit.Dead += OnUnitDead;
+            unit.Free += OnUnitFree;
+            unit.Dragger.DragStarted += OnUnitDragStarted;
+        }
+
+        private void Unsubscribe(Unit unit)
+        {
+            unit.Dead -= OnUnitDead;
+            unit.Free -= OnUnitFree;
+            unit.Dragger.DragStarted -= OnUnitDragStarted;
+        }
     }
 }
