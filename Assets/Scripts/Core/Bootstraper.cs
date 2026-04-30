@@ -31,8 +31,6 @@ namespace Battler.Core
         [SerializeField] private ShopSet _shopSet;
         [SerializeField] private List<LevelConfig> _levelConfigs;
 
-        private Language _language;
-
         private void Awake()
         {
             GameSquadKeeper squadKeeper = SquadKeeperFabric.Create(_startSquadSet);

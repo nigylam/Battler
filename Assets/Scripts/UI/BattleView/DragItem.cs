@@ -5,9 +5,12 @@ using UnityEngine.EventSystems;
 
 namespace Battler.UI.BattleView
 {
-    public class DragItem : SquadItem<BattleSquadCell>, IDragable, IBeginDragHandler, IEndDragHandler, IDragHandler
+    public class DragItem : SquadItem<BattleSquadCell>, IDragable, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private GameObject _upgradeMark;
+        [SerializeField] private AudioSource _audioSource;
+        [SerializeField] private AudioClip _hoverSound;
+        [SerializeField] private float _hoverScale;
 
         public event Action<DragItem> DragStarted;
         public event Action<PointerEventData> Dragged;
@@ -20,10 +23,29 @@ namespace Battler.UI.BattleView
             base.Initialize(squadCell);
             CreateUpgraded = squadCell.CreateUpgraded;
             _upgradeMark.SetActive(CreateUpgraded);
+        }   
+
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+            DragStarted?.Invoke(this);
+            transform.localScale = Vector3.one;
         }
 
-        public void OnBeginDrag(PointerEventData eventData) => DragStarted?.Invoke(this);
-        public void OnDrag(PointerEventData eventData) => Dragged?.Invoke(eventData);
-        public void OnEndDrag(PointerEventData eventData) => DragEnded?.Invoke(eventData);
+        public void OnDrag(PointerEventData eventData) 
+            => Dragged?.Invoke(eventData);
+
+        public void OnEndDrag(PointerEventData eventData) 
+            => DragEnded?.Invoke(eventData);
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            transform.localScale = Vector3.one * _hoverScale;
+            _audioSource.PlayOneShot(_hoverSound);
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            transform.localScale = Vector3.one;
+        }
     }
 }

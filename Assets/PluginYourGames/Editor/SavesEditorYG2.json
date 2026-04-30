@@ -7,16 +7,17 @@
         false,
         false
     ],
-    "idSave": 4,
-    "gold": 0,
-    "openedLevels": [],
-    "openedGoods": [],
-    "boughtSquads": [
+    "idSave": 3,
+    "gold": 200,
+    "openedLevels": [
         {
-            "instanceID": 28930
-        },
-        {
-            "instanceID": 28930
+            "instanceID": 26666
         }
-    ]
+    ],
+    "openedGoods": [
+        {
+            "instanceID": 27104
+        }
+    ],
+    "boughtSquads": []
 }

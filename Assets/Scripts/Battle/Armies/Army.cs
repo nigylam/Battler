@@ -37,6 +37,18 @@ namespace Battler.Battle.Armies
                 if (gameObject.layer == 7)
                     KillAll();
             }
+
+            if (Input.GetKeyUp(KeyCode.D))
+            {
+                Debug.Log("key up");
+
+                if (gameObject.layer == 6)
+                {
+                    Debug.Log("kill");
+
+                    KillAll();
+                }
+            }
         }
 
         private void KillAll()

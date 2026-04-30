@@ -11,6 +11,10 @@ namespace Battler.Battle.Armies
         [SerializeField] private Camera _camera;
         [SerializeField] private LayerMask _groundMask;
         [SerializeField] private LayerMask _thisCanvas;
+        [SerializeField] private AudioSource _audioSource;
+        [SerializeField] private AudioClip _startDragSound;
+        [SerializeField] private AudioClip _fieldPlaceSound;
+        [SerializeField] private AudioClip _menuPlaceSound;
 
         private SquadPlacer _placer;
         private PlayerArmyDeployer _deployer;
@@ -27,7 +31,21 @@ namespace Battler.Battle.Armies
         protected override void OnAwake()
         {
             _placer = new SquadPlacer(_camera, _groundMask, _thisCanvas);
-            _deployer = new PlayerArmyDeployer(_battleMenu, _placer, Field, Commander, _dragVisualSpawner, Creator, transform);
+
+            _deployer = new PlayerArmyDeployer
+            (
+                _battleMenu, 
+                _placer, 
+                Field, 
+                Commander, 
+                _dragVisualSpawner, 
+                Creator, 
+                transform,
+                _audioSource,
+                _startDragSound,
+                _fieldPlaceSound,
+                _menuPlaceSound
+            );
         }
 
         protected override void Enable()

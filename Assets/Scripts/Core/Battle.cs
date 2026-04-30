@@ -1,3 +1,4 @@
+using Battler.Battle;
 using Battler.Battle.Armies;
 using Battler.UI.BattleView;
 using System;
@@ -11,7 +12,13 @@ namespace Battler.Core
         [SerializeField] private EnemySide _enemy;
         [SerializeField] private BattleMenu _battleMenu;
         [SerializeField] private CameraMover _cameraMover;
+        [SerializeField] private AudioSource _audioSource;
+        [SerializeField] private AudioClip _winRoundSound;
+        [SerializeField] private AudioClip _loseRoundSound;
+        [SerializeField] private AudioClip _winLevelSound;
+        [SerializeField] private AudioClip _loseLevelSound;
 
+        private BattleSound _sound;
         private float _defaultTimeScale;
         private float _pauseTimeScale = 0;
         private bool _isBattleActive;
@@ -23,6 +30,11 @@ namespace Battler.Core
 
         public event Action<bool> End;
         public event Action Pause;
+
+        private void Awake()
+        {
+            _sound = new BattleSound(_audioSource, _winRoundSound, _loseRoundSound, _winLevelSound, _loseLevelSound);
+        }
 
         private void OnEnable()
         {
@@ -126,12 +138,14 @@ namespace Battler.Core
 
         private void OnPlayerWinRound()
         {
+            _sound.PlayWinRoundSound();
             _battleMenu.OnPlayerWinRound();
             OnRoundEnd();
         }
 
         private void OnEnemyWinRound()
         {
+            _sound.PlayLoseRoundSound();
             _battleMenu.OnEnemyWinRound();
             OnRoundEnd();
         }
@@ -145,12 +159,14 @@ namespace Battler.Core
 
         private void OnPlayerWin()
         {
+            _sound.PlayWinLevelSound();
             _haveWinner = true;
             End?.Invoke(true);
         }
 
         private void OnEnemyWin()
         {
+            _sound.PlayLoseLevelSound();
             _haveWinner = true;
             End?.Invoke(false);
         }

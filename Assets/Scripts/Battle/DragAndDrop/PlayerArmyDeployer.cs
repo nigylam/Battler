@@ -1,7 +1,6 @@
 using Battler.Battle.Armies;
 using Battler.Battle.Squads;
 using Battler.UI.BattleView;
-using System;
 using UnityEngine;
 
 namespace Battler.Battle.DragAndDrop
@@ -11,6 +10,10 @@ namespace Battler.Battle.DragAndDrop
         private readonly BattleMenu _menu;
         private readonly SquadPlacer _placer;
         private readonly DragVisualSpawner _visualSpawner;
+        private readonly AudioSource _audioSource;
+        private readonly AudioClip _startDragSound;
+        private readonly AudioClip _fieldPlaceSound;
+        private readonly AudioClip _menuPlaceSound;
 
         private BattleSquadKeeper _keeper;
 
@@ -22,12 +25,20 @@ namespace Battler.Battle.DragAndDrop
             ArmyCommander commander, 
             DragVisualSpawner visualSpawner, 
             SquadCreator creator, 
-            Transform squadsParrent
+            Transform squadsParrent,
+            AudioSource audioSource,
+            AudioClip startDragSound,
+            AudioClip placeSound,
+            AudioClip menuPlaceSound
         ) : base(field, commander, creator, squadsParrent)
         {
             _menu = menu;
             _placer = placer;
             _visualSpawner = visualSpawner;
+            _audioSource = audioSource;
+            _startDragSound = startDragSound;
+            _fieldPlaceSound = placeSound;
+            _menuPlaceSound = menuPlaceSound;
         }
 
         public void Set(BattleSquadKeeper keeper)
@@ -76,6 +87,7 @@ namespace Battler.Battle.DragAndDrop
             DragVisual visuals = _visualSpawner.Spawn(uiItem.SquadPlan);
             MenuDragContext menuDrag = new (uiItem, visuals, _visualSpawner);
             _placer.StartDrag(menuDrag);
+            _audioSource.PlayOneShot(_startDragSound);
         }
 
         private void OnFieldDragStarted(SquadFieldContext context, UnitDragger dragger)
@@ -85,6 +97,7 @@ namespace Battler.Battle.DragAndDrop
             DragVisual visual = _visualSpawner.Spawn(context.Plan);
             FieldDragContext fieldDrag = new (context, visual, _visualSpawner, dragger);
             _placer.StartDrag(fieldDrag);
+            _audioSource.PlayOneShot(_startDragSound);
         }
 
         private void ValidatePlayButton()
@@ -110,6 +123,7 @@ namespace Battler.Battle.DragAndDrop
             }
 
             ValidatePlayButton();
+            _audioSource.PlayOneShot(_fieldPlaceSound);
         }
 
         private void OnDropFail(DragContext item)
@@ -133,6 +147,7 @@ namespace Battler.Battle.DragAndDrop
             {
                 Commander.Remove(fieldItem.Context);
                 _keeper.AddSquad(new BattleSquadCell(item.SquadPlan, 1, item.CreateUpgraded));
+                _audioSource.PlayOneShot(_menuPlaceSound);
             }
         }
 
