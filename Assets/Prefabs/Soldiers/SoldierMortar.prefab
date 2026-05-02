@@ -921,6 +921,8 @@ MonoBehaviour:
   _deadAnimationEventSender: {fileID: 6860497008804336249}
   _meshRenderer: {fileID: 2582408216279078366}
   _dragger: {fileID: -2959226055001573414}
+  _renderers: []
+  _weapon: {fileID: 0}
   _animator: {fileID: 4035927440205319950}
 --- !u!114 &2858756706154115267
 MonoBehaviour:
@@ -1670,6 +1672,18 @@ PrefabInstance:
     - target: {fileID: 6263558869009338209, guid: d01c0573031a40c46b401d997904dd02, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6600316116081751258, guid: d01c0573031a40c46b401d997904dd02, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6600316116081751258, guid: d01c0573031a40c46b401d997904dd02, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8822957088081258943, guid: d01c0573031a40c46b401d997904dd02, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9052594248465061534, guid: d01c0573031a40c46b401d997904dd02, type: 3}
       propertyPath: m_Name
