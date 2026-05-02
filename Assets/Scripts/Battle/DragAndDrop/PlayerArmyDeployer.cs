@@ -77,7 +77,7 @@ namespace Battler.Battle.DragAndDrop
                 return;
 
             foreach (var squadContext in Commander.SurvivedSquads)
-                CreateSquad(squadContext.Plan, squadContext.StartCell, squadContext.CreateUpgraded);
+                Create(squadContext.Plan, squadContext.StartCell, squadContext.CreateUpgraded);
 
             ValidatePlayButton();
         }
@@ -119,7 +119,7 @@ namespace Battler.Battle.DragAndDrop
             else
             {
                 _keeper.RemoveSquad(new BattleSquadCell(item.SquadPlan, 1, item.CreateUpgraded));
-                CreateSquad(item.SquadPlan, startCell, item.CreateUpgraded);
+                Create(item.SquadPlan, startCell, item.CreateUpgraded);
             }
 
             ValidatePlayButton();

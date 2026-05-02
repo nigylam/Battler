@@ -27,7 +27,7 @@ namespace Battler.Battle.Armies
         protected Transform SquadsParrent { get; }
         protected ArmyCommander Commander { get; }
 
-        protected void CreateSquad(SquadPlan plan, (int x, int y) startCell, bool createUpgraded = false)
+        protected Squad Create(SquadPlan plan, (int x, int y) startCell, bool createUpgraded = false)
         {
             if (plan == null)
                 throw new ArgumentNullException(nameof(plan));
@@ -36,6 +36,7 @@ namespace Battler.Battle.Armies
                 throw new ArgumentOutOfRangeException(nameof(startCell));
 
             Commander.Add(squad, plan, startCell, createUpgraded);
+            return squad;
         }
 
         protected void RaiseDeploymentFinished()
