@@ -1,8 +1,8 @@
 using Battler.Settings;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using YG;
 
 namespace Battler.UI
 {
@@ -10,6 +10,7 @@ namespace Battler.UI
     {
         [SerializeField] private TMP_Dropdown _languageDropDown;
         [SerializeField] private Slider _uiSoundSlider;
+        [SerializeField] private Slider _sfxSoundSlider;
 
         private Language _language;
         private Audio _audio;
@@ -22,15 +23,14 @@ namespace Battler.UI
 
         protected override void Enable()
         {
-            _languageDropDown.onValueChanged.AddListener(OnLanguageChanged);
-            _uiSoundSlider.onValueChanged.AddListener(OnUiSoundValueChanged);
-            _uiSoundSlider.value = YG2.saves.soundUI;
+            Subscribe();
+            _uiSoundSlider.value = _audio.SoundUI;
+            _sfxSoundSlider.value = _audio.SoundSFX;
         }
 
         protected override void Disable()
         {
-            _languageDropDown.onValueChanged.RemoveListener(OnLanguageChanged);
-            _uiSoundSlider.onValueChanged.RemoveListener(OnUiSoundValueChanged);
+            Unsubscribe();
         }
 
         protected override void OnResumeClick()
@@ -39,7 +39,12 @@ namespace Battler.UI
             base.OnResumeClick();
         }
 
-        private void OnUiSoundValueChanged(float value)
+        private void OnSFXSoundChanged(float value)
+        {
+            _audio.SetVolumeSFX(value);
+        }
+
+        private void OnUISoundChanged(float value)
         {
             _audio.SetVolumeUI(value);
         }
@@ -58,6 +63,20 @@ namespace Battler.UI
                     _language.SetLanguage("tr");
                     break;
             }
+        }
+
+        private void Subscribe()
+        {
+            _languageDropDown.onValueChanged.AddListener(OnLanguageChanged);
+            _uiSoundSlider.onValueChanged.AddListener(OnUISoundChanged);
+            _sfxSoundSlider.onValueChanged.AddListener(OnSFXSoundChanged);
+        }
+
+        private void Unsubscribe()
+        {
+            _languageDropDown.onValueChanged.RemoveListener(OnLanguageChanged);
+            _uiSoundSlider.onValueChanged.RemoveListener(OnUISoundChanged);
+            _sfxSoundSlider.onValueChanged.RemoveListener(OnSFXSoundChanged);
         }
     }
 }

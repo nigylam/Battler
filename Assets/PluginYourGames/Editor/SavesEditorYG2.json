@@ -7,10 +7,11 @@
         false,
         false
     ],
-    "idSave": 512,
+    "idSave": 517,
     "gold": 100,
     "openedLevels": [],
     "openedGoods": [],
     "boughtSquads": [],
-    "soundUI": 0.04138849303126335
+    "soundUI": 0.11759088933467865,
+    "soundSFX": 0.2922573983669281
 }

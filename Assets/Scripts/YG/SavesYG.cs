@@ -10,5 +10,6 @@ namespace YG
         public List<SquadGoodConfig> openedGoods = new();
         public List<SquadPlan> boughtSquads = new();
         public float soundUI = 1f;
+        public float soundSFX = 1f;
     }
 }

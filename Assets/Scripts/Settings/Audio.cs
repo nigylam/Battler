@@ -9,26 +9,39 @@ namespace Battler.Settings
     {
         private const int DbToPercentConstant = 20;
         private const string VolumeUI = "UI";
+        private const string VolumeSFX = "SFX";
         private const float MixerMinValue = -80;
 
         private readonly AudioMixer _audioMixer;
-
-        private float _soundUI;
 
         public Audio(AudioMixer audioMixer)
         {
             _audioMixer = audioMixer ?? throw new ArgumentNullException(nameof(audioMixer));
         }
 
+        public float SoundUI { get; private set; }
+        public float SoundSFX { get; private set; }
+
         public void ApplySavedSettings()
         {
             SetVolumeUI(YG2.saves.soundUI);
+            SetVolumeSFX(YG2.saves.soundSFX);
         }
 
         public void SaveSettings()
         {
-            YG2.saves.soundUI = _soundUI;
+            YG2.saves.soundUI = SoundUI;
+            YG2.saves.soundSFX = SoundSFX;
             YG2.SaveProgress();
+        }
+
+        public void SetVolumeSFX(float value)
+        {
+            if (value < 0f || value > 1f)
+                throw new ArgumentOutOfRangeException(nameof(value));
+
+            SetVolume(value, out float soundSFX, VolumeSFX);
+            SoundSFX = soundSFX;
         }
 
         public void SetVolumeUI(float value)
@@ -36,14 +49,20 @@ namespace Battler.Settings
             if (value < 0f || value > 1f)
                 throw new ArgumentOutOfRangeException(nameof(value));
 
-            _soundUI = value;
+            SetVolume(value, out float soundUI, VolumeUI);
+            SoundUI = soundUI;
+        }
 
-            float volume = Mathf.Log10(_soundUI) * DbToPercentConstant;
+        private void SetVolume(float value, out float sound, string group)
+        {
+            sound = value;
 
-            if (_soundUI == 0f)
+            float volume = Mathf.Log10(sound) * DbToPercentConstant;
+
+            if (sound == 0f)
                 volume = MixerMinValue;
 
-            _audioMixer.SetFloat(VolumeUI, volume);
+            _audioMixer.SetFloat(group, volume);
         }
     }
 }
