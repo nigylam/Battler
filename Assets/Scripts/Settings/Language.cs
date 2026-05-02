@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using YG;
 
-namespace Battler.Localization
+namespace Battler.Settings
 {
     public class Language
     {

@@ -9,5 +9,6 @@ namespace YG
         public List<LevelConfig> openedLevels = new();
         public List<SquadGoodConfig> openedGoods = new();
         public List<SquadPlan> boughtSquads = new();
+        public float soundUI = 1f;
     }
 }

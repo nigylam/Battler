@@ -1,5 +1,5 @@
 using Battler.Core.SquadKeeping;
-using Battler.Localization;
+using Battler.Settings;
 using Battler.Meta;
 using Battler.State;
 using Battler.UI;
@@ -9,13 +9,15 @@ using Battler.UI.ShopView;
 using System.Collections.Generic;
 using UnityEngine;
 using YG;
+using UnityEngine.Audio;
 
 namespace Battler.Core
 {
     public class Bootstraper : MonoBehaviour
     {
-        [Header("Battle")]
+        [Header("Components")]
         [SerializeField] private Battle _battle;
+        [SerializeField] private AudioMixer _audioMixer;
 
         [Header("UI Menu")]
         [SerializeField] private MainMenu _mainMenu;
@@ -32,6 +34,8 @@ namespace Battler.Core
         [SerializeField] private ShopSet _shopSet;
         [SerializeField] private List<LevelConfig> _levelConfigs;
 
+        Audio _audio;
+
         private void Awake()
         {
             GameSquadKeeper squadKeeper = SquadKeeperFabric.Create(_startSquadSet);
@@ -40,7 +44,8 @@ namespace Battler.Core
             LevelProgress levelProgress = new (_levelConfigs, YG2.saves.openedLevels);
             _levelMenu.Initialize(gold, levelProgress);
             _shopMenu.Initialize(gold, shop, squadKeeper);
-            _settingsMenu.Initialize(new Language("en", "ru", "tr"));
+            _audio = new Audio(_audioMixer);
+            _settingsMenu.Initialize(new Language("en", "ru", "tr"), _audio);
 
             var context = new GameContext
             (
@@ -65,6 +70,11 @@ namespace Battler.Core
             );
 
             stateMachine.ChangeState(GameStateType.MainMenu);
+        }
+
+        private void Start()
+        {
+            _audio.ApplySavedSettings();
         }
 
         private Shop Create()

@@ -7,17 +7,10 @@
         false,
         false
     ],
-    "idSave": 5,
-    "gold": 400,
-    "openedLevels": [
-        {
-            "instanceID": 26666
-        }
-    ],
-    "openedGoods": [
-        {
-            "instanceID": 27104
-        }
-    ],
-    "boughtSquads": []
+    "idSave": 512,
+    "gold": 100,
+    "openedLevels": [],
+    "openedGoods": [],
+    "boughtSquads": [],
+    "soundUI": 0.04138849303126335
 }

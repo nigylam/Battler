@@ -24,7 +24,7 @@ namespace Battler.UI
         protected virtual void Enable() { }
         protected virtual void Disable() { }
 
-        private void OnResumeClick()
+        protected virtual void OnResumeClick()
         {
             Resume?.Invoke();
         }
