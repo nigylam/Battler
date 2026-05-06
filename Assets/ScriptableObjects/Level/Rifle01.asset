@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d719c12d2589bc742895eb3fd133b250, type: 3}
   m_Name: Rifle01
   m_EditorClassIdentifier: 
-  _squad: {fileID: 8985550516221197739, guid: 661723031e579b843a6cc73b51419ab9, type: 3}
+  _squadPlan: {fileID: 8985550516221197739, guid: 661723031e579b843a6cc73b51419ab9, type: 3}
   positionX: 0
   positionY: 0

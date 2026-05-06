@@ -17,7 +17,7 @@ namespace Battler.State
 
         public override void Exit()
         {
-            Context.Battle.EndLevel();
+            Context.Battle.CloseLevel();
             Context.Battle.End -= OnBattleEnd;
             Context.Battle.Pause -= OnBattlePause;
         }

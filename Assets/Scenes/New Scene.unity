@@ -17038,8 +17038,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _pauseButton: {fileID: 515236241}
   _roundTextCounter: {fileID: 1612387400}
-  _roundWinnerPannel: {fileID: 1612387399}
-  _roundWinsPannel: {fileID: 654505705}
+  _roundWinnerPanel: {fileID: 1612387399}
+  _roundWinsPanel: {fileID: 654505705}
   _startButton: {fileID: 1863968827}
   _armyPanel: {fileID: 907927638}
   _armyPanelImage: {fileID: 1069546406}
@@ -24267,13 +24267,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 1062050775}
   _enemy: {fileID: 303088311}
-  _battleMenu: {fileID: 1087834949}
+  _menu: {fileID: 1087834949}
   _cameraMover: {fileID: 1298733678}
   _audioSource: {fileID: 1462418483}
   _winRoundSound: {fileID: 8300000, guid: d89925fd76a99d04e9b1698b4ceead81, type: 3}
   _loseRoundSound: {fileID: 8300000, guid: e00718d3188e54c4f9a7282e20e4b2e8, type: 3}
   _winLevelSound: {fileID: 8300000, guid: aeb3373eac3983f4688c9ca1c17eda9d, type: 3}
   _loseLevelSound: {fileID: 8300000, guid: 042ce558d52297a489e03bc715b77387, type: 3}
+  RoundWinner: {fileID: 0}
+  LevelWinner: {fileID: 0}
+  HaveLevelWinner: 0
 --- !u!114 &1462418482
 MonoBehaviour:
   m_ObjectHideFlags: 0

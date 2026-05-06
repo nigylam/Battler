@@ -1,16 +1,22 @@
-using Battler.Battle;
-using Battler.Battle.Armies;
+using Battler.BattleSystem;
+using Battler.BattleSystem.Armies;
+using Battler.Core.Phases;
 using Battler.UI.BattleView;
 using System;
 using UnityEngine;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 
 namespace Battler.Core
 {
     public class Battle : MonoBehaviour
     {
+        private const int RoundsToWin = 2;
+        private const float PauseTimeScale = 0;
+
         [SerializeField] private PlayerSide _player;
         [SerializeField] private EnemySide _enemy;
-        [SerializeField] private BattleMenu _battleMenu;
+        [SerializeField] private BattleMenu _menu;
         [SerializeField] private CameraMover _cameraMover;
         [SerializeField] private AudioSource _audioSource;
         [SerializeField] private AudioClip _winRoundSound;
@@ -18,73 +24,93 @@ namespace Battler.Core
         [SerializeField] private AudioClip _winLevelSound;
         [SerializeField] private AudioClip _loseLevelSound;
 
-        private BattleSound _sound;
+        private CancellationTokenSource _cancelTokenSource;
+        private Side _levelWinner;
+
+        public PlayerSide Player => _player;
+        public EnemySide Enemy => _enemy;
+        public BattleMenu Menu => _menu;
+        public CancellationToken LevelToken => _cancelTokenSource?.Token ?? this.GetCancellationTokenOnDestroy();
+        public BattleSound Sound { get; private set; }
+        public bool HaveLevelWinner { get; private set; }
+        public Side RoundWinner { get; private set; }
+
         private float _defaultTimeScale;
-        private float _pauseTimeScale = 0;
         private bool _isBattleActive;
-        private int _roundsToWin = 2;
-        private int _sidesCount = 2;
-        private bool _haveWinner;
-        private int _sidesReadyForRound;
-        private int _sidesEndRound;
 
         public event Action<bool> End;
         public event Action Pause;
 
         private void Awake()
         {
-            _sound = new BattleSound(_audioSource, _winRoundSound, _loseRoundSound, _winLevelSound, _loseLevelSound);
+            Sound = new BattleSound(_audioSource, _winRoundSound, _loseRoundSound, _winLevelSound, _loseLevelSound);
         }
 
         private void OnEnable()
         {
-            _player.ReadyForRound += OnReadyForRound;
-            _enemy.ReadyForRound += OnReadyForRound;
-            _player.RoundEnded += OnRoundEnded;
-            _enemy.RoundEnded += OnRoundEnded;
-            _player.WinRound += OnPlayerWinRound;
-            _enemy.WinRound += OnEnemyWinRound;
-            _battleMenu.PlayerWin += OnPlayerWin;
-            _battleMenu.EnemyWin += OnEnemyWin;
-            _battleMenu.Pause += OnPause;
+            Subscribe();
             _defaultTimeScale = Time.timeScale;
         }
 
         private void OnDisable()
         {
-            _player.ReadyForRound -= OnReadyForRound;
-            _enemy.ReadyForRound -= OnReadyForRound;
-            _player.RoundEnded -= OnRoundEnded;
-            _enemy.RoundEnded -= OnRoundEnded;
-            _player.WinRound -= OnPlayerWinRound;
-            _enemy.WinRound -= OnEnemyWinRound;
-            _battleMenu.PlayerWin -= OnPlayerWin;
-            _battleMenu.EnemyWin -= OnEnemyWin;
-            _battleMenu.Pause -= OnPause;
+            Unsubscribe();
         }
 
-        public void StartLevel(GameContext context)
+        private void OnDestroy()
         {
-            _haveWinner = false;
+            if (_cancelTokenSource != null)
+            {
+                _cancelTokenSource.Cancel();
+                _cancelTokenSource.Dispose();
+            }
+        }
+
+        public async void StartLevel(GameContext context)
+        {
+            SetupNewLevel(context);
+
+            while (HaveLevelWinner == false)
+            {
+                RoundWinner = null;
+                if (await new PreparationPhase().ExecuteAsync(this).SuppressCancellationThrow())
+                    return;
+
+                _isBattleActive = true;
+                var combatPhase = new CombatPhase();
+                
+                if(await combatPhase.ExecuteAsync(this).SuppressCancellationThrow())
+                    return;
+
+                RoundWinner = combatPhase.RoundWinner;
+                _isBattleActive = false;
+
+                if(await new RoundEndPhase().ExecuteAsync(this).SuppressCancellationThrow())
+                    return;
+            }
+
+            EndLevel();
+        }
+
+        private void SetupNewLevel(GameContext context)
+        {
+            RefreshCancelToken();
+            HaveLevelWinner = false;
             _enemy.StartLevel(context);
             _player.StartLevel(context);
-            PrepareToRound();
-            _battleMenu.gameObject.SetActive(true);
-            _battleMenu.Initialize(_roundsToWin);
+            _menu.gameObject.SetActive(true);
+            _menu.Initialize(RoundsToWin);
             _cameraMover.gameObject.SetActive(true);
             Time.timeScale = _defaultTimeScale;
         }
 
-        public void EndLevel()
+        public void CloseLevel()
         {
-            _battleMenu.gameObject.SetActive(false);
+            _cancelTokenSource?.Cancel();
+            Enemy.EndLevel();
+            Player.EndLevel();
+            _menu.gameObject.SetActive(false);
             _cameraMover.gameObject.SetActive(false);
-            _enemy.EndLevel();
-            _player.EndLevel();
-            _sidesReadyForRound = 0;
-            _sidesEndRound = 0;
-            _haveWinner = false;
-            _isBattleActive = false;
         }
 
         public void ResumeGame()
@@ -93,82 +119,70 @@ namespace Battler.Core
             _cameraMover.gameObject.SetActive(true);
         }
 
+        private void RefreshCancelToken()
+        {
+            if (_cancelTokenSource != null)
+            {
+                _cancelTokenSource.Cancel();
+                _cancelTokenSource.Dispose();
+            }
+
+            _cancelTokenSource = new CancellationTokenSource();
+        }
+
+        private void EndLevel()
+        {
+            if (_levelWinner == _player)
+            {
+                Sound.PlayWinLevelSound();
+                End?.Invoke(true);
+            }
+            else
+            {
+                Sound.PlayLoseLevelSound();
+                End?.Invoke(false);
+            }
+
+        }
+
+        private void PauseGame()
+        {
+            if (_isBattleActive)
+                Time.timeScale = PauseTimeScale;
+
+            _cameraMover.gameObject.SetActive(false);
+        }
+
         private void OnPause()
         {
             Pause?.Invoke();
             PauseGame();
         }
 
-        private void PauseGame()
-        {
-            if (_isBattleActive)
-                Time.timeScale = _pauseTimeScale;
-
-            _cameraMover.gameObject.SetActive(false);
-        }
-
-        private void PrepareToRound()
-        {
-            if (_haveWinner)
-                return;
-
-            _player.PrepareToRound();
-            _enemy.PrepareToRound();
-        }
-
-        private void OnRoundEnded()
-        {
-            if (++_sidesEndRound == _sidesCount)
-            {
-                PrepareToRound();
-                _sidesEndRound = 0;
-            }
-        }
-
-        private void OnReadyForRound()
-        {
-            if (++_sidesReadyForRound == _sidesCount)
-            {
-                _player.StartRound();
-                _enemy.StartRound();
-                _sidesReadyForRound = 0;
-                _isBattleActive = true;
-            }
-        }
-
-        private void OnPlayerWinRound()
-        {
-            _sound.PlayWinRoundSound();
-            _battleMenu.OnPlayerWinRound();
-            OnRoundEnd();
-        }
-
-        private void OnEnemyWinRound()
-        {
-            _sound.PlayLoseRoundSound();
-            _battleMenu.OnEnemyWinRound();
-            OnRoundEnd();
-        }
-
-        private void OnRoundEnd()
-        {
-            _isBattleActive = false;
-            _player.EndRound();
-            _enemy.EndRound();
-        }
-
         private void OnPlayerWin()
         {
-            _sound.PlayWinLevelSound();
-            _haveWinner = true;
-            End?.Invoke(true);
+            HaveLevelWinner = true;
+            _levelWinner = _player;
         }
 
         private void OnEnemyWin()
         {
-            _sound.PlayLoseLevelSound();
-            _haveWinner = true;
-            End?.Invoke(false);
+            HaveLevelWinner = true;
+            _levelWinner = _enemy;
+        }
+
+        private void Subscribe()
+        {
+            _menu.PlayerWin += OnPlayerWin;
+            _menu.EnemyWin += OnEnemyWin;
+            _menu.Pause += OnPause;
+        }
+
+        private void Unsubscribe()
+        {
+            _menu.PlayerWin -= OnPlayerWin;
+            _menu.EnemyWin -= OnEnemyWin;
+            _menu.Pause -= OnPause;
         }
     }
 }

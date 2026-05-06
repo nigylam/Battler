@@ -8,8 +8,8 @@ namespace Battler.UI.BattleView
     {
         [SerializeField] private UIButton _pauseButton;
         [SerializeField] private TextCounter _roundTextCounter;
-        [SerializeField] private RoundWinnerPannel _roundWinnerPannel;
-        [SerializeField] private RoundWinsPannel _roundWinsPannel;
+        [SerializeField] private RoundWinnerPannel _roundWinnerPanel;
+        [SerializeField] private RoundWinsPannel _roundWinsPanel;
         [SerializeField] private UIButton _startButton;
         [SerializeField] private DragArmyPanel _armyPanel;
         [SerializeField] private Image _armyPanelImage;
@@ -37,20 +37,20 @@ namespace Battler.UI.BattleView
             _roundTextCounter.Enable();
             Restart();
             _roundCounter.Increase();
-            _roundWinsPannel.EnemyWin += OnEnemyWin;
-            _roundWinsPannel.PlayerWin += OnPlayerWin;
+            _roundWinsPanel.EnemyWin += OnEnemyWin;
+            _roundWinsPanel.PlayerWin += OnPlayerWin;
             _pauseButton.Clicked += OnPauseClick;
         }
 
         private void OnDisable()
         {
             _roundTextCounter.Disable();
-            _roundWinsPannel.EnemyWin -= OnEnemyWin;
-            _roundWinsPannel.PlayerWin -= OnPlayerWin;
+            _roundWinsPanel.EnemyWin -= OnEnemyWin;
+            _roundWinsPanel.PlayerWin -= OnPlayerWin;
             _pauseButton.Clicked += OnPauseClick;
             _startButton.Clicked -= OnStartClick;
             _startButton.gameObject.SetActive(false);
-            _roundWinnerPannel.gameObject.SetActive(false);
+            _roundWinnerPanel.gameObject.SetActive(false);
         }
 
         public void SetSquads(Keeper<BattleSquadCell> keeper)
@@ -58,13 +58,22 @@ namespace Battler.UI.BattleView
             _armyPanel.SetItems(keeper);
         }
 
-        public void SetPlayButtonActive()
+        public void EnablePlayButton()
         {
             if (_startButton.gameObject.activeSelf)
                 return;
 
             _startButton.gameObject.SetActive(true);
             _startButton.Clicked += OnStartClick;
+        }
+
+        public void DisablePlayButton()
+        {
+            if (_startButton.gameObject.activeSelf == false)
+                return;
+
+            _startButton.Clicked -= OnStartClick;
+            _startButton.gameObject.SetActive(false);
         }
 
         public void SetPlacingAvailable()
@@ -79,22 +88,30 @@ namespace Battler.UI.BattleView
 
         public void Initialize(int roundsToWin)
         {
-            _roundWinsPannel.Initialize(roundsToWin);
+            _roundWinsPanel.Initialize(roundsToWin);
         }
 
         public void OnPlayerWinRound()
         {
-            _roundWinnerPannel.SetPlayerWinner();
-            _roundWinsPannel.PlayerIncrease();
+            _roundWinsPanel.PlayerIncrease();
+        }
+
+        public void OnEnemyWinRound()
+        {
+            _roundWinsPanel.EnemyIncrease();
+        }
+
+        public void SetEnemyWinPanel()
+        {
+            _roundWinnerPanel.SetEnemyWinner();
 
             if (_haveWinner == false)
                 _roundCounter.Increase();
         }
 
-        public void OnEnemyWinRound()
+        public void SetPlayerWinPanel()
         {
-            _roundWinnerPannel.SetEnemyWinner();
-            _roundWinsPannel.EnemyIncrease();
+            _roundWinnerPanel.SetPlayerWinner();
 
             if (_haveWinner == false)
                 _roundCounter.Increase();
@@ -103,7 +120,7 @@ namespace Battler.UI.BattleView
         private void Restart()
         {
             _roundCounter.Restart();
-            _roundWinsPannel.Restart();
+            _roundWinsPanel.Restart();
         }
 
         private void OnStartClick()
