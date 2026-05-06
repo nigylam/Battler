@@ -806,6 +806,7 @@ Transform:
   - {fileID: 8512793236142816494}
   - {fileID: 5722913328603422382}
   - {fileID: 8320173643178301013}
+  - {fileID: 5535675214947390880}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &3789759010986614100
@@ -926,7 +927,7 @@ MonoBehaviour:
   - {fileID: 474757043529500180}
   - {fileID: 3660239056713569341}
   _weapon: {fileID: 1912922401779156604}
-  _spawnEffect: {fileID: 8320173643159907771}
+  _upgradeEffect: {fileID: 5535675214965665366}
   _animator: {fileID: 5768057268802727759}
 --- !u!114 &2858756706154115267
 MonoBehaviour:
@@ -1578,6 +1579,77 @@ Transform:
   - {fileID: 5376724016883450021}
   m_Father: {fileID: 2899343971537803080}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &973607570040930901
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6684930670258098679}
+    m_Modifications:
+    - target: {fileID: 4706360199029681449, guid: e456a5abefd21764cb2e548cf5d097cc, type: 3}
+      propertyPath: m_Name
+      value: UpgradeEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 4706360199029681449, guid: e456a5abefd21764cb2e548cf5d097cc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4706360199029741557, guid: e456a5abefd21764cb2e548cf5d097cc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4706360199029741557, guid: e456a5abefd21764cb2e548cf5d097cc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4706360199029741557, guid: e456a5abefd21764cb2e548cf5d097cc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4706360199029741557, guid: e456a5abefd21764cb2e548cf5d097cc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4706360199029741557, guid: e456a5abefd21764cb2e548cf5d097cc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4706360199029741557, guid: e456a5abefd21764cb2e548cf5d097cc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4706360199029741557, guid: e456a5abefd21764cb2e548cf5d097cc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4706360199029741557, guid: e456a5abefd21764cb2e548cf5d097cc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4706360199029741557, guid: e456a5abefd21764cb2e548cf5d097cc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4706360199029741557, guid: e456a5abefd21764cb2e548cf5d097cc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e456a5abefd21764cb2e548cf5d097cc, type: 3}
+--- !u!4 &5535675214947390880 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4706360199029741557, guid: e456a5abefd21764cb2e548cf5d097cc, type: 3}
+  m_PrefabInstance: {fileID: 973607570040930901}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &5535675214965665366 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4706360199045032963, guid: e456a5abefd21764cb2e548cf5d097cc, type: 3}
+  m_PrefabInstance: {fileID: 973607570040930901}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6160952552442421561
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1660,7 +1732,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 187952, guid: c05e92eaee7a00844867e5edc8e0dde1, type: 3}
       propertyPath: m_Name
-      value: DustDirtyPoof
+      value: SpawnEffect
       objectReference: {fileID: 0}
     - target: {fileID: 187952, guid: c05e92eaee7a00844867e5edc8e0dde1, type: 3}
       propertyPath: m_IsActive
@@ -1751,11 +1823,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c05e92eaee7a00844867e5edc8e0dde1, type: 3}
---- !u!198 &8320173643159907771 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 19826678, guid: c05e92eaee7a00844867e5edc8e0dde1, type: 3}
-  m_PrefabInstance: {fileID: 8320173643178158669}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8320173643178301013 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 424984, guid: c05e92eaee7a00844867e5edc8e0dde1, type: 3}

@@ -15,6 +15,7 @@ public abstract class Unit : MonoBehaviour
     [SerializeField] private UnitDragger _dragger;
     [SerializeField] private List<SkinnedMeshRenderer> _renderers;
     [SerializeField] private GameObject _weapon;
+    [SerializeField] private ParticleSystem _upgradeEffect;
 
     private Unit _target;
     private bool _dead;
@@ -25,12 +26,6 @@ public abstract class Unit : MonoBehaviour
     public UnitDragger Dragger => _dragger;
     protected bool IsMoving => _mover.Speed > 0;
     protected abstract UnitAnimator Animator { get; }
-
-    [ContextMenu("take Dama")]    
-    public void TakeDamage()
-    {
-        TakeDamage(5);
-    }
 
     private void OnEnable()
     {
@@ -72,7 +67,10 @@ public abstract class Unit : MonoBehaviour
         _attacker.Upgrade();
 
         if (playAnimation)
+        {
+            _upgradeEffect.gameObject.SetActive(true);
             Animator.OnUpgrade();
+        }
     }
 
     public void TakeDamage(int damage)
