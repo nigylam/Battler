@@ -26,6 +26,12 @@ public abstract class Unit : MonoBehaviour
     protected bool IsMoving => _mover.Speed > 0;
     protected abstract UnitAnimator Animator { get; }
 
+    [ContextMenu("take Dama")]    
+    public void TakeDamage()
+    {
+        TakeDamage(5);
+    }
+
     private void OnEnable()
     {
         _health.Dead += OnDead;
