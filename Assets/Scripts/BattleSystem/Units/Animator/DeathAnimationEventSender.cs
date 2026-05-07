@@ -1,12 +1,15 @@
 using System;
 using UnityEngine;
 
-public class DeathAnimationEventSender : MonoBehaviour
+namespace Battler.BattleSystem.Units.Animation
 {
-    public event Action AnimationEnded;
-
-    public void OnAnimationEnded()
+    public class DeathAnimationEventSender : MonoBehaviour
     {
-        AnimationEnded?.Invoke();
+        public event Action AnimationEnded;
+
+        public void OnAnimationEnded()
+        {
+            AnimationEnded?.Invoke();
+        }
     }
 }

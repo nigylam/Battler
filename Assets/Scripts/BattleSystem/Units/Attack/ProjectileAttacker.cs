@@ -1,31 +1,37 @@
 using UnityEngine;
 
-public class ProjectileAttacker : Attacker
+namespace Battler.BattleSystem.Units.Attack
 {
-    [SerializeField] private ProjectileSpawner _projectileSpawner;
-    [SerializeField] private Transform _muzzlePoint;
-
-    private LayerMask _attackTargets;
-    private bool _isUpgraded;
-
-    private void OnDisable()
+    public class ProjectileAttacker : Attacker
     {
-        _isUpgraded = false;
-    }
+        [SerializeField] private ProjectileSpawner _projectileSpawner;
+        [SerializeField] private Transform _muzzlePoint;
 
-    public override void Initialize(LayerMask attackTargets)
-    {
-        _attackTargets = attackTargets;
-    }
+        private LayerMask _attackTargets;
+        private bool _isUpgraded;
 
-    public override void Upgrade()
-    {
-        _isUpgraded = true;
-    }
+        private void OnDisable()
+        {
+            _isUpgraded = false;
+            Disable();
+        }
 
-    protected override void Attack()
-    {
-        base.Attack();
-        _projectileSpawner.Spawn(_muzzlePoint.position, _attackTargets, GetDirectionToTarget(_muzzlePoint.position), _isUpgraded);
+        protected virtual void Disable() { }
+
+        public override void Initialize(LayerMask attackTargets)
+        {
+            _attackTargets = attackTargets;
+        }
+
+        public override void Upgrade()
+        {
+            _isUpgraded = true;
+        }
+
+        protected override void Attack()
+        {
+            base.Attack();
+            _projectileSpawner.Spawn(_muzzlePoint.position, _attackTargets, GetDirectionToTarget(_muzzlePoint.position), _isUpgraded);
+        }
     }
 }

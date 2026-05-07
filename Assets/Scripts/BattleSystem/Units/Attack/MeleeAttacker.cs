@@ -1,40 +1,43 @@
 using UnityEngine;
 
-public class MeleeAttacker : Attacker
+namespace Battler.BattleSystem.Units.Animation.SoldierRunning
 {
-    [SerializeField] private MeleeWeaponAnimationEventSender _weaponAnimationEventSender;
-    [SerializeField] private MeleeDamager _damager;
-
-    private void OnEnable()
+    public class MeleeAttacker : Attacker
     {
+        [SerializeField] private MeleeWeaponAnimationEventSender _weaponAnimationEventSender;
+        [SerializeField] private MeleeDamager _damager;
 
-        _weaponAnimationEventSender.AttackHitEnable += EnableDamage;
-        _weaponAnimationEventSender.AttackHitDisable += DisableDamage;
-    }
+        private void OnEnable()
+        {
 
-    private void OnDisable()
-    {
-        _weaponAnimationEventSender.AttackHitEnable -= EnableDamage;
-        _weaponAnimationEventSender.AttackHitDisable -= DisableDamage;
-    }
+            _weaponAnimationEventSender.AttackHitEnable += EnableDamage;
+            _weaponAnimationEventSender.AttackHitDisable += DisableDamage;
+        }
 
-    public override void Initialize(LayerMask attackTargets)
-    {
-        _damager.Initialize(attackTargets);
-    }
+        private void OnDisable()
+        {
+            _weaponAnimationEventSender.AttackHitEnable -= EnableDamage;
+            _weaponAnimationEventSender.AttackHitDisable -= DisableDamage;
+        }
 
-    public override void Upgrade()
-    {
-        _damager.Upgrade();
-    }
+        public override void Initialize(LayerMask attackTargets)
+        {
+            _damager.Initialize(attackTargets);
+        }
 
-    private void EnableDamage()
-    {
-        _damager.EnableDamage();
-    }
+        public override void Upgrade()
+        {
+            _damager.Upgrade();
+        }
 
-    private void DisableDamage()
-    {
-        _damager.DisableDamage();
+        private void EnableDamage()
+        {
+            _damager.EnableDamage();
+        }
+
+        private void DisableDamage()
+        {
+            _damager.DisableDamage();
+        }
     }
 }

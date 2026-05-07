@@ -1,4 +1,4 @@
-using Battler.BattleSystem;
+using Battler.BattleSystem.Units;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +11,7 @@ namespace Battler.BattleSystem.Squads
         [SerializeField] private LayerMask _squadLayer;
         [SerializeField] private LayerMask _attackTargets;
         [SerializeField] private Squad _squadPrefab;
+        [SerializeField] private float _unitSpawnRotationY;
 
         public bool TryCreate(SquadPlan squadPlan, (int x, int y) startCell, Transform parrent, Field field, bool createUpgraded, out Squad squad)
         {
@@ -85,7 +86,8 @@ namespace Battler.BattleSystem.Squads
 
         private Unit CreateUnit(Unit unitPrefab, Vector3 position, Material armyMaterial, LayerMask attackTargets, Transform parrent)
         {
-            Unit unit = Instantiate(unitPrefab, position, Quaternion.identity, parrent);
+            Vector3 spawnRotation = new Vector3(unitPrefab.transform.rotation.x, _unitSpawnRotationY, unitPrefab.transform.rotation.z);
+            Unit unit = Instantiate(unitPrefab, position, Quaternion.Euler(spawnRotation), parrent);
             unit.Initialize(armyMaterial, attackTargets);
             int logP = 2;
             int layerIndex = (int)Mathf.Log(_squadLayer.value, logP);

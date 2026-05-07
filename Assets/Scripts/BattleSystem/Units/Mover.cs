@@ -6,6 +6,7 @@ public class Mover : MonoBehaviour
 {
     [SerializeField] private float _attackRange;
     [SerializeField] private float _attackRangeUpgraded;
+    [SerializeField] private float _shootRotationOffset;
     [SerializeField] private NavMeshAgent _agent;
 
     private Transform _target;

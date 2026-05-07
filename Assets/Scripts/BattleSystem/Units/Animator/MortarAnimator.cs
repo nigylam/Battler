@@ -1,1 +1,5 @@
-public class MortarAnimator : UnitAnimator {}
+
+namespace Battler.BattleSystem.Units.Animation
+{
+    public class MortarAnimator : UnitAnimator { }
+}

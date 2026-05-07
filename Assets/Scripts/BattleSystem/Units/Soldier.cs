@@ -1,17 +1,22 @@
+using Battler.BattleSystem.Units.Animation;
+using Battler.BattleSystem.Units.Animation.SoldierRunning;
 using UnityEngine;
 
-public class Soldier : Unit
+namespace Battler.BattleSystem.Units
 {
-    [SerializeField] private SoldierAnimator _animator;
-    protected override UnitAnimator Animator => _animator;
-
-    private void Update()
+    public class Soldier : Unit
     {
-        _animator.ProcessMovingAnimations(IsMoving);
-    }
+        [SerializeField] private SoldierAnimator _animator;
+        protected override UnitAnimator Animator => _animator;
 
-    protected override void OnAttackStarted()
-    {
-        _animator.OnAttack();
+        private void Update()
+        {
+            _animator.ProcessMovingAnimations(IsMoving);
+        }
+
+        protected override void OnAttackStarted()
+        {
+            _animator.OnAttack();
+        }
     }
 }

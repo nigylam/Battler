@@ -1,52 +1,58 @@
 using System;
 using UnityEngine;
 
-public abstract class UnitAnimator : MonoBehaviour
+namespace Battler.BattleSystem.Units.Animation
 {
-    [SerializeField] private Animator _animator;
-
-    private readonly int AnimatorWin = Animator.StringToHash("Win");
-    private readonly int AnimatorUpgrade = Animator.StringToHash("Upgrade");
-    private readonly int AnimatorHit = Animator.StringToHash("Hit");
-    private readonly int AnimatorDeath = Animator.StringToHash("Death");
-    private readonly string AnimatorHitLayer = "HitLayer";
-
-    private int _hitLayer;
-
-    private void Awake()
+    public abstract class UnitAnimator : MonoBehaviour
     {
-        _animator = GetComponent<Animator>();
-        _hitLayer = _animator.GetLayerIndex(AnimatorHitLayer);
-    }
+        [SerializeField] private Animator _animator;
 
-    public void OnHit()
-    {
-        SetTrigger(AnimatorHit);
-    }
+        private readonly int AnimatorWin = Animator.StringToHash("Win");
+        private readonly int AnimatorUpgrade = Animator.StringToHash("Upgrade");
+        private readonly int AnimatorHit = Animator.StringToHash("Hit");
+        private readonly int AnimatorDeath = Animator.StringToHash("Death");
+        private readonly string AnimatorHitLayer = "HitLayer";
 
-    public void OnWin()
-    {
-        SetTrigger(AnimatorWin);
-    }
+        private int _hitLayer;
 
-    public void OnUpgrade()
-    {
-        SetTrigger(AnimatorUpgrade);
-    }
+        private void Awake()
+        {
+            _animator = GetComponent<Animator>();
+            _hitLayer = _animator.GetLayerIndex(AnimatorHitLayer);
+        }
 
-    public void OnDeath()
-    {
-        _animator.SetLayerWeight(_hitLayer, 0);
-        _animator.SetTrigger(AnimatorDeath);
-    }
+        public void OnHit()
+        {
+            SetTrigger(AnimatorHit);
+        }
 
-    protected void SetBool(int id, bool value)
-    {
-        _animator.SetBool(id, value);
-    }
+        public void OnWin()
+        {
+            SetTrigger(AnimatorWin);
+        }
 
-    protected void SetTrigger(int id) 
-    {
-        _animator.SetTrigger(id);
+        public void OnUpgrade()
+        {
+            SetTrigger(AnimatorUpgrade);
+        }
+
+        public void OnDeath()
+        {
+            _animator.SetLayerWeight(_hitLayer, 0);
+            _animator.SetTrigger(AnimatorDeath);
+        }
+
+        public virtual void OnWentTarget() { }
+        public virtual void OnLeaveTarget() { }
+
+        protected void SetBool(int id, bool value)
+        {
+            _animator.SetBool(id, value);
+        }
+
+        protected void SetTrigger(int id)
+        {
+            _animator.SetTrigger(id);
+        }
     }
 }

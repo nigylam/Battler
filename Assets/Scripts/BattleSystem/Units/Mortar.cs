@@ -1,8 +1,12 @@
+using Battler.BattleSystem.Units.Animation;
 using UnityEngine;
 
-public class Mortar : Unit
+namespace Battler.BattleSystem.Units
 {
-    [SerializeField] private MortarAnimator _animator;
+    public class Mortar : Unit
+    {
+        [SerializeField] private MortarAnimator _animator;
 
-    protected override UnitAnimator Animator => _animator;
+        protected override UnitAnimator Animator => _animator;
+    }
 }

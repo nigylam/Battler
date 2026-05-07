@@ -9,18 +9,23 @@ public abstract class Attacker : MonoBehaviour
     private Coroutine _cooldown;
     private Transform _target;
     private float _coolDownOffset = 0.6f;
-    private bool _canAttack = false;
+    private bool _closeToTarget = false;
     private bool _cooldownEnded = true;
+
+    protected virtual bool CanAttack { get; } = true;
 
     public event Action AttackStarted;
     public event Action AttackEnded;
 
     private void Update()
     {
-        if(_canAttack == false) 
+        if (_closeToTarget == false) 
             return;
 
         if(_cooldownEnded == false) 
+            return;
+
+        if (CanAttack == false)
             return;
 
         Attack();
@@ -29,14 +34,14 @@ public abstract class Attacker : MonoBehaviour
     public abstract void Initialize(LayerMask attackTargets);
     public abstract void Upgrade();
 
-    public void StartAttack()
+    public virtual void StartAttack()
     {
-        _canAttack = true;
+        _closeToTarget = true;
     }
 
     public void StopAttack()
     {
-        _canAttack = false;
+        _closeToTarget = false;
     }
 
     public void SetTarget(Transform target)

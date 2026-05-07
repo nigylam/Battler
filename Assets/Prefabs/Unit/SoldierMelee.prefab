@@ -1521,13 +1521,13 @@ PrefabInstance:
       addedObject: {fileID: 6701256675798050568}
     - targetCorrespondingSourceObject: {fileID: 4207753064186563347, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3382089157510769369}
-    - targetCorrespondingSourceObject: {fileID: 4207753064186563347, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 3721518430036669803}
     - targetCorrespondingSourceObject: {fileID: 4207753064186563347, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4403208083683525876}
+    - targetCorrespondingSourceObject: {fileID: 4207753064186563347, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1874129015715982732}
   m_SourcePrefab: {fileID: 100100000, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
 --- !u!4 &1142174959773147587 stripped
 Transform:
@@ -1592,7 +1592,8 @@ MonoBehaviour:
   - {fileID: 8250757743040412835}
   _weapon: {fileID: 1649048750816218544}
   _upgradeEffect: {fileID: 2292011509077810786}
-  _animator: {fileID: 3382089157510769369}
+  _demoTarget: {fileID: 0}
+  _animator: {fileID: 1874129015715982732}
 --- !u!114 &1128264349046736809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1632,19 +1633,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e64b9837681ded448bcf05d6536aaede, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3382089157510769369
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7599971757103004455}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e2bc05d394dd034b8b8ee68c7b97166, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 8229374382659822114}
 --- !u!114 &3721518430036669803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1672,6 +1660,19 @@ MonoBehaviour:
   _damage: 10
   _damageUpgraded: 10
   _collider: {fileID: 7053361074623932402}
+--- !u!114 &1874129015715982732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7599971757103004455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7d91fad207969a4d981df8395bfec35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 8229374382659822114}
 --- !u!95 &8229374382659822114 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 2389418485003686422, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}

@@ -1,178 +1,192 @@
 using Battler.BattleSystem.DragAndDrop;
+using Battler.BattleSystem.Units.Animation;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Unit : MonoBehaviour
+namespace Battler.BattleSystem.Units
 {
-    [SerializeField] private HealthBar _healthBar;
-    [SerializeField] private Health _health;
-    [SerializeField] private Mover _mover;
-    [SerializeField] private Attacker _attacker;
-    [SerializeField] private TargetFinder _targetFinder;
-    [SerializeField] private DeathAnimationEventSender _deadAnimationEventSender;
-    [SerializeField] private SkinnedMeshRenderer _meshRenderer;
-    [SerializeField] private UnitDragger _dragger;
-    [SerializeField] private List<SkinnedMeshRenderer> _renderers;
-    [SerializeField] private GameObject _weapon;
-    [SerializeField] private ParticleSystem _upgradeEffect;
-
-    private Unit _target;
-    private bool _dead;
-
-    public event Action<Unit> Dead;
-    public event Action<Unit> Free;
-
-    public UnitDragger Dragger => _dragger;
-    protected bool IsMoving => _mover.Speed > 0;
-    protected abstract UnitAnimator Animator { get; }
-
-    private void OnEnable()
+    public abstract class Unit : MonoBehaviour
     {
-        _health.Dead += OnDead;
-        _mover.WentToTarget += OnWentToTarget;
-        _mover.LeaveTarget += OnLeaveTarget;
-        _attacker.AttackStarted += OnAttackStarted;
-        _deadAnimationEventSender.AnimationEnded += OnDeadAnimationPlayed;
-        _mover.Disable();
+        [SerializeField] private HealthBar _healthBar;
+        [SerializeField] private Health _health;
+        [SerializeField] private Mover _mover;
+        [SerializeField] private Attacker _attacker;
+        [SerializeField] private TargetFinder _targetFinder;
+        [SerializeField] private DeathAnimationEventSender _deadAnimationEventSender;
+        [SerializeField] private SkinnedMeshRenderer _meshRenderer;
+        [SerializeField] private UnitDragger _dragger;
+        [SerializeField] private List<SkinnedMeshRenderer> _renderers;
+        [SerializeField] private GameObject _weapon;
+        [SerializeField] private ParticleSystem _upgradeEffect;
+        [SerializeField] private Unit _demoTarget;
 
-        if (_target != null)
+        private Unit _target;
+        private bool _dead;
+
+        public event Action<Unit> Dead;
+        public event Action<Unit> Free;
+
+        public UnitDragger Dragger => _dragger;
+        protected Attacker Attacker => _attacker;
+        protected bool IsMoving => _mover.Speed > 0;
+        protected abstract UnitAnimator Animator { get; }
+
+        [ContextMenu("set ts")]
+        public void SetTarget()
+        {
+            SetTarget(new List<Unit> { _demoTarget });
+        }
+
+        private void OnEnable()
+        {
+            _health.Dead += OnDead;
+            _mover.WentToTarget += OnWentTarget;
+            _mover.LeaveTarget += OnLeaveTarget;
+            _attacker.AttackStarted += OnAttackStarted;
+            _deadAnimationEventSender.AnimationEnded += OnDeadAnimationPlayed;
+            _mover.Disable();
+
+            if (_target != null)
+                _target.Dead += OnTargetDead;
+        }
+
+        private void OnDisable()
+        {
+            _mover.Disable();
+            _health.Dead -= OnDead;
+            _mover.WentToTarget -= OnWentTarget;
+            _mover.LeaveTarget -= OnLeaveTarget;
+            _attacker.AttackStarted -= OnAttackStarted;
+            _deadAnimationEventSender.AnimationEnded -= OnDeadAnimationPlayed;
+
+            if (_target != null)
+                _target.Dead -= OnTargetDead;
+        }
+
+        public void Initialize(Material armyMaterial, LayerMask attackTargets)
+        {
+            _meshRenderer.material = armyMaterial;
+            _attacker.Initialize(attackTargets);
+        }
+
+        public void Upgrade(bool playAnimation)
+        {
+            _healthBar.Upgrade();
+            _health.Upgrade();
+            _mover.Upgrade();
+            _attacker.Upgrade();
+
+            if (playAnimation)
+            {
+                _upgradeEffect.gameObject.SetActive(true);
+                Animator.OnUpgrade();
+            }
+        }
+
+        public void TakeDamage(int damage)
+        {
+            _health.TakeDamage(damage);
+            Animator.OnHit();
+        }
+
+        public void Heal(int count)
+        {
+            _health.Heal(count);
+        }
+
+        public void SetTarget(List<Unit> targets)
+        {
+            if (targets.Count == 0)
+                return;
+
+            if (_dead)
+                return;
+
+            if (_target != null)
+            {
+                _target.Dead -= OnTargetDead;
+            }
+
+            _target = _targetFinder.GetTarget(targets);
             _target.Dead += OnTargetDead;
-    }
 
-    private void OnDisable()
-    {
-        _mover.Disable();
-        _health.Dead -= OnDead;
-        _mover.WentToTarget -= OnWentToTarget;
-        _mover.LeaveTarget -= OnLeaveTarget;
-        _attacker.AttackStarted -= OnAttackStarted;
-        _deadAnimationEventSender.AnimationEnded -= OnDeadAnimationPlayed;
-
-        if (_target != null)
-            _target.Dead -= OnTargetDead;
-    }
-
-    public void Initialize(Material armyMaterial, LayerMask attackTargets)
-    {
-        _meshRenderer.material = armyMaterial;
-        _attacker.Initialize(attackTargets);
-    }
-
-    public void Upgrade(bool playAnimation)
-    {
-        _healthBar.Upgrade();
-        _health.Upgrade();
-        _mover.Upgrade();
-        _attacker.Upgrade();
-
-        if (playAnimation)
-        {
-            _upgradeEffect.gameObject.SetActive(true);
-            Animator.OnUpgrade();
-        }
-    }
-
-    public void TakeDamage(int damage)
-    {
-        _health.TakeDamage(damage);
-        Animator.OnHit();
-    }
-
-    public void Heal(int count)
-    {
-        _health.Heal(count);
-    }
-
-    public void SetTarget(List<Unit> targets)
-    {
-        if (targets.Count == 0)
-            return;
-
-        if (_dead)
-            return;
-
-        if (_target != null)
-        {
-            _target.Dead -= OnTargetDead;
+            _mover.Enable();
+            _mover.SetTarget(_target.transform);
+            _attacker.SetTarget(_target.transform);
         }
 
-        _target = _targetFinder.GetTarget(targets);
-        _target.Dead += OnTargetDead;
+        public void Stop()
+        {
+            if (_dead)
+                return;
 
-        _mover.Enable();
-        _mover.SetTarget(_target.transform);
-        _attacker.SetTarget(_target.transform);
-    }
+            _mover.Disable();
+            _attacker.StopAttack();
+        }
 
-    public void Stop()
-    {
-        if (_dead)
-            return;
+        public void PlayWin()
+        {
+            Animator.OnWin();
+        }
 
-        _mover.Disable();
-        _attacker.StopAttack();
-    }
+        public void HideVisual()
+        {
+            foreach (SkinnedMeshRenderer renderer in _renderers)
+                renderer.enabled = false;
 
-    public void PlayWin()
-    {
-        Animator.OnWin();
-    }
+            _weapon.SetActive(false);
+            _healthBar.gameObject.SetActive(false);
+        }
 
-    public void HideVisual()
-    {
-        foreach (SkinnedMeshRenderer renderer in _renderers)
-            renderer.enabled = false;
+        public void ShowVisual()
+        {
+            foreach (SkinnedMeshRenderer renderer in _renderers)
+                renderer.enabled = true;
 
-        _weapon.gameObject.SetActive(false);
-        _healthBar.gameObject.SetActive(false);
-    }
+            _weapon.SetActive(true);
+            _healthBar.gameObject.SetActive(true);
+        }
 
-    public void ShowVisual()
-    {
-        foreach (SkinnedMeshRenderer renderer in _renderers)
-            renderer.enabled = true;
+        protected virtual void OnAttackStarted() { }    
 
-        _weapon.SetActive(true);
-        _healthBar.gameObject.SetActive(true);
-    }
+        protected virtual void OnWentTarget()
+        {
+            Animator.OnWentTarget();
+            _attacker.StartAttack();
+        }
 
-    protected virtual void OnAttackStarted() { }
+        private void OnLeaveTarget()
+        {
+            Animator.OnLeaveTarget();
+            _attacker.StopAttack();
+        }
 
-    private void OnWentToTarget()
-    {
-        _attacker.StartAttack();
-    }
+        private void OnTargetDead(Unit _)
+        {
+            if (_dead)
+                return;
 
-    private void OnLeaveTarget()
-    {
-        _attacker.StopAttack();
-    }
+            _target.Dead -= OnTargetDead;
+            _target = null;
 
-    private void OnTargetDead(Unit _)
-    {
-        if (_dead)
-            return;
+            _mover.Enable();
+            Free?.Invoke(this);
+        }
 
-        _target.Dead -= OnTargetDead;
-        _target = null;
+        private void OnDead()
+        {
+            _mover.Disable();
+            Animator.OnDeath();
+            _attacker.StopAttack();
+            _healthBar.gameObject.SetActive(false);
+            _dead = true;
+            Dead?.Invoke(this);
+        }
 
-        _mover.Enable();
-        Free?.Invoke(this);
-    }
-
-    private void OnDead()
-    {
-        _mover.Disable();
-        Animator.OnDeath();
-        _attacker.StopAttack();
-        _healthBar.gameObject.SetActive(false);
-        _dead = true;
-        Dead?.Invoke(this);
-    }
-
-    private void OnDeadAnimationPlayed()
-    {
-        gameObject.SetActive(false);
+        private void OnDeadAnimationPlayed()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

@@ -4433,6 +4433,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _squadPrefab: {fileID: 5303145192439265009, guid: 175362ca6bba8c84bb43dc635fadbca9, type: 3}
+  _unitSpawnRotationY: 180
 --- !u!114 &303088310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16348,6 +16349,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   _squadPrefab: {fileID: 5303145192439265009, guid: 175362ca6bba8c84bb43dc635fadbca9, type: 3}
+  _unitSpawnRotationY: 0
 --- !u!114 &1062050774
 MonoBehaviour:
   m_ObjectHideFlags: 0
