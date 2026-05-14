@@ -1,14 +1,11 @@
-using Battler.BattleSystem.DragAndDrop;
 using Battler.BattleSystem.Units.Actions;
-using Battler.BattleSystem.Units.Animation;
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Battler.BattleSystem.Units
 {
-    public class Unit : MonoBehaviour
+    public class UnitNew : MonoBehaviour
     {
         [SerializeField] private Health _health;
         [SerializeField] private TargetFinder _targetFinder;
@@ -19,8 +16,8 @@ namespace Battler.BattleSystem.Units
         private Unit _target;
         private bool _isDead;
 
-        public event Action<Unit> Dead;
-        public event Action<Unit> Free;
+        public event Action<UnitNew> Dead;
+        public event Action<UnitNew> Free;
 
         public UnitVisual Visual => _visual;
 
@@ -33,12 +30,6 @@ namespace Battler.BattleSystem.Units
                 _mover.WentToTarget += OnWentTarget;
                 _mover.LeaveTarget += OnLeaveTarget;
             }
-        }
-
-        private void Update()
-        {
-            if (_mover != null)
-                _visual.PlayMoveAnimation(_mover.Speed > 0);
         }
 
         private void OnDisable()
@@ -71,7 +62,9 @@ namespace Battler.BattleSystem.Units
                 _mover.Upgrade();
 
             if (playAnimation)
+            {
                 _visual.PlayUpgrade();
+            }
         }
 
         public void SetTarget(List<Unit> potentialTargets)
@@ -109,16 +102,19 @@ namespace Battler.BattleSystem.Units
 
         private void OnWentTarget()
         {
-            _action.StartAction(_target);
+            if (_action != null)
+                _action.StartAction(_target);
         }
 
         private void OnLeaveTarget()
         {
-            _action.StopAction();
+            if (_action != null)
+                _action.StopAction();
         }
 
         public void Stop()
         {
+
             _action.StopAction();
         }
 

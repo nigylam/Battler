@@ -65884,16 +65884,16 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.73333335
-    functionName: OnAttackHitEnable
+    functionName: OnAttackActionStarted
     data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 11500000, guid: 7378fdbf4bc725746ae6245b8c12ec52, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 1.3333334
-    functionName: OnAttackHitDisable
+    functionName: OnAttackActionEnded
     data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 11500000, guid: 7378fdbf4bc725746ae6245b8c12ec52, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0

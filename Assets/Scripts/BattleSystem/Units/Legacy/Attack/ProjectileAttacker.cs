@@ -1,10 +1,11 @@
+using Battler.BattleSystem.Units.Actions.Weapon;
 using UnityEngine;
 
 namespace Battler.BattleSystem.Units.Attack
 {
     public class ProjectileAttacker : Attacker
     {
-        [SerializeField] private ProjectileSpawner _projectileSpawner;
+        [SerializeField] private ProjectileWeapon _projectileSpawner;
         [SerializeField] private Transform _muzzlePoint;
 
         private LayerMask _attackTargets;

@@ -89842,9 +89842,9 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 2.9
-    functionName: OnAnimationEnded
+    functionName: OnDeathAnimationPlayed
     data: 
-    objectReferenceParameter: {fileID: 11500000, guid: e64b9837681ded448bcf05d6536aaede, type: 3}
+    objectReferenceParameter: {fileID: 11500000, guid: 656bb0a6c5c28ce44917a37cf0dde74a, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0

@@ -58,7 +58,7 @@ namespace Battler.BattleSystem.Squads
         public void PlayWin()
         {
             foreach (var unit in _unitsAlive)
-                unit.PlayWin();
+                unit.Visual.PlayWin();
         }
 
         public void Upgrade(bool playAnimation = true)
@@ -83,13 +83,13 @@ namespace Battler.BattleSystem.Squads
         public void HideVisuals()
         {
             foreach (Unit unit in _units)
-                unit.HideVisual();
+                unit.Visual.Hide();
         }
 
         public void ShowVisuals()
         {
             foreach (Unit unit in _units)
-                unit.ShowVisual();
+                unit.Visual.Show();
         }
 
         private void OnUnitDead(Unit unit)
@@ -121,14 +121,14 @@ namespace Battler.BattleSystem.Squads
         {
             unit.Dead += OnUnitDead;
             unit.Free += OnUnitFree;
-            unit.Dragger.DragStarted += OnUnitDragStarted;
+            unit.Visual.Dragger.DragStarted += OnUnitDragStarted;
         }
 
         private void Unsubscribe(Unit unit)
         {
             unit.Dead -= OnUnitDead;
             unit.Free -= OnUnitFree;
-            unit.Dragger.DragStarted -= OnUnitDragStarted;
+            unit.Visual.Dragger.DragStarted -= OnUnitDragStarted;
         }
     }
 }

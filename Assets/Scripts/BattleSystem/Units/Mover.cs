@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -6,18 +7,14 @@ public class Mover : MonoBehaviour
 {
     [SerializeField] private float _attackRange;
     [SerializeField] private float _attackRangeUpgraded;
-    [SerializeField] private float _shootRotationOffset;
     [SerializeField] private NavMeshAgent _agent;
 
-    private Transform _target;
+    private readonly float _updateRate = 0.2f;
+    private readonly float _rotationSpeed = 120f;
+    private readonly float _angleAttackOffset = 0.001f;
 
-    private float _updateRate = 0.2f;
-    private float _timer;
-    private float _rotationSpeed = 120f;
-    private float _angleAttackOffset = 0.001f;
-    private bool _wentEventSended = false;
-    private bool _leaveEventSended = false;
-    private bool _isEnabled = false;
+    private Transform _target;
+    private Coroutine _currentBehavior;
 
     public event Action WentToTarget;
     public event Action LeaveTarget;
@@ -31,33 +28,20 @@ public class Mover : MonoBehaviour
 
     private void Update()
     {
-        if (_isEnabled == false)
-            return;
-
         RotateTowardsTarget();
-
-        if (_agent.enabled == false)
-            return;
-
-        MoveNavmesh();
     }
 
-    public void Enable()
+    private void OnDisable()
     {
-        _isEnabled = true;
-    }
-
-    public void Disable()
-    {
-        _isEnabled = false;
+        if (_currentBehavior != null)
+            StopCoroutine(_currentBehavior);
     }
 
     public void SetTarget(Transform target)
     {
         _target = target;
-        _wentEventSended = false;
         _agent.isStopped = false;
-        _agent.SetDestination(_target.position);
+        SwitchState(MoveRoutine());
     }
 
     public void Upgrade()
@@ -68,41 +52,69 @@ public class Mover : MonoBehaviour
     private bool CloseToTarget()
     => Vector3.SqrMagnitude(transform.position - _target.position) <= _attackRange * _attackRange;
 
-    private void MoveNavmesh()
+    private void SwitchState(IEnumerator newState)
     {
-        _timer -= Time.deltaTime;
+        StopCurrentBehavior();
+        _currentBehavior = StartCoroutine(newState);
+    }
 
-        if (_timer > 0)
-            return;
-
-        _timer = _updateRate;
-
-        if (CloseToTarget() == false)
+    private void StopCurrentBehavior()
+    {
+        if (_currentBehavior != null)
         {
-            _agent.isStopped = false;
-            _agent.SetDestination(_target.position);
-
-            if (_leaveEventSended == false)
-            {
-                LeaveTarget?.Invoke();
-                _leaveEventSended = true;
-            }
+            StopCoroutine(_currentBehavior);
+            _currentBehavior = null;
         }
-        else
+    }
+
+    private IEnumerator MoveRoutine()
+    {
+        LeaveTarget?.Invoke();
+
+        if (_agent.enabled && _agent.isOnNavMesh)
+            _agent.isStopped = false;
+
+        float pathTimer = 0f;
+
+        while (_target != null && CloseToTarget() == false)
+        {
+            pathTimer -= Time.deltaTime;
+
+            if (pathTimer <= 0f)
+            {
+                pathTimer = _updateRate;
+
+                if (_agent.enabled && _agent.isOnNavMesh)
+                    _agent.SetDestination(_target.position);
+            }
+
+            yield return null;
+        }
+
+        if (_agent.enabled && _agent.isOnNavMesh)
         {
             _agent.isStopped = true;
             _agent.velocity = Vector3.zero;
-
-            if (_wentEventSended == false)
-            {
-                WentToTarget?.Invoke();
-                _wentEventSended = true;
-            }
         }
+
+        WentToTarget?.Invoke();
+        SwitchState(MonitorRoutine());
+    }
+
+    private IEnumerator MonitorRoutine()
+    {
+        while (_target != null && CloseToTarget())
+            yield return new WaitForSeconds(0.1f);
+
+        if (_target != null)
+            SwitchState(MoveRoutine());
     }
 
     private void RotateTowardsTarget()
     {
+        if (_target == null)
+            return;
+
         Vector3 direction = _target.position - transform.position;
         direction.y = 0f;
 

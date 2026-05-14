@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f644dce66277f7449d4f0bc1e68e812, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unitPrefab: {fileID: 5974361031313152713, guid: 331dca906f7fab14a9233b68451d27ee, type: 3}
+  _unitPrefab: {fileID: 1787221550882257309, guid: 331dca906f7fab14a9233b68451d27ee, type: 3}
   _preview: {fileID: 5896800842004084199, guid: b44be735b206594419e3617fe80fac93, type: 3}
   _dragIcon: {fileID: 21300000, guid: 79b47bb526f2f407ea5a899bf93524fc, type: 3}
   _uiIcon: {fileID: 21300000, guid: 79b47bb526f2f407ea5a899bf93524fc, type: 3}
