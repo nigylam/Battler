@@ -1324,7 +1324,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: f98d036fe766be74eba74703b5b3e289, type: 2}
     - target: {fileID: 4207753064186563347, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
       propertyPath: m_Name
-      value: Medic Variant
+      value: Medic
       objectReference: {fileID: 0}
     - target: {fileID: 5463160595052530089, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
       propertyPath: _mover
@@ -1517,7 +1517,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attackRange: 6
   _attackRangeUpgraded: 6
-  _agent: {fileID: 0}
+  _agent: {fileID: 3146657564590242139}
 --- !u!95 &4023512445950547500 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 2389418485003686422, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}

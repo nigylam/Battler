@@ -109,6 +109,9 @@ namespace Battler.BattleSystem.Units
 
         private void OnWentTarget()
         {
+            if(_target == null)
+                return;
+
             _action.StartAction(_target);
         }
 
