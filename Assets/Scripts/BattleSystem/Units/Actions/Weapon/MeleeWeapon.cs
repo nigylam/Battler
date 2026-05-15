@@ -38,8 +38,9 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
                 if (_damageDid)
                     return;
 
+                Vector3 hitPoint = other.ClosestPoint(transform.position);
                 _damageDid = true;
-                ApplyDamage(member);
+                ApplyDamage(member, hitPoint);
             }
         }
     }

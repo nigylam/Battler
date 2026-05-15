@@ -5,11 +5,17 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
     public class Grenade : Projectile
     {
         [SerializeField] private float _arcHeight = 5f;
+        [SerializeField] private ParticleSystem _explosionEffect;
 
         public override void Initialize(LayerMask attackTargets, Vector3 targetVector)
         {
             base.Initialize(attackTargets, targetVector);
             SetVelocity(CalculateBallisticVelocity(targetVector, _arcHeight));
+        }
+
+        protected override void OnTrigger()
+        {
+            _explosionEffect.gameObject.SetActive(true);
         }
 
         private Vector3 CalculateBallisticVelocity(Vector3 displacement, float addedHeight)

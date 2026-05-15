@@ -1,4 +1,5 @@
 using Battler.BattleSystem.DragAndDrop;
+using Battler.BattleSystem.Units;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace Battler
         [SerializeField] private ParticleSystem _upgradeEffect;
         [SerializeField] private Animator _animator;
         [SerializeField] private HealthBar _healthBar;
+        [SerializeField] private EffectSpawner _hitEffects;
 
         private int _hitLayer;
 
@@ -66,9 +68,10 @@ namespace Battler
             _animator.SetTrigger(AnimatorDeath);
         }
 
-        public void PlayHitAnimation()
+        public void OnHit(Vector3 hitPoint)
         {
             SetTrigger(AnimatorHit);
+            _hitEffects.Spawn(hitPoint);
         }
 
         public void PlayUpgrade()

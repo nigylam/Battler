@@ -1,6 +1,5 @@
 using Battler.BattleSystem.DragAndDrop;
 using Battler.BattleSystem.Units.Actions;
-using Battler.BattleSystem.Units.Animation;
 using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -96,10 +95,10 @@ namespace Battler.BattleSystem.Units
             }
         }
 
-        public void TakeDamage(int damage)
+        public void TakeDamage(int damage, Vector3 hitPoint)
         {
             _health.TakeDamage(damage);
-            _visual.PlayHitAnimation();
+            _visual.OnHit(hitPoint);
         }
 
         public void Heal(int count)

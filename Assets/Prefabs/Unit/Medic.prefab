@@ -1342,6 +1342,10 @@ PrefabInstance:
       propertyPath: _targetFinder
       value: 
       objectReference: {fileID: 4876254879816939719}
+    - target: {fileID: 5900805531238683160, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
+      propertyPath: _prefab
+      value: 
+      objectReference: {fileID: 19831454, guid: 0d10768fe55d2554297ee0a82d4e432b, type: 3}
     - target: {fileID: 6684930670258098679, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.122590065
@@ -1503,6 +1507,7 @@ MonoBehaviour:
   _upgradeEffect: {fileID: 6497607343573641836}
   _animator: {fileID: 4023512445950547500}
   _healthBar: {fileID: 4057083092197898034}
+  _hitEffects: {fileID: 5124348083970184738}
 --- !u!114 &6904371179370692245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1532,6 +1537,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ccf287d29b0761542a9a83eca38cce6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5124348083970184738 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5900805531238683160, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
+  m_PrefabInstance: {fileID: 1656911467026007098}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3214014518753333033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7171d10a83679e4c8a2ae0a784130a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &5348918691922859469 stripped

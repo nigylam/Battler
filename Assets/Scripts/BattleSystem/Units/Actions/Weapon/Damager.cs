@@ -22,11 +22,11 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
             _damage = _damageUpgraded;
         }
 
-        protected void ApplyDamage(Unit member)
+        protected void ApplyDamage(Unit member, Vector3 hitPoint)
         {
             int damage = Random.Range(_damage - _damageOffset, _damage + _damageOffset);
             damage = Mathf.Clamp(damage, _damageMinValue, int.MaxValue);
-            member.TakeDamage(damage);
+            member.TakeDamage(damage, hitPoint);
         }
 
         protected bool IsInLayerMask(GameObject obj)

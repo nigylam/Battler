@@ -23,7 +23,7 @@ namespace Battler.BattleSystem.Squads
         public void KillAll()
         {
             for (int i = _unitsAlive.Count - 1; i >= 0; i--)
-                _unitsAlive[i].TakeDamage(100);
+                _unitsAlive[i].TakeDamage(100, Vector3.zero);
         }
 
         private void OnEnable()

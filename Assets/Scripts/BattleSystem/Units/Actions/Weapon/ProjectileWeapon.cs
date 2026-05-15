@@ -1,34 +1,13 @@
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Pool;
 
 namespace Battler.BattleSystem.Units.Actions.Weapon
 {
-    public class ProjectileWeapon : MonoBehaviour
+    public class ProjectileWeapon : Spawner<Projectile>
     {
-        [SerializeField] private Projectile _projectilePrefab;
-
-        private ObjectPool<Projectile> _pool;
-        private List<Projectile> _activeElements = new();
-        private int _poolCapacity = 50;
-        private int _poolMaxSize = 100;
-
-        private void Awake()
-        {
-            _pool = new ObjectPool<Projectile>(
-                createFunc: () => Instantiate(_projectilePrefab),
-                actionOnGet: (obj) => obj.gameObject.SetActive(true),
-                actionOnRelease: (obj) => obj.gameObject.SetActive(false),
-                actionOnDestroy: (obj) => Destroy(obj.gameObject),
-                collectionCheck: true,
-                defaultCapacity: _poolCapacity,
-                maxSize: _poolMaxSize
-            );
-        }
-
         public Projectile Spawn(Vector3 position, LayerMask attackTargets, Vector3 shotDirection, bool isUpgraded)
         {
-            Projectile projectile = Instantiate(_projectilePrefab, position, Quaternion.identity, transform);
+            Projectile projectile = Pool.Get();
+            projectile.transform.position = position;
             projectile.Initialize(attackTargets, shotDirection);
             projectile.Collided += OnCollided;
             projectile.Wasted += OnWasted;
@@ -40,14 +19,14 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
             return projectile;
         }
 
-        public void Restart()
+        protected override void Release(Projectile item)
         {
-            while (_activeElements.Count > 0)
-            {
-                Release(_activeElements[0]);
-            }
+            if (TryRemoveFromActiveList(item) == false)
+                return;
 
-            _activeElements.Clear();
+            item.Collided -= OnCollided;
+            item.Wasted -= OnWasted;
+            Pool.Release(item);
         }
 
         private void OnCollided(Projectile projectile)
@@ -58,34 +37,6 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
         private void OnWasted(Projectile projectile)
         {
             Release(projectile);
-        }
-
-        private void Release(Projectile projectile)
-        {
-            if (TryRemoveFromActiveList(projectile) == false)
-                return;
-
-            projectile.Collided -= OnCollided;
-            projectile.Wasted -= OnWasted;
-            _pool.Release(projectile);
-        }
-
-        private bool TryAddToActiveList(Projectile projectile)
-        {
-            if (_activeElements.Contains(projectile))
-                return false;
-
-            _activeElements.Add(projectile);
-            return true;
-        }
-
-        private bool TryRemoveFromActiveList(Projectile projectile)
-        {
-            if (_activeElements.Contains(projectile) == false)
-                return false;
-
-            _activeElements.Remove(projectile);
-            return true;
         }
     }
 }
