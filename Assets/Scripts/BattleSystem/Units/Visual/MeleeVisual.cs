@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Battler
+namespace Battler.BattleSystem.Units.Visual
 {
     public class MeleeVisual : UnitVisual
     {

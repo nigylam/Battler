@@ -1356,6 +1356,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 059f83abce5683c4bb60173de44e7df9, type: 2}
+    - target: {fileID: 3365085714825458440, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
+      propertyPath: _healEffect
+      value: 
+      objectReference: {fileID: 7772752433256786324}
     - target: {fileID: 4207753064186563347, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
       propertyPath: m_Name
       value: Mortar
@@ -1560,6 +1564,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7171d10a83679e4c8a2ae0a784130a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!198 &7772752433256786324 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 7253012766606541839, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
+  m_PrefabInstance: {fileID: 1115130779390061979}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8305106404054703700
 PrefabInstance:
   m_ObjectHideFlags: 0

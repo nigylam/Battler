@@ -152,7 +152,7 @@ namespace UnityEngine.UI.Extensions
 
             if (!isInitialised && !pSystem.main.playOnAwake)
             {
-                pSystem.Stop(false, ParticleSystemStopBehavior.StopEmittingAndClear);
+                //pSystem.Stop(false, ParticleSystemStopBehavior.StopEmittingAndClear);
                 isInitialised = true;
             }
 
@@ -341,7 +341,7 @@ namespace UnityEngine.UI.Extensions
         {
             if (!fixedTime && Application.isPlaying)
             {
-                pSystem.Simulate(Time.unscaledDeltaTime, false, false, true);
+                //pSystem.Simulate(Time.unscaledDeltaTime, false, false, true);
                 SetAllDirty();
 
                 if ((currentMaterial != null && currentTexture != currentMaterial.mainTexture) ||
@@ -363,7 +363,7 @@ namespace UnityEngine.UI.Extensions
             {
                 if (fixedTime)
                 {
-                    pSystem.Simulate(Time.unscaledDeltaTime, false, false, true);
+                    //pSystem.Simulate(Time.unscaledDeltaTime, false, false, true);
                     SetAllDirty();
                     if ((currentMaterial != null && currentTexture != currentMaterial.mainTexture) ||
                         (material != null && currentMaterial != null && material.shader != currentMaterial.shader))

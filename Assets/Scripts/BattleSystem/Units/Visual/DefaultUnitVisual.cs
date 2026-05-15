@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Battler
+namespace Battler.BattleSystem.Units.Visual
 {
     public class DefaultUnitVisual : UnitVisual { }
 }

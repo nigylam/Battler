@@ -1,7 +1,5 @@
-using Battler.BattleSystem.Units;
+using Battler.BattleSystem.Units.Visual;
 using Cysharp.Threading.Tasks;
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
@@ -44,9 +42,14 @@ namespace Battler.BattleSystem.Units.Actions
             Collider[] colliders = Physics.OverlapSphere(transform.position, _healRange);
 
             foreach (Collider collider in colliders)
+            {
+                if (collider.transform.root == transform.root)
+                    continue;
+
                 if (collider.TryGetComponent(out Unit unit))
                     if (IsInLayerMask(unit.gameObject) == false)
                         unit.Heal(_healPerTime);
+            }
         }
 
         private async UniTask ExecuteSequenceAsync(Unit target, CancellationToken token)
@@ -55,9 +58,7 @@ namespace Battler.BattleSystem.Units.Actions
 
             while (target != null && token.IsCancellationRequested == false)
             {
-                if (_visual != null)
-                    _visual.PlayHealAnimation();
-
+                _visual.OnHeal();
                 Heal();
                 await UniTask.Delay(System.TimeSpan.FromSeconds(GetCooldownTime()), cancellationToken: token);
             }

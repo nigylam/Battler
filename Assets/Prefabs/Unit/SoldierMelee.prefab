@@ -1465,6 +1465,10 @@ PrefabInstance:
       propertyPath: _health
       value: 
       objectReference: {fileID: 8408272208221307127}
+    - target: {fileID: 3365085714825458440, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
+      propertyPath: _healEffect
+      value: 
+      objectReference: {fileID: 4015970323499463739}
     - target: {fileID: 3761040249525030457, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
       propertyPath: _attackRange
       value: 1.5
@@ -1589,6 +1593,11 @@ Transform:
 --- !u!198 &2292011509077810786 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 5535675214965665366, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
+  m_PrefabInstance: {fileID: 5988792539531374644}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &4015970323499463739 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 7253012766606541839, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
   m_PrefabInstance: {fileID: 5988792539531374644}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &7431518367316639537 stripped
