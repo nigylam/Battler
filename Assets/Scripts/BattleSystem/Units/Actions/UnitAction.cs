@@ -28,7 +28,7 @@ namespace Battler.BattleSystem.Units.Actions
         private void OnDisable()
         {
             _ñooldownCts.Cancel();
-            _actionCts.Cancel();
+            _actionCts?.Cancel();
             Disable();
         }
 

@@ -1503,6 +1503,7 @@ MonoBehaviour:
   _animator: {fileID: 3337544434052218765}
   _healthBar: {fileID: 2434919257387015827}
   _hitEffects: {fileID: 6816869652770226051}
+  _healEffect: {fileID: 9073565432736760866}
 --- !u!114 &4200976901024357699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1567,6 +1568,11 @@ MonoBehaviour:
 --- !u!198 &7772752433256786324 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 7253012766606541839, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
+  m_PrefabInstance: {fileID: 1115130779390061979}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &9073565432736760866 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8255795374563781049, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
   m_PrefabInstance: {fileID: 1115130779390061979}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8305106404054703700

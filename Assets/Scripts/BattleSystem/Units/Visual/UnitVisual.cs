@@ -24,6 +24,7 @@ namespace Battler.BattleSystem.Units.Visual
         [SerializeField] private Animator _animator;
         [SerializeField] private HealthBar _healthBar;
         [SerializeField] private EffectSpawner _hitEffects;
+        [SerializeField] private ParticleSystem _healEffect;
 
         private int _hitLayer;
 
@@ -92,6 +93,12 @@ namespace Battler.BattleSystem.Units.Visual
         public void OnDeathAnimationPlayed()
         {
             gameObject.SetActive(false);
+        }
+
+        public void OnHeal()
+        {
+            _healEffect.gameObject.SetActive(false);
+            _healEffect.gameObject.SetActive(true);
         }
 
         protected void SetBool(int id, bool value)

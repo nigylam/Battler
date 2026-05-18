@@ -1520,6 +1520,11 @@ ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 7253012766606541839, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
   m_PrefabInstance: {fileID: 5411725685314206683}
   m_PrefabAsset: {fileID: 0}
+--- !u!198 &4145622763919200866 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8255795374563781049, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
+  m_PrefabInstance: {fileID: 5411725685314206683}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &7325492330862676179 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3365085714825458440, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
@@ -1598,6 +1603,7 @@ MonoBehaviour:
   _animator: {fileID: 7652359746596841933}
   _healthBar: {fileID: 7325492330862676179}
   _hitEffects: {fileID: 1943743642961635779}
+  _healEffect: {fileID: 4145622763919200866}
 --- !u!114 &4401036715121198555
 MonoBehaviour:
   m_ObjectHideFlags: 0

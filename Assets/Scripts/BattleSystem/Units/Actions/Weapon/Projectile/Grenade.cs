@@ -13,6 +13,11 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
             SetVelocity(CalculateBallisticVelocity(targetVector, _arcHeight));
         }
 
+        protected override void Disable()
+        {
+            _explosionEffect.gameObject.SetActive(false);
+        }
+
         protected override void OnTrigger()
         {
             _explosionEffect.gameObject.SetActive(true);

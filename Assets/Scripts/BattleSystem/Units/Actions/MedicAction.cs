@@ -29,7 +29,7 @@ namespace Battler.BattleSystem.Units.Actions
                 return;
 
             await UniTask.WaitUntil(() => IsCooldownEnded, cancellationToken: ActionCancelToken);
-            _visual.OnHeal();
+            _visual.OnHealing();
             Heal(target);
             StartCoolDown().Forget();
         }

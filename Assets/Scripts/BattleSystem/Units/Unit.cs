@@ -43,6 +43,18 @@ namespace Battler.BattleSystem.Units
             _health.Dead -= OnDead;
         }
 
+        [ContextMenu("damage")]
+        public void TakeDamage() 
+        {
+            TakeDamage(10, Vector3.zero);
+        }
+
+        [ContextMenu("heal")]
+        public void Heal()
+        {
+            Heal(10);
+        }
+
         public void Initialize(Material armyMaterial, LayerMask targetLayer)
         {
             _visual.SetMaterial(armyMaterial);
@@ -71,6 +83,7 @@ namespace Battler.BattleSystem.Units
         public void Heal(int count)
         {
             _health.Heal(count);
+            _visual.OnHeal();
         }
 
         public async UniTask StartCombat()

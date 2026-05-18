@@ -38,6 +38,7 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
         private void OnDisable()
         {
             StopDisableCoroutine();
+            Disable();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -61,12 +62,13 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
             _lifetime = _startLifetime;
         }
 
+        protected virtual void OnTrigger() { }
+        protected virtual void Disable() { }
+
         protected void SetVelocity(Vector3 velocity)
         {
             _rigidbody.velocity = velocity;
         }
-
-        protected virtual void OnTrigger() { }
 
         private void StopDisableCoroutine()
         {
