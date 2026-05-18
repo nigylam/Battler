@@ -1,9 +1,9 @@
-using Battler.BattleSystem.DragAndDrop;
 using Battler.BattleSystem.Units.Actions;
+using Battler.BattleSystem.Units.TargetFinding;
 using Battler.BattleSystem.Units.Visual;
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Battler.BattleSystem.Units
@@ -16,23 +16,20 @@ namespace Battler.BattleSystem.Units
         [SerializeField] private UnitAction _action;
         [SerializeField] private Mover _mover;
 
+        private readonly float _targetRequestDelay = 1f;
+
         private Unit _target;
-        private bool _isDead;
 
         public event Action<Unit> Dead;
-        public event Action<Unit> Free;
+        public event Action<Unit> NeedTarget;
 
         public UnitVisual Visual => _visual;
+        public bool IsDead { get; private set; }
+        public bool HealthDecreased => _health.Current < _health.Max;
 
         private void OnEnable()
         {
             _health.Dead += OnDead;
-
-            if (_mover != null)
-            {
-                _mover.WentToTarget += OnWentTarget;
-                _mover.LeaveTarget += OnLeaveTarget;
-            }
         }
 
         private void Update()
@@ -44,15 +41,6 @@ namespace Battler.BattleSystem.Units
         private void OnDisable()
         {
             _health.Dead -= OnDead;
-
-            if (_target != null)
-                _target.Dead -= OnTargetDead;
-
-            if (_mover != null)
-            {
-                _mover.WentToTarget -= OnWentTarget;
-                _mover.LeaveTarget -= OnLeaveTarget;
-            }
         }
 
         public void Initialize(Material armyMaterial, LayerMask targetLayer)
@@ -74,28 +62,6 @@ namespace Battler.BattleSystem.Units
                 _visual.PlayUpgrade();
         }
 
-        public void SetTarget(List<Unit> potentialTargets)
-        {
-            if (_isDead || potentialTargets.Count == 0)
-                return;
-
-            _target = _targetFinder.GetTarget(potentialTargets);
-
-            if (_target == null)
-                return;
-
-            _target.Dead += OnTargetDead;
-
-            if (_mover != null)
-            {
-                _mover.SetTarget(_target.transform);
-            }
-            else
-            {
-                OnWentTarget();
-            }
-        }
-
         public void TakeDamage(int damage, Vector3 hitPoint)
         {
             _health.TakeDamage(damage);
@@ -107,41 +73,69 @@ namespace Battler.BattleSystem.Units
             _health.Heal(count);
         }
 
-        private void OnWentTarget()
+        public async UniTask StartCombat()
         {
-            if(_target == null)
-                return;
+            while (IsDead == false)
+            {
+                if (await SetTargetAsync().SuppressCancellationThrow())
+                    return;
 
-            _action.StartAction(_target);
+                if (await MoveToTarget().SuppressCancellationThrow())
+                    return;
+
+                if (await PerformAction().SuppressCancellationThrow())
+                    return;
+            }
         }
 
-        private void OnLeaveTarget()
+        public void SetTarget(List<Unit> enemies, List<Unit> alies)
         {
-            _action.StopAction();
+            _target = _targetFinder.GetTarget(enemies, alies);
         }
 
         public void Stop()
         {
-            _action.StopAction();
+            _action.Stop();
         }
 
         private void OnDead()
         {
-            Stop();
-            _isDead = true;
+            _action.Stop();
+            IsDead = true;
             _visual.PlayDeathAnimation();
             Dead?.Invoke(this);
         }
 
-        private void OnTargetDead(Unit _)
+        private async UniTask PerformAction()
         {
-            if (_isDead)
+            if (_target == null || _target.IsDead)
                 return;
 
-            _target.Dead -= OnTargetDead;
-            _target = null;
+            Func<bool> isClose = () => _mover == null || _mover.CloseToTarget();
+            await _action.StartAction(_target, isClose);
 
-            Free?.Invoke(this);
+            if (_action.IsSingleAction)
+            {
+                _target = null;
+            }
+        }
+
+        private async UniTask MoveToTarget()
+        {
+            if (_mover == null)
+                return;
+
+            _mover.SetTarget(_target.transform);
+            await UniTask.WaitUntil(() => _mover.CloseToTarget() || _target.IsDead, cancellationToken: this.GetCancellationTokenOnDestroy());
+        }
+
+        private async UniTask SetTargetAsync()
+        {
+            while (_target == null || _target.IsDead)
+            {
+                NeedTarget?.Invoke(this);
+                await UniTask.Delay(TimeSpan.FromSeconds(_targetRequestDelay), cancellationToken: this.GetCancellationTokenOnDestroy());
+            }
         }
     }
 }

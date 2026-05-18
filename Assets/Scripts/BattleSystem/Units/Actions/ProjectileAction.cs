@@ -1,7 +1,7 @@
 using Battler.BattleSystem.Units.Actions.Weapon;
 using Battler.BattleSystem.Units.Visual;
 using Cysharp.Threading.Tasks;
-using System.Threading;
+using System;
 using UnityEngine;
 
 namespace Battler.BattleSystem.Units.Actions
@@ -13,42 +13,30 @@ namespace Battler.BattleSystem.Units.Actions
         [SerializeField] private Transform _muzzlePoint;
 
         private bool _isUpgraded;
-        private CancellationTokenSource _actionCts;
-
-        private void OnDisable()
-        {
-            StopAction();
-        }
-
-        public override void StartAction(Unit target)
-        {
-            base.StartAction(target);
-            _actionCts?.Cancel();
-            _actionCts = new CancellationTokenSource();
-            ExecuteSequenceAsync(target, _actionCts.Token).Forget();
-        }
-
-        public override void StopAction()
-        {
-            _actionCts?.Cancel();
-        }
 
         public override void Upgrade()
         {
             _isUpgraded = true;
         }
 
-        private async UniTask ExecuteSequenceAsync(Unit target, CancellationToken token)
+        protected override void Disable()
         {
-            await UniTask.Delay(System.TimeSpan.FromSeconds(GetCooldownTime()), cancellationToken: token);
+            Stop();
+        }
 
-            while (target != null && token.IsCancellationRequested == false)
+        protected override async UniTask ProcessAction(Unit target, Func<bool> isClose)
+        {
+            StartCoolDown().Forget();
+
+            while (target.IsDead == false && isClose())
             {
+                await UniTask.WaitUntil(() => IsCooldownEnded, cancellationToken: ActionCancelToken);
+
                 if (_visual != null)
                     _visual.PlayShotAnimation();
 
-                _weapon.Spawn(_muzzlePoint.position, TargetLayer, GetDirectionToTarget(_muzzlePoint.position), _isUpgraded);
-                await UniTask.Delay(System.TimeSpan.FromSeconds(GetCooldownTime()), cancellationToken: token);
+                _weapon.Spawn(_muzzlePoint.position, TargetLayer, GetDirectionToTarget(target.transform.position, _muzzlePoint.position), _isUpgraded);
+                StartCoolDown().Forget();
             }
         }
     }

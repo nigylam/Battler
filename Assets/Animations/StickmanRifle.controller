@@ -394,7 +394,7 @@ AnimatorController:
   - serializedVersion: 5
     m_Name: HitLayer
     m_StateMachine: {fileID: -6799270181026236571}
-    m_Mask: {fileID: 31900000, guid: c3eb434a0447df84389e95d900901fd9, type: 2}
+    m_Mask: {fileID: 0}
     m_Motions: []
     m_Behaviours: []
     m_BlendingMode: 0

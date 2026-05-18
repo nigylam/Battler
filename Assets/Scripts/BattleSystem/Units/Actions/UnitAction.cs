@@ -1,5 +1,7 @@
 using UnityEngine;
 using System;
+using Cysharp.Threading.Tasks;
+using System.Threading;
 
 namespace Battler.BattleSystem.Units.Actions
 {
@@ -9,35 +11,67 @@ namespace Battler.BattleSystem.Units.Actions
 
         private readonly float _coolDownOffset = 0.6f;
 
-        private Unit _target;
+        private CancellationTokenSource _ñooldownCts;
+        private CancellationTokenSource _actionCts;
 
-        protected LayerMask TargetLayer;
+        public virtual bool IsSingleAction => false;
+
+        protected bool IsCooldownEnded { get; private set; } = true;
+        protected CancellationToken ActionCancelToken => _actionCts.Token;
+        protected LayerMask TargetLayer { get; private set; }
+
+        private void Awake()
+        {
+            _ñooldownCts = new CancellationTokenSource();
+        }
+
+        private void OnDisable()
+        {
+            _ñooldownCts.Cancel();
+            _actionCts.Cancel();
+            Disable();
+        }
 
         public virtual void Initialize(LayerMask targetLayer)
         {
             TargetLayer = targetLayer;
         }
 
-        public virtual void StartAction(Unit target)
+        public async UniTask StartAction(Unit target, Func<bool> isClose)
         {
             if (target == null)
                 throw new ArgumentNullException(nameof(target));
 
-            _target = target;
+            _actionCts?.Cancel();
+            _actionCts = new CancellationTokenSource();
+            await ProcessAction(target, isClose);
         }
 
-        public abstract void StopAction();
+        public void Stop()
+        {
+            _actionCts?.Cancel();
+        }
 
         public abstract void Upgrade();
 
-        protected Vector3 GetDirectionToTarget(Vector3 startPosition)
+        protected virtual void Disable() { }
+        protected abstract UniTask ProcessAction(Unit target, Func<bool> isClose);
+
+        protected async UniTask StartCoolDown()
         {
-            Vector3 shotDirection = _target.transform.position - startPosition;
+            IsCooldownEnded = false;
+            await UniTask.Delay(TimeSpan.FromSeconds(GetCooldownTime()), cancellationToken: _ñooldownCts.Token);
+            IsCooldownEnded = true;
+        }
+
+        protected Vector3 GetDirectionToTarget(Vector3 targetPosition, Vector3 startPosition)
+        {
+            Vector3 shotDirection = targetPosition - startPosition;
             shotDirection.y = 0;
             return shotDirection;
         }
 
-        protected float GetCooldownTime()
+        private float GetCooldownTime()
         {
             return UnityEngine.Random.Range(_cooldownTime - _coolDownOffset, _cooldownTime + _coolDownOffset);
         }

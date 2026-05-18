@@ -16,9 +16,6 @@ public class Mover : MonoBehaviour
     private Transform _target;
     private Coroutine _currentBehavior;
 
-    public event Action WentToTarget;
-    public event Action LeaveTarget;
-
     public float Speed => _agent.velocity.magnitude;
 
     private void Awake()
@@ -49,7 +46,7 @@ public class Mover : MonoBehaviour
         _attackRange = _attackRangeUpgraded;
     }
 
-    private bool CloseToTarget()
+    public bool CloseToTarget()
     => Vector3.SqrMagnitude(transform.position - _target.position) <= _attackRange * _attackRange;
 
     private void SwitchState(IEnumerator newState)
@@ -69,8 +66,6 @@ public class Mover : MonoBehaviour
 
     private IEnumerator MoveRoutine()
     {
-        LeaveTarget?.Invoke();
-
         if (_agent.enabled && _agent.isOnNavMesh)
             _agent.isStopped = false;
 
@@ -97,7 +92,6 @@ public class Mover : MonoBehaviour
             _agent.velocity = Vector3.zero;
         }
 
-        WentToTarget?.Invoke();
         SwitchState(MonitorRoutine());
     }
 

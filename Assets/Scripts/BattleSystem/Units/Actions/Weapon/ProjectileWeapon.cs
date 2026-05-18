@@ -7,7 +7,9 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
         public Projectile Spawn(Vector3 position, LayerMask attackTargets, Vector3 shotDirection, bool isUpgraded)
         {
             Projectile projectile = Pool.Get();
+            projectile.gameObject.SetActive(true);
             projectile.transform.position = position;
+            projectile.transform.parent = transform;
             projectile.Initialize(attackTargets, shotDirection);
             projectile.Collided += OnCollided;
             projectile.Wasted += OnWasted;

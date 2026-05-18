@@ -1,6 +1,7 @@
 using Battler.BattleSystem.Armies;
 using Battler.BattleSystem.DragAndDrop;
 using Battler.BattleSystem.Units;
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,7 @@ namespace Battler.BattleSystem.Squads
         private readonly List<Unit> _units = new();
         private readonly List<Unit> _unitsAlive = new();
 
+        private Army _ownerArmy;
         private Army _enemyArmy;
         private bool _isBattleEnded;
 
@@ -72,12 +74,13 @@ namespace Battler.BattleSystem.Squads
             return _unitsAlive;
         }
 
-        public void Attack(Army army)
+        public void Attack(Army enemyArmy, Army ownerArmy)
         {
-            _enemyArmy = army;
+            _enemyArmy = enemyArmy;
+            _ownerArmy = ownerArmy;
 
             foreach (Unit unit in _unitsAlive)
-                unit.SetTarget(_enemyArmy.GetTargets());
+                unit.StartCombat().Forget();
         }
 
         public void HideVisuals()
@@ -114,20 +117,20 @@ namespace Battler.BattleSystem.Squads
             if (_isBattleEnded)
                 return;
 
-            unit.SetTarget(_enemyArmy.GetTargets());
+            unit.SetTarget(_enemyArmy.GetTargets(), _ownerArmy.GetTargets());
         }
 
         private void Subscribe(Unit unit)
         {
             unit.Dead += OnUnitDead;
-            unit.Free += OnUnitFree;
+            unit.NeedTarget += OnUnitFree;
             unit.Visual.Dragger.DragStarted += OnUnitDragStarted;
         }
 
         private void Unsubscribe(Unit unit)
         {
             unit.Dead -= OnUnitDead;
-            unit.Free -= OnUnitFree;
+            unit.NeedTarget -= OnUnitFree;
             unit.Visual.Dragger.DragStarted -= OnUnitDragStarted;
         }
     }

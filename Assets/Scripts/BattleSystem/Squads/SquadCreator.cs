@@ -29,11 +29,15 @@ namespace Battler.BattleSystem.Squads
             List<(int x, int y)> cellsToTake = GetCellsToTake(field, startCell, squadPlan);
 
             if (cellsPerUnit == 1)
-                foreach (var (x, y) in cellsToTake)
-                    squad.AddUnit(CreateUnit(squadPlan.Unit, field.GetCellPosition(x, y), _armyMaterial, _attackTargets, squad.transform));
+            {
+                for(int i = 0; i < cellsToTake.Count; i++)
+                {
+                    squad.AddUnit(CreateUnit(squadPlan.Unit, field.GetCellPosition(cellsToTake[i].x, cellsToTake[i].y), _armyMaterial, _attackTargets, squad.transform, i));
+                }
+            }
 
             if (cellsPerUnit > 1)
-                squad.AddUnit(CreateUnit(squadPlan.Unit, GetCenter(cellsToTake, field), _armyMaterial, _attackTargets, squad.transform));
+                squad.AddUnit(CreateUnit(squadPlan.Unit, GetCenter(cellsToTake, field), _armyMaterial, _attackTargets, squad.transform, 0));
 
             if (createUpgraded)
                 squad.Upgrade(false);
@@ -84,14 +88,15 @@ namespace Battler.BattleSystem.Squads
             return cellsToTake;
         }
 
-        private Unit CreateUnit(Unit unitPrefab, Vector3 position, Material armyMaterial, LayerMask attackTargets, Transform parrent)
+        private Unit CreateUnit(Unit unitPrefab, Vector3 position, Material armyMaterial, LayerMask attackTargets, Transform parrent, int iterator)
         {
-            Vector3 spawnRotation = new Vector3(unitPrefab.transform.rotation.x, _unitSpawnRotationY, unitPrefab.transform.rotation.z);
+            Vector3 spawnRotation = new(unitPrefab.transform.rotation.x, _unitSpawnRotationY, unitPrefab.transform.rotation.z);
             Unit unit = Instantiate(unitPrefab, position, Quaternion.Euler(spawnRotation), parrent);
             unit.Initialize(armyMaterial, attackTargets);
             int logP = 2;
             int layerIndex = (int)Mathf.Log(_squadLayer.value, logP);
             unit.gameObject.layer = layerIndex;
+            unit.gameObject.name = unit.gameObject.name + iterator;
             return unit;
         }
 

@@ -1,5 +1,3 @@
-using Battler.BattleSystem.Units.Actions.Weapon;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -35,9 +33,7 @@ namespace Battler.BattleSystem.Units
         public virtual void Restart()
         {
             while (_activeElements.Count > 0)
-            {
                 Release(_activeElements[0]);
-            }
 
             _activeElements.Clear();
         }

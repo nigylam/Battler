@@ -2,10 +2,8 @@ using Battler.BattleSystem.Units;
 using Battler.BattleSystem.Units.Actions.Weapon;
 using Battler.BattleSystem.Units.Visual;
 using Cysharp.Threading.Tasks;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
+using System;
 
 namespace Battler.BattleSystem.Units.Actions
 {
@@ -14,18 +12,10 @@ namespace Battler.BattleSystem.Units.Actions
         [SerializeField] private MeleeVisual _visual;
         [SerializeField] private MeleeWeapon _weapon;
 
-        private CancellationTokenSource _actionCts;
-
         private void OnEnable()
         {
             _visual.AttackStarted += EnableDamage;
             _visual.AttackEnded += DisableDamage;
-        }
-
-        private void OnDisable()
-        {
-            _visual.AttackStarted -= EnableDamage;
-            _visual.AttackEnded -= DisableDamage;
         }
 
         public override void Initialize(LayerMask targetLayer)
@@ -39,25 +29,19 @@ namespace Battler.BattleSystem.Units.Actions
             _weapon.Upgrade();
         }
 
-        public override void StartAction(Unit target)
+        protected override void Disable()
         {
-            base.StartAction(target);
-            _actionCts?.Cancel();
-            _actionCts = new CancellationTokenSource();
-            ExecuteSequenceAsync(target, _actionCts.Token).Forget();
+            _visual.AttackStarted -= EnableDamage;
+            _visual.AttackEnded -= DisableDamage;
         }
 
-        public override void StopAction()
+        protected override async UniTask ProcessAction(Unit target, Func<bool> isClose)
         {
-            _actionCts?.Cancel();
-        }
-
-        private async UniTask ExecuteSequenceAsync(Unit target, CancellationToken token)
-        {
-            while (target != null && token.IsCancellationRequested == false)
+            while (target.IsDead == false && isClose())
             {
+                await UniTask.WaitUntil(() => IsCooldownEnded, cancellationToken: ActionCancelToken);
                 _visual.PlayAttackAnimation();
-                await UniTask.Delay(System.TimeSpan.FromSeconds(GetCooldownTime()), cancellationToken: token);
+                StartCoolDown().Forget();
             }
         }
 

@@ -43,14 +43,14 @@ public class HealthBar : MonoBehaviour
 
     private void OnDisable()
     {
-        _decorUpgraded.gameObject.SetActive(false);
+        _decorUpgraded.SetActive(false);
         _healthSliderBar.Disable();
         _health.Changed -= OnHealthChanged;
     }
 
     public void Upgrade()
     {
-        _decorUpgraded.gameObject.SetActive(true);
+        _decorUpgraded.SetActive(true);
         _isUpgraded = true;
     }
 }

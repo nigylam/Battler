@@ -7,10 +7,11 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
 {
     public abstract class Projectile : Damager
     {
-        [SerializeField] private float _lifetime = 4f;
+        [SerializeField] private float _startLifetime = 4f;
         [SerializeField] private Rigidbody _rigidbody;
 
         private readonly float _effectTime = 2f;
+        private float _lifetime;
         private Coroutine _disableAfterEffect;
 
         public event Action<Projectile> Collided;
@@ -57,6 +58,7 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
         public virtual void Initialize(LayerMask attackTargets, Vector3 shotDirection)
         {
             base.Initialize(attackTargets);
+            _lifetime = _startLifetime;
         }
 
         protected void SetVelocity(Vector3 velocity)

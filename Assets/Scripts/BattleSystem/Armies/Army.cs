@@ -64,15 +64,13 @@ namespace Battler.BattleSystem.Armies
                 return;
 
             while (_squads.Count > 0)
-            {
                 Remove(_squads[0]);
-            }
         }
 
         public void Attack()
         {
             foreach (var squad in _squads)
-                squad.Attack(_enemyArmy);
+                squad.Attack(_enemyArmy, this);
         }
 
         public void Stop()
