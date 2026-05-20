@@ -8,7 +8,7 @@ namespace Battler.Meta
 {
     public class LevelProgress
     {
-        private readonly Dictionary<LevelConfig, Level> _levels = new Dictionary<LevelConfig, Level>();
+        private readonly Dictionary<LevelConfig, Level> _levels = new();
         private readonly List<LevelConfig> _levelConfigs = new();
 
         public LevelProgress(List<LevelConfig> levels, List<LevelConfig> openedLevels)
@@ -21,7 +21,7 @@ namespace Battler.Meta
 
             _levelConfigs.AddRange(levels);
 
-            foreach (LevelConfig level in levels)
+            foreach (LevelConfig level in _levelConfigs)
             {
                 if (level == null)
                     throw new ArgumentNullException(nameof(level));
