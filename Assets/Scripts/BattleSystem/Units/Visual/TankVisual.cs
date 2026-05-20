@@ -9,10 +9,12 @@ namespace Battler.BattleSystem.Units.Visual
         [SerializeField] private float _rotationSpeed;
         [SerializeField] private float _destroyEffectDuration;
         [SerializeField] private GameObject _tower;
-        [SerializeField] private Transform _target;
         [SerializeField] private ParticleSystem _explosionEffect;
         [SerializeField] private ParticleSystem _smokeEffect;
         [SerializeField] private Material _explodedMaterial;
+
+        [Header("For testing")]
+        [SerializeField] private Transform _target;
 
         [ContextMenu("rotate")]
         public void Rotate()

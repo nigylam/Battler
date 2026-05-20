@@ -11,5 +11,10 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
             base.Initialize(attackTargets, shotDirection);
             SetVelocity(Vector3.Normalize(shotDirection) * _speed);
         }
+
+        protected override void OnTrigger()
+        {
+            SetVelocity(Vector3.zero);
+        }
     }
 }

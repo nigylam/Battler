@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Level5
   m_EditorClassIdentifier: 
   _rounds:
-  - {fileID: 11400000, guid: 508270502938e1941a68a73322e86535, type: 2}
-  - {fileID: 11400000, guid: 0103a9e47f76253499dec21e5677cc85, type: 2}
-  - {fileID: 11400000, guid: 0103a9e47f76253499dec21e5677cc85, type: 2}
+  - {fileID: 11400000, guid: b95c83061ab4ab143902b29f38d6ae8f, type: 2}
+  - {fileID: 11400000, guid: d23fa2a226095e04ab7449af6902bf45, type: 2}
+  - {fileID: 11400000, guid: d23fa2a226095e04ab7449af6902bf45, type: 2}
   _goldReward: 100
   _squadReward: {fileID: 0}

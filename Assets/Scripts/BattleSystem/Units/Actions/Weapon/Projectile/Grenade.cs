@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Battler.BattleSystem.Units.Actions.Weapon
 {
-    public class MortarGrenade : Projectile
+    public class Grenade : Projectile
     {
         [SerializeField] private float _arcHeight = 5f;
         [SerializeField] private ParticleSystem _explosionEffect;

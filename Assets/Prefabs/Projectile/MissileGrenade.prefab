@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1451453634609063531}
   - component: {fileID: -2490699038816690824}
   m_Layer: 0
-  m_Name: MortarGrenade
+  m_Name: MissileGrenade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -98,7 +98,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -148,9 +148,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab56c0bfd42079a4481d9756526c50ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 6
-  _damageUpgraded: 12
-  _startLifetime: 4
+  _damage: 16
+  _damageUpgraded: 20
+  _startLifetime: 6
   _rigidbody: {fileID: 5615922289110471858}
   _arcHeight: 5
   _explosionEffect: {fileID: 1754236264206477763}

@@ -1356,6 +1356,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 059f83abce5683c4bb60173de44e7df9, type: 2}
+    - target: {fileID: 2858756706154115267, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
+      propertyPath: _maxHealthUpgraded
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 3365085714825458440, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
       propertyPath: _healEffect
       value: 
