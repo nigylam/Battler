@@ -1,0 +1,25 @@
+{
+    "intExample": 5,
+    "strExample": "Hello!",
+    "boolExample": [
+        false,
+        false,
+        false,
+        false
+    ],
+    "idSave": 3,
+    "gold": 200,
+    "openedLevels": [
+        {
+            "instanceID": 29550
+        }
+    ],
+    "openedGoods": [
+        {
+            "instanceID": 29994
+        }
+    ],
+    "boughtSquads": [],
+    "soundUI": 1.0,
+    "soundSFX": 1.0
+}

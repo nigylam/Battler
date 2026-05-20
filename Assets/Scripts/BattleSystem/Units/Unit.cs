@@ -15,6 +15,7 @@ namespace Battler.BattleSystem.Units
         [SerializeField] private UnitVisual _visual;
         [SerializeField] private UnitAction _action;
         [SerializeField] private Mover _mover;
+        [SerializeField] private Collider _collider;
 
         private readonly float _targetRequestDelay = 1f;
 
@@ -57,7 +58,7 @@ namespace Battler.BattleSystem.Units
 
         public void Initialize(Material armyMaterial, LayerMask targetLayer)
         {
-            _visual.SetMaterial(armyMaterial);
+            _visual.SetArmyMaterial(armyMaterial);
             _action.Initialize(targetLayer);
         }
 
@@ -111,6 +112,11 @@ namespace Battler.BattleSystem.Units
             _action.Stop();
         }
 
+        public Vector3 GetClosestPoint(Vector3 point)
+        {
+            return _collider.ClosestPoint(point);
+        }
+
         private void OnDead()
         {
             _action.Stop();
@@ -138,7 +144,7 @@ namespace Battler.BattleSystem.Units
             if (_mover == null)
                 return;
 
-            _mover.SetTarget(_target.transform);
+            _mover.SetTarget(_target);
             await UniTask.WaitUntil(() => _mover.CloseToTarget() || _target.IsDead, cancellationToken: this.GetCancellationTokenOnDestroy());
         }
 

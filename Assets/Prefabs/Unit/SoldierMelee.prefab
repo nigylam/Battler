@@ -1407,6 +1407,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 4904562226658582875}
   m_SourcePrefab: {fileID: 100100000, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
+--- !u!23 &1000473573826784357 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 723048676402585632, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
+  m_PrefabInstance: {fileID: 570459182425607237}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1649048750816218544 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1227288625216307701, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
@@ -1493,6 +1498,10 @@ PrefabInstance:
       propertyPath: _visual
       value: 
       objectReference: {fileID: 1138452030124607777}
+    - target: {fileID: 5463160595052530089, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
+      propertyPath: _collider
+      value: 
+      objectReference: {fileID: 7461227255666552160}
     - target: {fileID: 5463160595052530089, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
       propertyPath: _targetFinder
       value: 
@@ -1616,6 +1625,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eeb977997e26c247ad9a88d7942d2e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &7461227255666552160 stripped
+CapsuleCollider:
+  m_CorrespondingSourceObject: {fileID: 3789759010986614100, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
+  m_PrefabInstance: {fileID: 5988792539531374644}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7599971757103004455 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4207753064186563347, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
@@ -1683,11 +1697,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dragger: {fileID: 7431518367316639537}
-  _renderers:
+  _skinnedRenderers:
   - {fileID: 8878138310736152447}
   - {fileID: 130807198982342319}
   - {fileID: 8250757743040412835}
-  _weapon: {fileID: 1649048750816218544}
+  _meshRenderers:
+  - {fileID: 1000473573826784357}
   _armyColorPart: {fileID: 8878138310736152447}
   _upgradeEffect: {fileID: 2292011509077810786}
   _animator: {fileID: 8229374382659822114}
@@ -1706,8 +1721,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac921b25e893fa34d8d420fd8d4f071e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackRange: 1.5
-  _attackRangeUpgraded: 1.5
+  _attackRange: 1
+  _attackRangeUpgraded: 1
   _agent: {fileID: 1659791258364142208}
 --- !u!95 &8229374382659822114 stripped
 Animator:

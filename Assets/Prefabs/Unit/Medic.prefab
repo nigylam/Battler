@@ -1347,6 +1347,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 322940526940561662}
     - target: {fileID: 5463160595052530089, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
+      propertyPath: _collider
+      value: 
+      objectReference: {fileID: 2479624732726139246}
+    - target: {fileID: 5463160595052530089, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
       propertyPath: _targetFinder
       value: 
       objectReference: {fileID: 5929910486673285996}
@@ -1430,6 +1434,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 5929910486673285996}
   m_SourcePrefab: {fileID: 100100000, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
+--- !u!136 &2479624732726139246 stripped
+CapsuleCollider:
+  m_CorrespondingSourceObject: {fileID: 3789759010986614100, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
+  m_PrefabInstance: {fileID: 1656911467026007098}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2504267140189604671 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3764579935532093189, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
@@ -1497,11 +1506,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dragger: {fileID: 2504267140189604671}
-  _renderers:
+  _skinnedRenderers:
   - {fileID: 3541307833369438721}
   - {fileID: 8777647944466484219}
   - {fileID: 3180921023558041455}
-  _weapon: {fileID: 1140524959508684579}
+  _meshRenderers:
+  - {fileID: 4373595336102630029}
   _armyColorPart: {fileID: 8777647944466484219}
   _upgradeEffect: {fileID: 6497607343573641836}
   _animator: {fileID: 4023512445950547500}
@@ -1650,9 +1660,9 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ddd8e0758ee34841b5062d6339bb90c, type: 3}
---- !u!1 &1140524959508684579 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6634302417537332605, guid: 4ddd8e0758ee34841b5062d6339bb90c, type: 3}
+--- !u!23 &4373595336102630029 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8029938233139493075, guid: 4ddd8e0758ee34841b5062d6339bb90c, type: 3}
   m_PrefabInstance: {fileID: 6035443137708075614}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &7518865320655999749 stripped

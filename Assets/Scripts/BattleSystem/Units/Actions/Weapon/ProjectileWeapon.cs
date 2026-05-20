@@ -4,7 +4,7 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
 {
     public class ProjectileWeapon : Spawner<Projectile>
     {
-        public Projectile Spawn(Vector3 position, LayerMask attackTargets, Vector3 shotDirection, bool isUpgraded)
+        public Projectile Shoot(Vector3 position, LayerMask attackTargets, Vector3 shotDirection, bool isUpgraded)
         {
             Projectile projectile = Pool.Get();
             projectile.gameObject.SetActive(true);

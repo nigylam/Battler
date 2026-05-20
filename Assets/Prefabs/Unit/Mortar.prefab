@@ -1373,6 +1373,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6813153262995928672}
     - target: {fileID: 5463160595052530089, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
+      propertyPath: _collider
+      value: 
+      objectReference: {fileID: 4318477280412659919}
+    - target: {fileID: 5463160595052530089, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
       propertyPath: _targetFinder
       value: 
       objectReference: {fileID: 2032807964113043705}
@@ -1493,11 +1497,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dragger: {fileID: 4271598311939646110}
-  _renderers:
+  _skinnedRenderers:
   - {fileID: 210637314779141516}
   - {fileID: 8118079258182678381}
   - {fileID: 6722234480749573185}
-  _weapon: {fileID: 8645079988985672190}
+  _meshRenderers:
+  - {fileID: 7852450372294250539}
   _armyColorPart: {fileID: 210637314779141516}
   _upgradeEffect: {fileID: 4876016096723878861}
   _animator: {fileID: 3337544434052218765}
@@ -1544,6 +1549,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eeb977997e26c247ad9a88d7942d2e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &4318477280412659919 stripped
+CapsuleCollider:
+  m_CorrespondingSourceObject: {fileID: 3789759010986614100, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
+  m_PrefabInstance: {fileID: 1115130779390061979}
+  m_PrefabAsset: {fileID: 0}
 --- !u!198 &4876016096723878861 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 5535675214965665366, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
@@ -1637,9 +1647,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6385055488360855273, guid: 98b9a1c223e07dd49b844b4c12e8d0b1, type: 3}
   m_PrefabInstance: {fileID: 8305106404054703700}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &8645079988985672190 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 340255108544901034, guid: 98b9a1c223e07dd49b844b4c12e8d0b1, type: 3}
+--- !u!23 &7852450372294250539 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2285621099980590719, guid: 98b9a1c223e07dd49b844b4c12e8d0b1, type: 3}
   m_PrefabInstance: {fileID: 8305106404054703700}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &8985436478769490756 stripped

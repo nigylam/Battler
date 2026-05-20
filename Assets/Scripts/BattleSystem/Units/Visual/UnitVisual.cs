@@ -17,8 +17,8 @@ namespace Battler.BattleSystem.Units.Visual
         private readonly string AnimatorHitLayer = "HitLayer";
 
         [SerializeField] private UnitDragger _dragger;
-        [SerializeField] private List<SkinnedMeshRenderer> _renderers;
-        [SerializeField] private GameObject _weapon;
+        [SerializeField] private List<SkinnedMeshRenderer> _skinnedRenderers;
+        [SerializeField] private List<MeshRenderer> _meshRenderers;
         [SerializeField] private SkinnedMeshRenderer _armyColorPart;
         [SerializeField] private ParticleSystem _upgradeEffect;
         [SerializeField] private Animator _animator;
@@ -32,30 +32,38 @@ namespace Battler.BattleSystem.Units.Visual
 
         private void Awake()
         {
-            _hitLayer = _animator.GetLayerIndex(AnimatorHitLayer);
+            if (_animator != null)
+                _hitLayer = _animator.GetLayerIndex(AnimatorHitLayer);
         }
 
         public void Hide()
         {
-            foreach (SkinnedMeshRenderer renderer in _renderers)
-                renderer.enabled = false;
+            if (_skinnedRenderers.Count > 0)
+                foreach (SkinnedMeshRenderer renderer in _skinnedRenderers)
+                    renderer.enabled = false;
 
-            _weapon.SetActive(false);
+            if (_meshRenderers.Count > 0)
+                foreach (MeshRenderer renderer in _meshRenderers)
+                    renderer.enabled = false;
+
             _healthBar.gameObject.SetActive(false);
         }
 
         public void Show()
         {
-            foreach (SkinnedMeshRenderer renderer in _renderers)
+            foreach (SkinnedMeshRenderer renderer in _skinnedRenderers)
                 renderer.enabled = true;
 
-            _weapon.SetActive(true);
+            foreach (MeshRenderer renderer in _meshRenderers)
+                renderer.enabled = true;
+
             _healthBar.gameObject.SetActive(true);
         }
 
-        public void SetMaterial(Material armyMaterial)
+        public void SetArmyMaterial(Material armyMaterial)
         {
-            _armyColorPart.material = armyMaterial;
+            if (_armyColorPart != null)
+                _armyColorPart.material = armyMaterial;
         }
 
         public void PlayMoveAnimation(bool isMoving)
@@ -63,10 +71,13 @@ namespace Battler.BattleSystem.Units.Visual
             SetBool(AnimatorIsMoving, isMoving);
         }
 
-        public void PlayDeathAnimation()
+        public virtual void PlayDeathAnimation()
         {
-            _animator.SetLayerWeight(_hitLayer, 0);
-            _animator.SetTrigger(AnimatorDeath);
+            if (_animator != null)
+            {
+                _animator.SetLayerWeight(_hitLayer, 0);
+                _animator.SetTrigger(AnimatorDeath);
+            }
         }
 
         public void OnHit(Vector3 hitPoint)
@@ -101,14 +112,27 @@ namespace Battler.BattleSystem.Units.Visual
             _healEffect.gameObject.SetActive(true);
         }
 
+        protected void SetMaterial(Material material)
+        {
+            Material[] materials = new Material[] {material};
+
+            foreach (SkinnedMeshRenderer renderer in _skinnedRenderers)
+                renderer.materials = materials;
+
+            foreach (MeshRenderer renderer in _meshRenderers)
+                renderer.materials = materials;
+        }
+
         protected void SetBool(int id, bool value)
         {
-            _animator.SetBool(id, value);
+            if (_animator != null)
+                _animator.SetBool(id, value);
         }
 
         protected void SetTrigger(int id)
         {
-            _animator.SetTrigger(id);
+            if (_animator != null)
+                _animator.SetTrigger(id);
         }
     }
 }

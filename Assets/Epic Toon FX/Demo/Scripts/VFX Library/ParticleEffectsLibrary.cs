@@ -99,7 +99,7 @@ public class ParticleEffectsLibrary : MonoBehaviour {
 
 	private Vector3 spawnPosition = Vector3.zero;
 	public void SpawnParticleEffect(Vector3 positionInWorldToSpawn) {
-		// Spawn Currently Selected Particle Effect
+		// Shoot Currently Selected Particle Effect
 		spawnPosition = positionInWorldToSpawn + ParticleEffectSpawnOffsets[CurrentParticleEffectIndex];
 		GameObject newParticleEffect = GameObject.Instantiate(ParticleEffectPrefabs[CurrentParticleEffectIndex], spawnPosition, ParticleEffectPrefabs[CurrentParticleEffectIndex].transform.rotation) as GameObject;
 		newParticleEffect.name = "PE_" + ParticleEffectPrefabs[CurrentParticleEffectIndex];

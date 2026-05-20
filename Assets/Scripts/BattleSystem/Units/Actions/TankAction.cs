@@ -6,13 +6,25 @@ using UnityEngine;
 
 namespace Battler.BattleSystem.Units.Actions
 {
-    public class ProjectileAction : UnitAction
+    public class TankAction : UnitAction
     {
-        [SerializeField] private ShooterVisual _visual;
+        [SerializeField] private TankVisual _visual;
         [SerializeField] private ProjectileWeapon _weapon;
         [SerializeField] private Transform _muzzlePoint;
 
+        [Header("For testing")]
+        [SerializeField] private Unit _target;
+        [SerializeField] private LayerMask _targetLayer;
+
         private bool _isUpgraded;
+
+        public override bool IsSingleAction => true;
+
+        [ContextMenu("attadk")]
+        public void Shoot()
+        {
+            ProcessAction(_target, () => _target != null).Forget();
+        }
 
         public override void Upgrade()
         {
@@ -26,16 +38,12 @@ namespace Battler.BattleSystem.Units.Actions
 
         protected override async UniTask ProcessAction(Unit target, Func<bool> isClose)
         {
-            StartCoolDown().Forget();
+            await _visual.RotateTower(target.transform, ActionCancelToken);
 
             while (target.IsDead == false && isClose())
             {
                 await UniTask.WaitUntil(() => IsCooldownEnded, cancellationToken: ActionCancelToken);
-
-                if (_visual != null)
-                    _visual.PlayShotAnimation();
-
-                _weapon.Spawn(_muzzlePoint.position, TargetLayer, GetDirectionToTarget(target.transform.position, _muzzlePoint.position), _isUpgraded);
+                _weapon.Shoot(_muzzlePoint.position, TargetLayer, _muzzlePoint.forward, _isUpgraded);
                 StartCoolDown().Forget();
             }
         }
