@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rounds:
   - {fileID: 11400000, guid: 2bafc41e577ee8541af10613bad29373, type: 2}
-  - {fileID: 11400000, guid: a1159ddbe57ca32418ba3e452ab27d7e, type: 2}
-  _goldReward: 100
+  - {fileID: 11400000, guid: d32b9dcd386b189428d4b9fc27fe580c, type: 2}
+  - {fileID: 11400000, guid: d32b9dcd386b189428d4b9fc27fe580c, type: 2}
+  _goldReward: 160
   _squadReward: {fileID: 0}

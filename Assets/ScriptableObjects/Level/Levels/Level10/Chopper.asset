@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5253205f4b0747a4994103289507a6a0, type: 3}
-  m_Name: Melees
+  m_Script: {fileID: 11500000, guid: 37d79409a69a4d44192ce7940f16e70a, type: 3}
+  m_Name: Chopper
   m_EditorClassIdentifier: 
-  _squad: {fileID: -864476455278839830, guid: 52c80bb4894fe674590570b75397ddeb, type: 3}
-  _count: 4
+  _squads:
+  - {fileID: 11400000, guid: 6bd7fcab42b6d4f4e9cff697f610bdbc, type: 2}

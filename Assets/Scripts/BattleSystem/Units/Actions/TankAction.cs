@@ -12,19 +12,9 @@ namespace Battler.BattleSystem.Units.Actions
         [SerializeField] private ProjectileWeapon _weapon;
         [SerializeField] private Transform _muzzlePoint;
 
-        [Header("For testing")]
-        [SerializeField] private Unit _target;
-        [SerializeField] private LayerMask _targetLayer;
-
         private bool _isUpgraded;
 
         public override bool IsSingleAction => true;
-
-        [ContextMenu("attadk")]
-        public void Shoot()
-        {
-            ProcessAction(_target, () => _target != null).Forget();
-        }
 
         public override void Upgrade()
         {

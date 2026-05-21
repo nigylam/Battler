@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 37d79409a69a4d44192ce7940f16e70a, type: 3}
-  m_Name: MissMeleeMelee
+  m_Name: ChopperMeleeMelee
   m_EditorClassIdentifier: 
   _squads:
-  - {fileID: 11400000, guid: 2f8e6891ca7ef3546945b97b96038d9d, type: 2}
-  - {fileID: 11400000, guid: 9d24aa9cb652bbe4a979e35ae401b4f8, type: 2}
+  - {fileID: 11400000, guid: 6bd7fcab42b6d4f4e9cff697f610bdbc, type: 2}
   - {fileID: 11400000, guid: e7692c983a7afb840acc06bd02b6c4cc, type: 2}
+  - {fileID: 11400000, guid: bac13a32f73c3184fb79d09b051f56b8, type: 2}

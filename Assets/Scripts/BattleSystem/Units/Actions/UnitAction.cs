@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using Cysharp.Threading.Tasks;
 using System.Threading;
+using static UnityEngine.GraphicsBuffer;
 
 namespace Battler.BattleSystem.Units.Actions
 {
@@ -19,6 +20,17 @@ namespace Battler.BattleSystem.Units.Actions
         protected bool IsCooldownEnded { get; private set; } = true;
         protected CancellationToken ActionCancelToken => _actionCts.Token;
         protected LayerMask TargetLayer { get; private set; }
+
+
+        [Header("For testing")]
+        [SerializeField] private Unit _target;
+        [SerializeField] private LayerMask _targetLayer;
+
+        [ContextMenu("attadk")]
+        public void Shoot()
+        {
+            StartAction(_target, () => _target != null).Forget();
+        }
 
         private void Awake()
         {
@@ -62,13 +74,6 @@ namespace Battler.BattleSystem.Units.Actions
             IsCooldownEnded = false;
             await UniTask.Delay(TimeSpan.FromSeconds(GetCooldownTime()), cancellationToken: _ñooldownCts.Token);
             IsCooldownEnded = true;
-        }
-
-        protected Vector3 GetDirectionToTarget(Vector3 targetPosition, Vector3 startPosition)
-        {
-            Vector3 shotDirection = targetPosition - startPosition;
-            shotDirection.y = 0;
-            return shotDirection;
         }
 
         private float GetCooldownTime()

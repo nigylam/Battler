@@ -13,7 +13,7 @@ namespace Battler.BattleSystem.Units
 
         private readonly float _updateRate = 0.2f;
         private readonly float _rotationSpeed = 120f;
-        private readonly float _angleAttackOffset = 0.001f;
+        private readonly float _angleAttackOffset = 0.0001f;
 
         private Unit _target;
         private Coroutine _currentBehavior;

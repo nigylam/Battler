@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb0633e654ebc6f42b1315d344a6c9a3, type: 3}
-  m_Name: Level6
+  m_Name: Level10
   m_EditorClassIdentifier: 
   _rounds:
-  - {fileID: 11400000, guid: a1159ddbe57ca32418ba3e452ab27d7e, type: 2}
-  - {fileID: 11400000, guid: a1159ddbe57ca32418ba3e452ab27d7e, type: 2}
-  - {fileID: 11400000, guid: a1159ddbe57ca32418ba3e452ab27d7e, type: 2}
-  _goldReward: 110
+  - {fileID: 11400000, guid: 4c6b127487a9af94d88e0dc39b37ecc5, type: 2}
+  - {fileID: 11400000, guid: 4e0682beb4661b643ad3433dc85a7b3d, type: 2}
+  - {fileID: 11400000, guid: 4e0682beb4661b643ad3433dc85a7b3d, type: 2}
+  _goldReward: 250
   _squadReward: {fileID: 0}

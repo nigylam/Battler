@@ -17,6 +17,9 @@ namespace Battler.BattleSystem.Units
         [SerializeField] private Mover _mover;
         [SerializeField] private Collider _collider;
 
+        [Header("for testing")]
+        [SerializeField] private int _damage;
+
         private readonly float _targetRequestDelay = 1f;
 
         private Unit _target;
@@ -47,7 +50,7 @@ namespace Battler.BattleSystem.Units
         [ContextMenu("damage")]
         public void TakeDamage() 
         {
-            TakeDamage(10, Vector3.zero);
+            TakeDamage(_damage, Vector3.zero);
         }
 
         [ContextMenu("heal")]

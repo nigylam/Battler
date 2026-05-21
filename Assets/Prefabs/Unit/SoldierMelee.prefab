@@ -1380,23 +1380,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7352195783100230583, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
       propertyPath: m_Size.x
-      value: 0.3106617
+      value: 0.35831422
       objectReference: {fileID: 0}
     - target: {fileID: 7352195783100230583, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
       propertyPath: m_Size.y
-      value: 0.215158
+      value: 0.25874454
       objectReference: {fileID: 0}
     - target: {fileID: 7352195783100230583, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
       propertyPath: m_Center.x
-      value: 0.13069965
+      value: 0.15452361
       objectReference: {fileID: 0}
     - target: {fileID: 7352195783100230583, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
       propertyPath: m_Center.y
-      value: 0.38073546
+      value: 0.3750737
       objectReference: {fileID: 0}
     - target: {fileID: 7352195783100230583, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
       propertyPath: m_Center.z
-      value: 0.00026043007
+      value: 0.00026279892
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 183399575229169464, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
@@ -1682,6 +1682,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cooldownTime: 2
+  _target: {fileID: 0}
+  _targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
   _visual: {fileID: 1138452030124607777}
   _weapon: {fileID: 4904562226658582875}
 --- !u!114 &1138452030124607777
@@ -1721,8 +1725,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac921b25e893fa34d8d420fd8d4f071e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackRange: 1
-  _attackRangeUpgraded: 1
+  _attackRange: 1.5
+  _attackRangeUpgraded: 1.5
   _agent: {fileID: 1659791258364142208}
 --- !u!95 &8229374382659822114 stripped
 Animator:
