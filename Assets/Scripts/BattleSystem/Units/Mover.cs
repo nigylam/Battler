@@ -14,6 +14,7 @@ namespace Battler.BattleSystem.Units
         private readonly float _updateRate = 0.2f;
         private readonly float _rotationSpeed = 120f;
         private readonly float _angleAttackOffset = 0.0001f;
+        private readonly float _flyingAttackRangeOffset = 0.5f;
 
         private Unit _target;
         private Coroutine _currentBehavior;
@@ -49,7 +50,14 @@ namespace Battler.BattleSystem.Units
         }
 
         public bool CloseToTarget()
-        => Vector3.SqrMagnitude(transform.position - _target.GetClosestPoint(transform.position)) <= _attackRange * _attackRange;
+        {
+            float attackRange = _attackRange;
+
+            if (_target.IsFlying)
+                attackRange += _flyingAttackRangeOffset;
+
+            return Vector3.SqrMagnitude(transform.position - _target.GetClosestPoint(transform.position)) <= attackRange * attackRange;
+        }
 
         private void SwitchState(IEnumerator newState)
         {

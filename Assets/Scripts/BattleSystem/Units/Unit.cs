@@ -16,6 +16,7 @@ namespace Battler.BattleSystem.Units
         [SerializeField] private UnitAction _action;
         [SerializeField] private Mover _mover;
         [SerializeField] private Collider _collider;
+        [SerializeField] private bool _isFlying = false;
 
         [Header("for testing")]
         [SerializeField] private int _damage;
@@ -31,6 +32,7 @@ namespace Battler.BattleSystem.Units
         public bool IsDead { get; private set; }
         public bool HealthDecreased => _health.Current < _health.Max;
         public Transform Body => _visual.Body;
+        public bool IsFlying => _isFlying;
 
         private void OnEnable()
         {

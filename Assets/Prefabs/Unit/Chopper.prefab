@@ -209,6 +209,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9011370069802519897}
     - target: {fileID: 5463160595052530089, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
+      propertyPath: _isFlying
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5463160595052530089, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
       propertyPath: _targetFinder
       value: 
       objectReference: {fileID: 8752032271536959158}

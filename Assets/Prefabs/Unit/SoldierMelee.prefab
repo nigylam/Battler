@@ -1411,23 +1411,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7352195783100230583, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
       propertyPath: m_Size.x
-      value: 0.35831422
+      value: 0.5080753
       objectReference: {fileID: 0}
     - target: {fileID: 7352195783100230583, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
       propertyPath: m_Size.y
-      value: 0.25874454
+      value: 0.37019742
       objectReference: {fileID: 0}
     - target: {fileID: 7352195783100230583, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
       propertyPath: m_Center.x
-      value: 0.15452361
+      value: 0.22939426
       objectReference: {fileID: 0}
     - target: {fileID: 7352195783100230583, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
       propertyPath: m_Center.y
-      value: 0.3750737
+      value: 0.43079257
       objectReference: {fileID: 0}
     - target: {fileID: 7352195783100230583, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
       propertyPath: m_Center.z
-      value: 0.00026279892
+      value: 0.0002697258
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 183399575229169464, guid: 854a70d336fddcb4eb96b3c9109a961c, type: 3}
@@ -1760,8 +1760,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac921b25e893fa34d8d420fd8d4f071e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackRange: 1.5
-  _attackRangeUpgraded: 1.5
+  _attackRange: 1.2
+  _attackRangeUpgraded: 1.2
   _agent: {fileID: 1659791258364142208}
 --- !u!95 &8229374382659822114 stripped
 Animator:
