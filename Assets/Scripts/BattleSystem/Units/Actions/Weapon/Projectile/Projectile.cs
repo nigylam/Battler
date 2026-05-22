@@ -9,8 +9,10 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
     {
         [SerializeField] private float _startLifetime = 4f;
         [SerializeField] private Rigidbody _rigidbody;
-
+        [SerializeField] private MeshRenderer _visual;
+        
         private readonly float _effectTime = 2f;
+
         private float _lifetime;
         private Coroutine _disableAfterEffect;
 
@@ -24,7 +26,10 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
 
         private void OnEnable()
         {
-            StopDisableCoroutine();
+            if (_disableAfterEffect != null)
+                StopCoroutine(_disableAfterEffect);
+
+            _visual.enabled = true;
         }
 
         private void Update()
@@ -37,7 +42,9 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
 
         private void OnDisable()
         {
-            StopDisableCoroutine();
+            if (_disableAfterEffect != null)
+                StopCoroutine(_disableAfterEffect);
+
             Disable();
         }
 
@@ -52,7 +59,9 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
             Vector3 hitPoint = other.ClosestPoint(transform.position);
             ApplyDamage(unitMember, hitPoint);
             OnTrigger();
-            StopDisableCoroutine();
+
+            if (_disableAfterEffect != null)
+                StopCoroutine(_disableAfterEffect);
             _disableAfterEffect = StartCoroutine(DisableAfterEffect());
         }
 
@@ -65,15 +74,14 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
         protected virtual void OnTrigger() { }
         protected virtual void Disable() { }
 
+        protected void HideVisual()
+        {
+            _visual.enabled = false;
+        }
+
         protected void SetVelocity(Vector3 velocity)
         {
             _rigidbody.velocity = velocity;
-        }
-
-        private void StopDisableCoroutine()
-        {
-            if (_disableAfterEffect != null)
-                StopCoroutine(_disableAfterEffect);
         }
 
         private IEnumerator DisableAfterEffect()

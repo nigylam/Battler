@@ -151,6 +151,7 @@ MonoBehaviour:
   _damageUpgraded: 0
   _startLifetime: 4
   _rigidbody: {fileID: 5615922289110471858}
+  _visual: {fileID: 5718703166708925509}
   _speed: 15
 --- !u!1001 &2664479860075151532
 PrefabInstance:

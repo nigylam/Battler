@@ -15,6 +15,7 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
         protected override void OnTrigger()
         {
             SetVelocity(Vector3.zero);
+            HideVisual();
         }
     }
 }
