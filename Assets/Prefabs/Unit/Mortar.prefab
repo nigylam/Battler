@@ -370,6 +370,37 @@ Transform:
   - {fileID: 994332315770178615}
   m_Father: {fileID: 5729961280081544071}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3385098181653280822
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1688319112872733577}
+  m_Layer: 0
+  m_Name: Body
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1688319112872733577
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3385098181653280822}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.687, z: 0.014}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6033724605972036716}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3918342773935216269
 GameObject:
   m_ObjectHideFlags: 0
@@ -1437,6 +1468,9 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6684930670258098679, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 1688319112872733577}
+    - targetCorrespondingSourceObject: {fileID: 6684930670258098679, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 8265355965659047645}
     - targetCorrespondingSourceObject: {fileID: 6684930670258098679, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
       insertIndex: -1
@@ -1500,6 +1534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c80f1e8807c6f946b7eb3bf57b5dd40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _body: {fileID: 3385098181653280822}
   _dragger: {fileID: 4271598311939646110}
   _skinnedRenderers:
   - {fileID: 210637314779141516}
@@ -1526,6 +1561,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cooldownTime: 4
+  _target: {fileID: 0}
+  _targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
   _visual: {fileID: 0}
   _weapon: {fileID: 6944843214585260289}
   _muzzlePoint: {fileID: 3160942439358310589}

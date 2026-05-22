@@ -335,6 +335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36866e716a7cec2408ee9c802a4de5e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _body: {fileID: 7053898303250761017}
   _dragger: {fileID: 7074308172483410299}
   _skinnedRenderers: []
   _meshRenderers:
@@ -348,12 +349,13 @@ MonoBehaviour:
   _hitEffects: {fileID: 572338759032661094}
   _healEffect: {fileID: 2630381916328550343}
   _rotationSpeed: 15
+  _towerRotationOffsetY: 1
   _destroyEffectDuration: 3
   _tower: {fileID: 4369107906182971839}
-  _target: {fileID: 0}
   _explosionEffect: {fileID: 7428249697158777026}
   _smokeEffect: {fileID: 4613862391049396357}
   _explodedMaterial: {fileID: 2100000, guid: c3760d80cfcd57f429ddd57135223ad0, type: 2}
+  _target: {fileID: 0}
 --- !u!114 &221560508275729748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,13 +369,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cooldownTime: 4
-  _visual: {fileID: 3095346163059872306}
-  _weapon: {fileID: 5582728660491010428}
-  _muzzlePoint: {fileID: 3785446995047400517}
   _target: {fileID: 0}
   _targetLayer:
     serializedVersion: 2
     m_Bits: 128
+  _visual: {fileID: 3095346163059872306}
+  _weapon: {fileID: 5582728660491010428}
+  _muzzlePoint: {fileID: 3785446995047400517}
+  _fireRate: 0
+  _fireBurstSize: 1
 --- !u!114 &5582728660491010428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -678,6 +682,11 @@ GameObject:
 --- !u!4 &4428784879819343426 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5191147665771227151, guid: 61bc641b0bb727149804fc8ae55a1fbb, type: 3}
+  m_PrefabInstance: {fileID: 8465814222568468045}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7053898303250761017 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1484189017646476148, guid: 61bc641b0bb727149804fc8ae55a1fbb, type: 3}
   m_PrefabInstance: {fileID: 8465814222568468045}
   m_PrefabAsset: {fileID: 0}
 --- !u!23 &7560133100851141338 stripped

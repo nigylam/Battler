@@ -368,6 +368,37 @@ Transform:
   - {fileID: 8418691126978212007}
   m_Father: {fileID: 389078774289371013}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2860254516153351373
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7375469485087929367}
+  m_Layer: 0
+  m_Name: Body
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7375469485087929367
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2860254516153351373}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.02, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5348918691922859469}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3223583376285009916
 GameObject:
   m_ObjectHideFlags: 0
@@ -1417,6 +1448,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6684930670258098679, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2327421004013682163}
+    - targetCorrespondingSourceObject: {fileID: 6684930670258098679, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7375469485087929367}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4207753064186563347, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
       insertIndex: 4
@@ -1490,6 +1524,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cooldownTime: 6
+  _target: {fileID: 0}
+  _targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
   _healPerTime: 6
   _healPerTimeUpgraded: 10
   _visual: {fileID: 322940526940561662}
@@ -1505,6 +1543,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f303df529e363e40b93dcab6fe71690, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _body: {fileID: 2860254516153351373}
   _dragger: {fileID: 2504267140189604671}
   _skinnedRenderers:
   - {fileID: 3541307833369438721}

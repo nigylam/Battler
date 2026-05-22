@@ -1,4 +1,5 @@
 using Battler.BattleSystem.Units.Actions.Weapon;
+using Battler.BattleSystem.Units.Visual;
 using Cysharp.Threading.Tasks;
 using System;
 using UnityEngine;
@@ -9,6 +10,7 @@ namespace Battler.BattleSystem.Units.Actions
     {
         [SerializeField] private ProjectileWeapon _weapon;
         [SerializeField] private Transform[] _muzzlePoints;
+        [SerializeField] private TankVisual _visual;
 
         private readonly float _fireRate = 0.1f;
         private readonly int _fireBurstSize = 8;

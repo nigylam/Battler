@@ -11,6 +11,8 @@ namespace Battler.BattleSystem.Units.Actions
         [SerializeField] private TankVisual _visual;
         [SerializeField] private ProjectileWeapon _weapon;
         [SerializeField] private Transform _muzzlePoint;
+        [SerializeField] private float _fireRate;
+        [SerializeField] private int _fireBurstSize;
 
         private bool _isUpgraded;
 
@@ -28,14 +30,19 @@ namespace Battler.BattleSystem.Units.Actions
 
         protected override async UniTask ProcessAction(Unit target, Func<bool> isClose)
         {
-            await _visual.RotateTower(target.transform, ActionCancelToken);
+            await _visual.RotateTower(target.Body, ActionCancelToken);
+            await UniTask.WaitUntil(() => IsCooldownEnded, cancellationToken: ActionCancelToken);
 
-            while (target.IsDead == false && isClose())
+            if (target.IsDead)
+                return;
+
+            for (int i = 0; i < _fireBurstSize; i++)
             {
-                await UniTask.WaitUntil(() => IsCooldownEnded, cancellationToken: ActionCancelToken);
                 _weapon.Shoot(_muzzlePoint.position, TargetLayer, _muzzlePoint.forward, _isUpgraded);
-                StartCoolDown().Forget();
+                await UniTask.WaitForSeconds(_fireRate, cancellationToken: ActionCancelToken);
             }
+
+            StartCoolDown().Forget();
         }
     }
 }

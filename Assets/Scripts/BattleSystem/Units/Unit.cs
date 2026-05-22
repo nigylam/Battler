@@ -30,6 +30,7 @@ namespace Battler.BattleSystem.Units
         public UnitVisual Visual => _visual;
         public bool IsDead { get; private set; }
         public bool HealthDecreased => _health.Current < _health.Max;
+        public Transform Body => _visual.Body;
 
         private void OnEnable()
         {

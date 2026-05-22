@@ -16,6 +16,7 @@ namespace Battler.BattleSystem.Units.Visual
         private readonly int AnimatorIsMoving = Animator.StringToHash("IsMoving");
         private readonly string AnimatorHitLayer = "HitLayer";
 
+        [SerializeField] private GameObject _body;
         [SerializeField] private UnitDragger _dragger;
         [SerializeField] private List<SkinnedMeshRenderer> _skinnedRenderers;
         [SerializeField] private List<MeshRenderer> _meshRenderers;
@@ -29,6 +30,7 @@ namespace Battler.BattleSystem.Units.Visual
         private int _hitLayer;
 
         public UnitDragger Dragger => _dragger;
+        public Transform Body => _body.transform;
 
         private void Awake()
         {

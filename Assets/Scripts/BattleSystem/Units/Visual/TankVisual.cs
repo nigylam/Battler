@@ -7,6 +7,7 @@ namespace Battler.BattleSystem.Units.Visual
     public class TankVisual : UnitVisual
     {
         [SerializeField] private float _rotationSpeed;
+        [SerializeField] private float _towerRotationOffsetY;
         [SerializeField] private float _destroyEffectDuration;
         [SerializeField] private GameObject _tower;
         [SerializeField] private ParticleSystem _explosionEffect;
@@ -24,7 +25,9 @@ namespace Battler.BattleSystem.Units.Visual
 
         public async UniTask RotateTower(Transform target, CancellationToken token)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(target.position - transform.position);
+            Vector3 targetPosition = target.position;
+            targetPosition.y -= _towerRotationOffsetY;
+            Quaternion targetRotation = Quaternion.LookRotation(targetPosition - transform.position);
 
             while (_tower.transform.rotation != targetRotation)
             {

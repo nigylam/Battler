@@ -35,7 +35,7 @@ namespace Battler.BattleSystem.Units.Actions
                 if (_visual != null)
                     _visual.PlayShotAnimation();
 
-                _weapon.Shoot(_muzzlePoint.position, TargetLayer, GetDirection(target.transform.position, _muzzlePoint.position), _isUpgraded);
+                _weapon.Shoot(_muzzlePoint.position, TargetLayer, target.Body.position - _muzzlePoint.position, _isUpgraded);
                 StartCoolDown().Forget();
             }
         }

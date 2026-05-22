@@ -633,6 +633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36866e716a7cec2408ee9c802a4de5e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _body: {fileID: 9088541324399841023}
   _dragger: {fileID: 4959948631285123417}
   _skinnedRenderers: []
   _meshRenderers:
@@ -688,6 +689,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cooldownTime: 5
+  _target: {fileID: 0}
+  _targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
   _weapon: {fileID: 8491860296450123610}
   _muzzlePoints:
   - {fileID: 5919739134787249526}
@@ -811,6 +816,11 @@ PrefabInstance:
 --- !u!4 &9088541324399591449 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 428402, guid: 2cac3423654414ee0ba77976be545e3f, type: 3}
+  m_PrefabInstance: {fileID: 9088541324399692139}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9088541324399841023 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 182164, guid: 2cac3423654414ee0ba77976be545e3f, type: 3}
   m_PrefabInstance: {fileID: 9088541324399692139}
   m_PrefabAsset: {fileID: 0}
 --- !u!23 &9088541324401521479 stripped
