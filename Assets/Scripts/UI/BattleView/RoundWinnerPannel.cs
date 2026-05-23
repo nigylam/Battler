@@ -4,29 +4,30 @@ using UnityEngine;
 
 public class RoundWinnerPannel : MonoBehaviour
 {
-    private readonly string EnemyWinnerText = "Enemy win";
-    private readonly string PlayerWinnerText = "Player win";
-
-    [SerializeField] private TextMeshProUGUI _title;
+    [SerializeField] private TextMeshProUGUI _titlePlayer;
+    [SerializeField] private TextMeshProUGUI _titleEnemy;
 
     private float _disableTime = 1f;
     private Coroutine _disable;
 
     public void SetEnemyWinner()
     {
-        SetTitle(EnemyWinnerText);
+        gameObject.SetActive(true);
+        _titlePlayer.gameObject.SetActive(false);
+        _titleEnemy.gameObject.SetActive(true);
+        SetCoroutine();
     }
 
     public void SetPlayerWinner()
     {
-        SetTitle(PlayerWinnerText);
+        gameObject.SetActive(true);
+        _titlePlayer.gameObject.SetActive(true);
+        _titleEnemy.gameObject.SetActive(false);
+        SetCoroutine();
     }
 
-    private void SetTitle(string title)
+    private void SetCoroutine()
     {
-        gameObject.SetActive(true);
-        _title.text = title;
-
         if (_disable != null)
             StopCoroutine(_disable);
 
