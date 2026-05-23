@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37d79409a69a4d44192ce7940f16e70a, type: 3}
+  m_Name: Turret2Chainsaw2
+  m_EditorClassIdentifier: 
+  _squads:
+  - {fileID: 11400000, guid: a4b2c53144312344086c4da436c8d1be, type: 2}
+  - {fileID: 11400000, guid: 012f5171c2d04574ab8756186ab15662, type: 2}
+  - {fileID: 11400000, guid: 5cbad26a253cf0546a70242be6547d21, type: 2}
+  - {fileID: 11400000, guid: c21f17ddc61b19846a15cc4ce36144c6, type: 2}

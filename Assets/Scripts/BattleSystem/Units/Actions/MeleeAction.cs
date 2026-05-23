@@ -40,6 +40,10 @@ namespace Battler.BattleSystem.Units.Actions
             while (target.IsDead == false && isClose())
             {
                 await UniTask.WaitUntil(() => IsCooldownEnded, cancellationToken: ActionCancelToken);
+
+                if (target.IsDead)
+                    return;
+
                 _visual.PlayAttackAnimation();
                 StartCoolDown().Forget();
             }

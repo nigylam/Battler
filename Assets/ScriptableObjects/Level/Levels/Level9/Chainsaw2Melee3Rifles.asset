@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37d79409a69a4d44192ce7940f16e70a, type: 3}
+  m_Name: Chainsaw2Melee3Rifles
+  m_EditorClassIdentifier: 
+  _squads:
+  - {fileID: 11400000, guid: 5784168331c86b240ba4523744680714, type: 2}
+  - {fileID: 11400000, guid: 9804fc9e88c717c42a875a041021445a, type: 2}
+  - {fileID: 11400000, guid: c2139c3d50dde924ab42e2fbbb6f8675, type: 2}
+  - {fileID: 11400000, guid: bac13a32f73c3184fb79d09b051f56b8, type: 2}
+  - {fileID: 11400000, guid: e7692c983a7afb840acc06bd02b6c4cc, type: 2}
+  - {fileID: 11400000, guid: 6e27a49b258fe594ba4eda54c6874854, type: 2}
