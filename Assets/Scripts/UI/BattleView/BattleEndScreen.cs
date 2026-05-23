@@ -7,10 +7,8 @@ namespace Battler.UI.BattleView
 {
     public class BattleEndScreen : MonoBehaviour
     {
-        private readonly string YouLoseText = "You lose";
-        private readonly string YouWinText = "You win";
-
-        [SerializeField] private TextMeshProUGUI _title;
+        [SerializeField] private TextMeshProUGUI _titleLose;
+        [SerializeField] private TextMeshProUGUI _titleWin;
         [SerializeField] private GameObject _rewardBlock;
         [SerializeField] private GameObject _squadRewardBlock;
         [SerializeField] private Image _squadReward;
@@ -35,26 +33,28 @@ namespace Battler.UI.BattleView
 
             if (isPlayerWin == false)
             {
-                SetLoseText();
+                SetLose();
                 return;
             }
 
-            SetWinText(goldReward, squadReward);
+            SetWin(goldReward, squadReward);
         }
 
-        private void SetLoseText()
+        private void SetLose()
         {
             _rewardBlock.SetActive(false);
-            _title.text = YouLoseText;
+            _titleLose.gameObject.SetActive(true);
+            _titleWin.gameObject.SetActive(false);
         }
 
-        private void SetWinText(int goldReward, SquadGoodConfig squadReward = null)
+        private void SetWin(int goldReward, SquadGoodConfig squadReward = null)
         {
             if (goldReward <= 0)
                 throw new ArgumentOutOfRangeException(nameof(goldReward));
 
             _rewardBlock.SetActive(true);
-            _title.text = YouWinText;
+            _titleLose.gameObject.SetActive(false);
+            _titleWin.gameObject.SetActive(true);
             _goldReward.text = goldReward.ToString();
 
             if (squadReward == null)

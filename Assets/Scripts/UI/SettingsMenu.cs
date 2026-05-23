@@ -25,6 +25,7 @@ namespace Battler.UI
             Subscribe();
             _uiSoundSlider.value = _audio.SoundUI;
             _sfxSoundSlider.value = _audio.SoundSFX;
+            SetDropdown();
         }
 
         protected override void Disable()
@@ -60,6 +61,22 @@ namespace Battler.UI
                     break;
                 case 2:
                     _language.SetLanguage("tr");
+                    break;
+            }
+        }
+
+        private void SetDropdown()
+        {
+            switch (_language.Value)
+            {
+                case "ru":
+                    _languageDropDown.value = 0;
+                    break;                
+                case "en":
+                    _languageDropDown.value = 1;
+                    break;                
+                case "tr":
+                    _languageDropDown.value = 2;
                     break;
             }
         }

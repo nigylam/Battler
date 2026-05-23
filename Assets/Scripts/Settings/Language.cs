@@ -10,6 +10,8 @@ namespace Battler.Settings
     {
         private readonly List<string> _languages;
 
+        public string Value => Lean.Localization.LeanLocalization.GetFirstCurrentLanguage();
+
         public Language(params string[] languages)
         {
             if (languages ==  null || languages.Length == 0)
