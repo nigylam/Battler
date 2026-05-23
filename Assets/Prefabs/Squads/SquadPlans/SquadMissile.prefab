@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _unitPrefab: {fileID: 4267781993629994997, guid: be6810a0e7f877f46a85f2cd2defc22a, type: 3}
   _preview: {fileID: 7350751016646580553, guid: 1901d7fe89a8541429593ce33418eed1, type: 3}
-  _dragIcon: {fileID: 21300000, guid: 7d104067dadcd4e8b99152b262b82566, type: 3}
+  _dragIcon: {fileID: 21300000, guid: 1856fd064af02434abe3b2f4875ee7fc, type: 3}
   _uiIcon: {fileID: 21300000, guid: 7d104067dadcd4e8b99152b262b82566, type: 3}
   _unitCount: 1
   _sizeX: 4
