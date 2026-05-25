@@ -7,7 +7,6 @@ namespace Battler.UI.BattleView
     public class BattleMenu : MonoBehaviour
     {
         [SerializeField] private UIButton _pauseButton;
-        [SerializeField] private TextCounter _roundTextCounter;
         [SerializeField] private RoundWinnerPannel _roundWinnerPanel;
         [SerializeField] private RoundWinsPannel _roundWinsPanel;
         [SerializeField] private UIButton _startButton;
@@ -16,9 +15,6 @@ namespace Battler.UI.BattleView
         [SerializeField] private Color _armyPanelDefaultColor;
         [SerializeField] private Color _armyPanelPlacingColor;
 
-        private RoundCounter _roundCounter;
-        private bool _haveWinner;
-
         public event Action Pause;
         public event Action PlayerWin;
         public event Action EnemyWin;
@@ -26,17 +22,9 @@ namespace Battler.UI.BattleView
 
         public DragArmyPanel ArmyPannel => _armyPanel;
 
-        private void Awake()
-        {
-            _roundCounter = new RoundCounter();
-        }
-
         private void OnEnable()
         {
-            _roundTextCounter.Initialize(_roundCounter);
-            _roundTextCounter.Enable();
             Restart();
-            _roundCounter.Increase();
             _roundWinsPanel.EnemyWin += OnEnemyWin;
             _roundWinsPanel.PlayerWin += OnPlayerWin;
             _pauseButton.Clicked += OnPauseClick;
@@ -44,11 +32,11 @@ namespace Battler.UI.BattleView
 
         private void OnDisable()
         {
-            _roundTextCounter.Disable();
             _roundWinsPanel.EnemyWin -= OnEnemyWin;
             _roundWinsPanel.PlayerWin -= OnPlayerWin;
-            _pauseButton.Clicked += OnPauseClick;
+            _pauseButton.Clicked -= OnPauseClick;
             _startButton.Clicked -= OnStartClick;
+            _roundWinnerPanel.Restart();
             _startButton.gameObject.SetActive(false);
             _roundWinnerPanel.gameObject.SetActive(false);
         }
@@ -104,22 +92,15 @@ namespace Battler.UI.BattleView
         public void SetEnemyWinPanel()
         {
             _roundWinnerPanel.SetEnemyWinner();
-
-            if (_haveWinner == false)
-                _roundCounter.Increase();
         }
 
         public void SetPlayerWinPanel()
         {
             _roundWinnerPanel.SetPlayerWinner();
-
-            if (_haveWinner == false)
-                _roundCounter.Increase();
         }
 
         private void Restart()
         {
-            _roundCounter.Restart();
             _roundWinsPanel.Restart();
         }
 
@@ -137,13 +118,11 @@ namespace Battler.UI.BattleView
 
         private void OnEnemyWin()
         {
-            _haveWinner = true;
             EnemyWin?.Invoke();
         }
 
         private void OnPlayerWin()
         {
-            _haveWinner = true;
             PlayerWin?.Invoke();
         }
     }

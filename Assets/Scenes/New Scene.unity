@@ -667,7 +667,7 @@ GameObject:
   - component: {fileID: 29376568}
   - component: {fileID: 29376567}
   - component: {fileID: 29376570}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Cell (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2042,7 +2042,7 @@ GameObject:
   - component: {fileID: 112454515}
   - component: {fileID: 112454514}
   - component: {fileID: 112454517}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Cell (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5131,7 +5131,7 @@ GameObject:
   - component: {fileID: 317564181}
   - component: {fileID: 317564180}
   - component: {fileID: 317564183}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Cell (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7068,7 +7068,7 @@ GameObject:
   - component: {fileID: 443868085}
   - component: {fileID: 443868084}
   - component: {fileID: 443868087}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Cell (15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8728,7 +8728,7 @@ GameObject:
   - component: {fileID: 538145570}
   - component: {fileID: 538145569}
   - component: {fileID: 538145572}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Cell (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13395,7 +13395,7 @@ GameObject:
   - component: {fileID: 853794393}
   - component: {fileID: 853794392}
   - component: {fileID: 853794395}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Cell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14199,7 +14199,7 @@ GameObject:
   - component: {fileID: 897682168}
   - component: {fileID: 897682167}
   - component: {fileID: 897682170}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Cell (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18215,7 +18215,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pauseButton: {fileID: 515236241}
-  _roundTextCounter: {fileID: 1612387400}
   _roundWinnerPanel: {fileID: 1612387399}
   _roundWinsPanel: {fileID: 654505705}
   _startButton: {fileID: 1863968827}
@@ -20371,7 +20370,7 @@ GameObject:
   - component: {fileID: 1191716550}
   - component: {fileID: 1191716549}
   - component: {fileID: 1191716552}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Cell (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20508,7 +20507,7 @@ GameObject:
   - component: {fileID: 1203554758}
   - component: {fileID: 1203554757}
   - component: {fileID: 1203554760}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Cell (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21238,7 +21237,7 @@ GameObject:
   - component: {fileID: 1253794696}
   - component: {fileID: 1253794695}
   - component: {fileID: 1253794698}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Cell (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25127,7 +25126,7 @@ GameObject:
   - component: {fileID: 1443512271}
   - component: {fileID: 1443512270}
   - component: {fileID: 1443512273}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Cell (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25466,7 +25465,7 @@ GameObject:
   - component: {fileID: 1455894445}
   - component: {fileID: 1455894444}
   - component: {fileID: 1455894447}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Cell (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26599,7 +26598,7 @@ GameObject:
   - component: {fileID: 1515473299}
   - component: {fileID: 1515473298}
   - component: {fileID: 1515473301}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Cell (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27372,7 +27371,7 @@ GameObject:
   - component: {fileID: 1585036604}
   - component: {fileID: 1585036603}
   - component: {fileID: 1585036606}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Cell (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28352,6 +28351,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _titlePlayer: {fileID: 1587742644}
   _titleEnemy: {fileID: 512990683}
+  _roundTextCounter: {fileID: 1612387400}
 --- !u!114 &1612387400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35441,7 +35441,7 @@ GameObject:
   - component: {fileID: 2012178364}
   - component: {fileID: 2012178363}
   - component: {fileID: 2012178366}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Cell (14)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36774,7 +36774,7 @@ GameObject:
   - component: {fileID: 2119378406}
   - component: {fileID: 2119378405}
   - component: {fileID: 2119378408}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Cell (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

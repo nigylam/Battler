@@ -6,23 +6,48 @@ public class RoundWinnerPannel : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _titlePlayer;
     [SerializeField] private TextMeshProUGUI _titleEnemy;
+    [SerializeField] private TextCounter _roundTextCounter;
 
-    private float _disableTime = 1f;
+    private readonly float _disableTime = 1f;
+
+    private RoundCounter _roundCounter;
     private Coroutine _disable;
+
+    private void Awake()
+    {
+        _roundCounter = new RoundCounter();
+        _roundTextCounter.Initialize(_roundCounter);
+    }
+
+    private void OnDisable()
+    {
+        _roundTextCounter.Disable();
+    }
 
     public void SetEnemyWinner()
     {
-        gameObject.SetActive(true);
+        Activate();
         _titlePlayer.gameObject.SetActive(false);
         _titleEnemy.gameObject.SetActive(true);
-        SetCoroutine();
     }
 
     public void SetPlayerWinner()
     {
-        gameObject.SetActive(true);
+        Activate();
         _titlePlayer.gameObject.SetActive(true);
         _titleEnemy.gameObject.SetActive(false);
+    }
+
+    public void Restart()
+    {
+        _roundCounter.Restart();
+    }
+
+    private void Activate()
+    {
+        gameObject.SetActive(true);
+        _roundCounter.Increase();
+        _roundTextCounter.Enable();
         SetCoroutine();
     }
 
