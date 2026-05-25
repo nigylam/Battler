@@ -17,4 +17,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f44805d778ba31b48b796454317f098a, type: 2}
   - {fileID: 11400000, guid: f44805d778ba31b48b796454317f098a, type: 2}
   _goldReward: 160
+  _scoreReward: 9
   _squadReward: {fileID: 0}

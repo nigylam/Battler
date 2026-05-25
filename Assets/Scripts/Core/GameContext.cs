@@ -8,6 +8,7 @@ public class GameContext
     (
         GameSquadKeeper squadKeeper,
         Gold gold,
+        Score score,
         Shop shop,
         LevelProgress levelProgress,
         Battle battle
@@ -15,6 +16,7 @@ public class GameContext
     {
         SquadKeeper = squadKeeper;
         Gold = gold;
+        Score = score;
         Shop = shop;
         LevelProgress = levelProgress;
         Battle = battle;
@@ -23,6 +25,7 @@ public class GameContext
 
     public GameSquadKeeper SquadKeeper { get; }
     public Gold Gold { get; }
+    public Score Score { get; }
     public Shop Shop { get; }
     public LevelProgress LevelProgress { get; }
     public Battle Battle { get; }

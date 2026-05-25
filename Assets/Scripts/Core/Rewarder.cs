@@ -17,6 +17,7 @@ public class Rewarder
         if (IsPlayerWin == false)
             return;
 
+        context.Score.Increase(context.Level.ScoreReward);
         context.Gold.Increase(context.Level.GoldReward);
         GoldReward = context.Level.GoldReward;
 

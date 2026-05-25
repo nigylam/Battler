@@ -40,6 +40,7 @@ namespace Battler.Core
         {
             GameSquadKeeper squadKeeper = SquadKeeperFabric.Create(_startSquadSet);
             var gold = new Gold();
+            var score = new Score();
             Shop shop = CreateShop();
             LevelProgress levelProgress = new (_levelConfigs, YG2.saves.openedLevels);
             _levelMenu.Initialize(gold, levelProgress);
@@ -51,6 +52,7 @@ namespace Battler.Core
             (
                 squadKeeper,
                 gold,
+                score,
                 shop,
                 levelProgress,
                 _battle

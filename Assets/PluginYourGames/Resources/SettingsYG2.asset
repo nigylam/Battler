@@ -25,6 +25,184 @@ MonoBehaviour:
     postponeCallByFail: 0
     postponeCallTimer: 10
     labelAdvSimLabel: 0
+  Leaderboards:
+    enable: 1
+    saveScoreAnonymousPlayers: 1
+    listLBSim:
+    - technoName: test1
+      entries: '1. Max: 10
+
+        2. Masha: 15
+
+        3. anonymous: 23
+
+        4.
+        Player 4: 30
+
+        5. Player current: 40
+
+        6. Player 6: 50
+
+        7.
+        Player 7: 60
+
+        8. Player 8: 70
+
+        9. Player 9: 80
+
+        10.
+        Player 10: 90'
+      isDefault: 0
+      isInvertSortOrder: 0
+      decimalOffset: 0
+      type: numeric
+      players:
+      - rank: 1
+        name: Nick
+        score: 2000
+        photo: 
+        uniqueID: 
+        extraData: 
+      - rank: 2
+        name: Nick232
+        score: 1000
+        photo: 
+        uniqueID: 
+        extraData: 
+      - rank: 3
+        name: DSldfd
+        score: 600
+        photo: 
+        uniqueID: 
+        extraData: 
+      - rank: 4
+        name: Doctor
+        score: 100
+        photo: 
+        uniqueID: 
+        extraData: 
+      - rank: 5
+        name: Doctor23
+        score: 50
+        photo: 
+        uniqueID: 
+        extraData: 
+      currentPlayer:
+        rank: 999
+        score: 1
+        extraData: 
+    - technoName: time
+      entries: '1. Max: 7123
+
+        2. Maria: 15321
+
+        3. anonymous: 62000
+
+        4.
+        Player 4: 122000
+
+        5. Player current: 127000
+
+        6. Player 6:
+        340000'
+      isDefault: 0
+      isInvertSortOrder: 1
+      decimalOffset: 0
+      type: numeric
+      players:
+      - rank: 1
+        name: Max
+        score: 7123
+        photo: demo image
+        uniqueID: 789
+        extraData: 
+      - rank: 2
+        name: Maria
+        score: 15321
+        photo: demo image
+        uniqueID: 987
+        extraData: 
+      - rank: 3
+        name: anonymous
+        score: 62000
+        photo: anonymous
+        uniqueID: 891
+        extraData: 
+      - rank: 4
+        name: Player 4
+        score: 122000
+        photo: demo image
+        uniqueID: 321
+        extraData: 
+      - rank: 5
+        name: Player current
+        score: 127000
+        photo: demo image
+        uniqueID: 000
+        extraData: 
+      - rank: 6
+        name: Player 6
+        score: 340000
+        photo: demo image
+        uniqueID: 321
+        extraData: 
+      currentPlayer:
+        rank: 5
+        score: 127000
+        extraData: 
+    - technoName: test2
+      entries: '1. Max: 7123
+
+        2. Maria: 15321
+
+        3. anonymous: 62000
+
+        4.
+        Player 4: 122000
+
+        5. Player current: 127000
+
+        6. Player 6:
+        340000'
+      isDefault: 1
+      isInvertSortOrder: 0
+      decimalOffset: 0
+      type: numeric
+      players:
+      - rank: 1
+        name: Max
+        score: 7123
+        photo: demo image
+        uniqueID: 789
+        extraData: 
+      - rank: 3
+        name: anonymous
+        score: 62000
+        photo: anonymous
+        uniqueID: 891
+        extraData: 
+      - rank: 4
+        name: Player 4
+        score: 122000
+        photo: demo image
+        uniqueID: 321
+        extraData: 
+      - rank: 5
+        name: FFdf
+        score: 127000
+        photo: demo image
+        uniqueID: 000
+        extraData: 
+      - rank: 6
+        name: Player 6
+        score: 340000
+        photo: demo image
+        uniqueID: 321
+        extraData: 
+      currentPlayer:
+        rank: 99
+        score: 1
+        extraData: 
   Storage:
     saveLocal: 0
     saveCloud: 1
