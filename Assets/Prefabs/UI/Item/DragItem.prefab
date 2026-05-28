@@ -501,7 +501,7 @@ MonoBehaviour:
   _count: {fileID: 8781548689614480581}
   _upgradeMark: {fileID: 3315079670729176746}
   _audioSource: {fileID: 1396130298381186848}
-  _hoverSound: {fileID: 8300000, guid: 6de036a6f15ca90449e792492ea236b0, type: 3}
+  _hoverSound: {fileID: 8300000, guid: 2e2de53a87e8ed045958dc0afe15f8d9, type: 3}
   _hoverScale: 1.2
 --- !u!82 &1396130298381186848
 AudioSource:

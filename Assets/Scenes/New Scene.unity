@@ -9217,7 +9217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 515236237}
   _audioSource: {fileID: 515236240}
-  _hoverSound: {fileID: 8300000, guid: 6de036a6f15ca90449e792492ea236b0, type: 3}
+  _hoverSound: {fileID: 8300000, guid: 2e2de53a87e8ed045958dc0afe15f8d9, type: 3}
   _clickSound: {fileID: 8300000, guid: 6ae1f849aec030841b64e59020774c83, type: 3}
 --- !u!1 &516730169
 GameObject:
@@ -36204,7 +36204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 1861755702}
-  _hoverSound: {fileID: 8300000, guid: 6de036a6f15ca90449e792492ea236b0, type: 3}
+  _hoverSound: {fileID: 8300000, guid: 2e2de53a87e8ed045958dc0afe15f8d9, type: 3}
   _clickSound: {fileID: 8300000, guid: 6ae1f849aec030841b64e59020774c83, type: 3}
   _handlers:
   - {fileID: 1861755704}
@@ -38191,7 +38191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 1955890246}
   _audioSource: {fileID: 1955890249}
-  _hoverSound: {fileID: 8300000, guid: 6de036a6f15ca90449e792492ea236b0, type: 3}
+  _hoverSound: {fileID: 8300000, guid: 2e2de53a87e8ed045958dc0afe15f8d9, type: 3}
   _clickSound: {fileID: 8300000, guid: 6ae1f849aec030841b64e59020774c83, type: 3}
 --- !u!1001 &1956466588
 PrefabInstance:
@@ -42628,7 +42628,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3327503401574928573, guid: f093fa2ca2bf496458db9120b0bf5576, type: 3}
       propertyPath: nameLB
-      value: test2
+      value: test
       objectReference: {fileID: 0}
     - target: {fileID: 3327503401574928575, guid: f093fa2ca2bf496458db9120b0bf5576, type: 3}
       propertyPath: m_Pivot.x
