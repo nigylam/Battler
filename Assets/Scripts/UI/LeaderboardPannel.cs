@@ -5,21 +5,21 @@ namespace Battler.UI
 {
     public class LeaderboardPannel : PopupMenu 
     {
-        private readonly string LeaderBoardTitle = "Leaderboard";
-        private readonly string WinGameTitle = "Congratulations, you win the game! Check your scrores";
-
-        [SerializeField] private TextMeshProUGUI _title;
+        [SerializeField] private TextMeshProUGUI _defaultTitle;
+        [SerializeField] private TextMeshProUGUI _winGameTitle;
 
         public void SetDefaultTitle()
         {
             gameObject.SetActive(true);
-            _title.text = LeaderBoardTitle;
+            _defaultTitle.gameObject.SetActive(true);
+            _winGameTitle.gameObject.SetActive(false);
         }
 
         public void SetWinTitle()
         {
             gameObject.SetActive(true);
-            _title.text = WinGameTitle;
+            _defaultTitle.gameObject.SetActive(false);
+            _winGameTitle.gameObject.SetActive(true);
         }
     }
 }

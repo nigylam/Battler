@@ -34,7 +34,7 @@ namespace Battler.Meta
         public void Increase(int count)
         {
             _count += count;
-            YG2.SetLeaderboard("test", _count);
+            YG2.SetLeaderboard("leaderboard", _count);
         }
     }
 }
