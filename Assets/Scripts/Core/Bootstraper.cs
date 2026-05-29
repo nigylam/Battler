@@ -33,16 +33,17 @@ namespace Battler.Core
         [SerializeField] private StartSquadsConfig _startSquadSet;
         [SerializeField] private ShopSet _shopSet;
         [SerializeField] private List<LevelConfig> _levelConfigs;
+        [SerializeField] private List<SquadPlan> _squadPlans;
 
         Audio _audio;
 
         private void Awake()
         {
-            GameSquadKeeper squadKeeper = SquadKeeperFabric.Create(_startSquadSet);
+            GameSquadKeeper squadKeeper = SquadKeeperFabric.Create(_startSquadSet, _squadPlans);
             var gold = new Gold();
             var score = new Score();
             Shop shop = CreateShop();
-            LevelProgress levelProgress = new (_levelConfigs, YG2.saves.openedLevels);
+            LevelProgress levelProgress = new (_levelConfigs, YG2.saves.lastOpenedLevelId);
             _levelMenu.Initialize(gold, levelProgress);
             _shopMenu.Initialize(gold, shop, squadKeeper);
             _audio = new Audio(_audioMixer);

@@ -11,13 +11,10 @@ namespace Battler.Meta
         private readonly Dictionary<LevelConfig, Level> _levels = new();
         private readonly List<LevelConfig> _levelConfigs = new();
 
-        public LevelProgress(List<LevelConfig> levels, List<LevelConfig> openedLevels)
+        public LevelProgress(List<LevelConfig> levels, string lastOpenedLevelId)
         {
             if (levels == null)
                 throw new ArgumentNullException(nameof(levels));
-
-            if(openedLevels == null)
-                throw new ArgumentNullException(nameof(openedLevels));
 
             _levelConfigs.AddRange(levels);
 
@@ -31,16 +28,19 @@ namespace Battler.Meta
 
             _levels[_levelConfigs[0]].SetOpened();
 
-            foreach (LevelConfig level in openedLevels)
-            {
-                if(level == null)
-                    throw new ArgumentNullException(nameof(level));
+            if (lastOpenedLevelId == "")
+                return;
 
+            foreach (LevelConfig level in _levels.Keys)
+            {
                 _levels[level].SetOpened();
                 int previousLevelIndex = _levelConfigs.IndexOf(level) - 1;
 
                 if (previousLevelIndex >= 0)
                     _levels[_levelConfigs[previousLevelIndex]].SetCompleted();
+
+                if (level.Id == lastOpenedLevelId)
+                    break;
             }
         }
 
@@ -62,7 +62,7 @@ namespace Battler.Meta
             {
                 LevelConfig nextLevel = _levelConfigs[nextLevelIndex];
                 _levels[nextLevel].SetOpened();
-                YG2.saves.openedLevels.Add(nextLevel);
+                YG2.saves.lastOpenedLevelId = nextLevel.Id;
                 YG2.SaveProgress();
             }
             else

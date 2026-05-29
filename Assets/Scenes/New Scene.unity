@@ -25948,6 +25948,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 95419d041d342cf4395d8b654821c50f, type: 2}
   - {fileID: 11400000, guid: bf1184608ac345749917566b6b6c2536, type: 2}
   - {fileID: 11400000, guid: e61218e53aba5494e8a6470164d8f5a9, type: 2}
+  _squadPlans:
+  - {fileID: 3264878291395778645, guid: 85a338e4a6d8a0340a85aff930d9d321, type: 3}
+  - {fileID: 3264878291395778645, guid: d631d036b69ab894da7b577f48f1937c, type: 3}
+  - {fileID: 3264878291395778645, guid: 106b5438349bc104db64d55c7cd2aca3, type: 3}
+  - {fileID: -864476455278839830, guid: 52c80bb4894fe674590570b75397ddeb, type: 3}
+  - {fileID: 3264878291395778645, guid: df4539f373c9b664f97b1b011afb1321, type: 3}
+  - {fileID: 1681863201356703300, guid: 5d6a4754c6109fb4eb50ebae3d2e5937, type: 3}
+  - {fileID: 8985550516221197739, guid: 661723031e579b843a6cc73b51419ab9, type: 3}
+  - {fileID: 3264878291395778645, guid: acf7f29cd56d4d64ba4f91aa7d5e339b, type: 3}
+  - {fileID: 3264878291395778645, guid: a707e63b12acd6f4aba99fb15e82fead, type: 3}
 --- !u!82 &1462418483
 AudioSource:
   m_ObjectHideFlags: 0

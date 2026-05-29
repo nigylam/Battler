@@ -8,9 +8,11 @@ public class LevelConfig : ScriptableObject
     [SerializeField] private int _goldReward;
     [SerializeField] private int _scoreReward;
     [SerializeField] private SquadGoodConfig _squadReward;
+    [SerializeField] private string _id;
 
     public IReadOnlyCollection<EnemyRound> Rounds => _rounds;
     public int GoldReward => _goldReward;
     public SquadGoodConfig SquadReward => _squadReward;
     public int ScoreReward => _scoreReward;
+    public string Id => _id;
 }

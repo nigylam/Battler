@@ -7,9 +7,9 @@ namespace YG
     {
         public int gold = 100;
         public int score = 0;
-        public List<LevelConfig> openedLevels = new();
-        public List<SquadGoodConfig> openedGoods = new();
-        public List<SquadPlan> boughtSquads = new();
+        public string lastOpenedLevelId = "";
+        public string lastOpenedGoodId = "";
+        public List<string> boughtSquads = new();
         public float soundUI = 1f;
         public float soundSFX = 1f;
     }

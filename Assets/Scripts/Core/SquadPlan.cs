@@ -1,6 +1,5 @@
 using Battler.BattleSystem.Units;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class SquadPlan : MonoBehaviour
 {
@@ -11,6 +10,7 @@ public class SquadPlan : MonoBehaviour
     [SerializeField] private int _unitCount;
     [SerializeField] private int _sizeX;
     [SerializeField] private int _sizeY;
+    [SerializeField] private string _id;
 
     public (int x, int y) Size => (_sizeX, _sizeY);
     public int Count => _unitCount;
@@ -18,4 +18,5 @@ public class SquadPlan : MonoBehaviour
     public Sprite DragIcon => _dragIcon;
     public Sprite UiIcon => _uiIcon;
     public SquadPreview Preview => _preview;
+    public string Id => _id;
 }

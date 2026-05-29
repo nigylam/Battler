@@ -19,3 +19,4 @@ MonoBehaviour:
   _goldReward: 50
   _scoreReward: 1
   _squadReward: {fileID: 0}
+  _id: 1

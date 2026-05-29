@@ -58,7 +58,7 @@ namespace Battler.UI.ShopView
             {
                 GameSquadCell squadCell = new(squad, 1);
                 _keeper.AddSquad(squadCell);
-                YG2.saves.boughtSquads.Add(squadCell.Plan);
+                YG2.saves.boughtSquads.Add(squadCell.Plan.Id);
                 YG2.SaveProgress();
                 PlayBuySound(_buySound);
             }

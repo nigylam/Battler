@@ -15,3 +15,4 @@ MonoBehaviour:
   _squad: {fileID: 1681863201356703300, guid: 5d6a4754c6109fb4eb50ebae3d2e5937, type: 3}
   _price: 150
   _startAvailable: 0
+  _id: mortar

@@ -19,3 +19,4 @@ MonoBehaviour:
   _goldReward: 120
   _scoreReward: 4
   _squadReward: {fileID: 11400000, guid: 80501de5621aad54aadcc046994bbc19, type: 2}
+  _id: 4

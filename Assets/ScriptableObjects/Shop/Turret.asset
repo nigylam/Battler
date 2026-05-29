@@ -15,3 +15,4 @@ MonoBehaviour:
   _squad: {fileID: 3264878291395778645, guid: a707e63b12acd6f4aba99fb15e82fead, type: 3}
   _price: 180
   _startAvailable: 0
+  _id: turret

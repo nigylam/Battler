@@ -15,3 +15,4 @@ MonoBehaviour:
   _squad: {fileID: 3264878291395778645, guid: 85a338e4a6d8a0340a85aff930d9d321, type: 3}
   _price: 150
   _startAvailable: 0
+  _id: chainsaw

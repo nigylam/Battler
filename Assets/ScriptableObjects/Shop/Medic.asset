@@ -15,3 +15,4 @@ MonoBehaviour:
   _squad: {fileID: 3264878291395778645, guid: 106b5438349bc104db64d55c7cd2aca3, type: 3}
   _price: 130
   _startAvailable: 0
+  _id: medic

@@ -29,10 +29,15 @@ namespace Battler.Meta
                 _goods.Add(good, new SquadGood(good));
             }
 
+            if (YG2.saves.lastOpenedGoodId == "")
+                return;
+
             foreach (SquadGoodConfig good in _goods.Keys)
             {
-                if (YG2.saves.openedGoods.Contains(good))
-                    _goods[good].Unlock();
+                _goods[good].Unlock();
+
+                if (good.Id == YG2.saves.lastOpenedGoodId)
+                    break;
             }
         }
 
@@ -67,7 +72,7 @@ namespace Battler.Meta
 
             _goods[goodConfig].Unlock();
             Changed?.Invoke();
-            YG2.saves.openedGoods.Add(goodConfig);
+            YG2.saves.lastOpenedGoodId = goodConfig.Id;
             YG2.SaveProgress();
         }
     }

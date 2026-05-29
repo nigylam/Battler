@@ -15,3 +15,4 @@ MonoBehaviour:
   _squad: {fileID: -864476455278839830, guid: 52c80bb4894fe674590570b75397ddeb, type: 3}
   _price: 50
   _startAvailable: 1
+  _id: melees
