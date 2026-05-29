@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using YG;
 
 namespace Battler.UI.BattleView
 {
@@ -73,6 +74,7 @@ namespace Battler.UI.BattleView
         {
             _endButton.Clicked -= OnClick;
             End?.Invoke();
+            YG2.InterstitialAdvShow();
         }
     }
 }
