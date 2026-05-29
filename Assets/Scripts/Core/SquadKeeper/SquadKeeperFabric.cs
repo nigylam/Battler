@@ -16,11 +16,11 @@ public static class SquadKeeperFabric
 
         GameSquadKeeper gameSquadKeeper = new(squads);
 
-        if (YG2.saves.boughtSquads.Count > 0)
+        if (YG2.saves.boughtSquadsDictionary != "")
         {
-            foreach (string squadId in YG2.saves.boughtSquads)
+            foreach (var squad in YG2.saves.GetBoughtSquadsId())
             {
-                gameSquadKeeper.AddSquad(new GameSquadCell(squadPlansId[squadId], 1));
+                gameSquadKeeper.AddSquad(new GameSquadCell(squadPlansId[squad.Key], squad.Value));
             }
         }
 

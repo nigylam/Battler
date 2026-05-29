@@ -7,17 +7,12 @@
         false,
         false
     ],
-    "idSave": 15,
+    "idSave": 21,
     "gold": 10,
     "score": 0,
     "lastOpenedLevelId": "3",
     "lastOpenedGoodId": "rifles",
-    "boughtSquads": [
-        "SquadRifle",
-        "SquadMelee",
-        "SquadRifle",
-        "SquadRifle"
-    ],
+    "boughtSquadsDictionary": "SquadMelee,1;",
     "soundUI": 1.0,
     "soundSFX": 1.0
 }

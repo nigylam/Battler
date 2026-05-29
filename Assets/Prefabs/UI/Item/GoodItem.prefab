@@ -508,7 +508,7 @@ MonoBehaviour:
   _button: {fileID: 3612231452058001845}
   _audioSource: {fileID: 8398008333256820099}
   _hoverSound: {fileID: 8300000, guid: 2e2de53a87e8ed045958dc0afe15f8d9, type: 3}
-  _clickSound: {fileID: 8300000, guid: e1bf8245b771f2645a6403ed755cac0e, type: 3}
+  _clickSound: {fileID: 0}
 --- !u!114 &3612231452058001845
 MonoBehaviour:
   m_ObjectHideFlags: 0
