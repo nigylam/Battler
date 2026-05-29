@@ -40,7 +40,8 @@ public class RoundWinnerPannel : MonoBehaviour
 
     public void Restart()
     {
-        _roundCounter.Restart();
+        if (_roundCounter != null)
+            _roundCounter.Restart();
     }
 
     private void Activate()

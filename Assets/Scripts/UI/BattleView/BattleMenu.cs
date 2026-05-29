@@ -24,7 +24,8 @@ namespace Battler.UI.BattleView
 
         private void OnEnable()
         {
-            Restart();
+            _roundWinsPanel.Restart();
+            _startButton.gameObject.SetActive(false);
             _roundWinsPanel.EnemyWin += OnEnemyWin;
             _roundWinsPanel.PlayerWin += OnPlayerWin;
             _pauseButton.Clicked += OnPauseClick;
@@ -97,11 +98,6 @@ namespace Battler.UI.BattleView
         public void SetPlayerWinPanel()
         {
             _roundWinnerPanel.SetPlayerWinner();
-        }
-
-        private void Restart()
-        {
-            _roundWinsPanel.Restart();
         }
 
         private void OnStartClick()
