@@ -152,6 +152,7 @@ MonoBehaviour:
   _damageUpgraded: 20
   _startLifetime: 6
   _rigidbody: {fileID: 5615922289110471858}
+  _visual: {fileID: 5718703166708925509}
   _arcHeight: 5
   _explosionEffect: {fileID: 1754236264206477763}
 --- !u!1001 &1754236264221800293

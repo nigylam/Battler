@@ -8,8 +8,8 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
         [SerializeField] private int _damage;
         [SerializeField] private int _damageUpgraded;
 
-        private int _damageOffset = 2;
-        private int _damageMinValue = 1;
+        private readonly int _damageOffset = 2;
+        private readonly int _damageMinValue = 1;
         private LayerMask _attackTargets;
 
         public virtual void Initialize(LayerMask attackTargets)

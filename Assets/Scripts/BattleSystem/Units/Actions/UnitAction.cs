@@ -30,6 +30,7 @@ namespace Battler.BattleSystem.Units.Actions
         public void Shoot()
         {
             StartAction(_target, () => _target != null).Forget();
+            TargetLayer = _targetLayer;
         }
 
         private void Awake()
