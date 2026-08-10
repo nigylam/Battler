@@ -1,6 +1,7 @@
 using Battler.BattleSystem.Units.Visual;
 using Cysharp.Threading.Tasks;
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Battler.BattleSystem.Units.Actions
@@ -10,6 +11,7 @@ namespace Battler.BattleSystem.Units.Actions
         [SerializeField] private int _healPerTime;
         [SerializeField] private int _healPerTimeUpgraded;
         [SerializeField] private MedicVisual _visual;
+        [SerializeField] private Sound _sound;
 
         public override bool IsSingleAction => true;
 
@@ -31,6 +33,7 @@ namespace Battler.BattleSystem.Units.Actions
             await UniTask.WaitUntil(() => IsCooldownEnded, cancellationToken: ActionCancelToken);
             _visual.OnHealing();
             Heal(target);
+            _sound.PlayActionSound();
             StartCoolDown().Forget();
         }
 

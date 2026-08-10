@@ -62,8 +62,7 @@ namespace Battler.BattleSystem.Units.Actions
 
         private void EnableDamage()
         {
-            Debug.Log("damage enabling");
-            _sound.PlayAttackSound();
+            _sound.PlayActionSound();
             _weapon.EnableDamage();
         }
 

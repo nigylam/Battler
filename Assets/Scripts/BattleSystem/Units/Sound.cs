@@ -8,7 +8,7 @@ namespace Battler.BattleSystem.Units
     {
         [SerializeField] private AudioSource _audioSource;
         [SerializeField] private AudioClip[] _damageSounds;
-        [SerializeField] private AudioClip[] _attackSounds;
+        [SerializeField] private AudioClip[] _actionSounds;
         [SerializeField] private float _pitchOffset;
 
         private float _defaultPitch;
@@ -26,15 +26,13 @@ namespace Battler.BattleSystem.Units
             Play(_damageSounds);
         }
 
-        public void PlayAttackSound()
+        public void PlayActionSound()
         {
-            Debug.Log("PlayAttackSound");
-            Play(_attackSounds);
+            Play(_actionSounds);
         }
 
         private void Play(AudioClip[] audioClips)
         {
-            Debug.Log("Play");
             _audioSource.pitch = Random.Range(_defaultPitch - _pitchOffset, _defaultPitch + _pitchOffset);
             _audioSource.clip = audioClips[Random.Range(0, audioClips.Length)];
             _audioSource.Play();

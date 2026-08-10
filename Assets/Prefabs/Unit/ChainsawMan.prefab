@@ -1688,7 +1688,7 @@ MonoBehaviour:
     m_Bits: 0
   _visual: {fileID: 5056827758970396052}
   _weapon: {fileID: 3303807254610935283}
-  _sound: {fileID: 0}
+  _sound: {fileID: 6347023214893925754}
 --- !u!114 &3057451500338440276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1718,7 +1718,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 2129422658950139404}
   _damageSounds: []
-  _attackSounds:
+  _actionSounds:
   - {fileID: 8300000, guid: 6ba6e93a679d48345a61385097e1de6a, type: 3}
   - {fileID: 8300000, guid: 424cc4a50a92d7943ac5bf96562b9e9e, type: 3}
   _pitchOffset: 0.3

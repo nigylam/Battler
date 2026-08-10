@@ -1785,7 +1785,7 @@ MonoBehaviour:
   _audioSource: {fileID: -2433627125022877944}
   _damageSounds:
   - {fileID: 8300000, guid: 11390b4b43824e54e9eaada95422a366, type: 3}
-  _attackSounds:
+  _actionSounds:
   - {fileID: 8300000, guid: f532260c0b1dfda46aceb24afb3368c2, type: 3}
   _pitchOffset: 0.1
 --- !u!82 &-2433627125022877944
