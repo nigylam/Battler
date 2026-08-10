@@ -1,4 +1,5 @@
 using Battler.BattleSystem.Units;
+using System;
 using UnityEngine;
 
 namespace Battler.BattleSystem.Units.Actions.Weapon
@@ -8,6 +9,8 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
         [SerializeField] private Collider _collider;
 
         private bool _damageDid = false;
+
+        public event Action DamageDid;
 
         private void OnEnable()
         {
@@ -41,6 +44,7 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
                 Vector3 hitPoint = other.ClosestPoint(transform.position);
                 _damageDid = true;
                 ApplyDamage(member, hitPoint);
+                DamageDid?.Invoke();
             }
         }
     }

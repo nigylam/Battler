@@ -11,11 +11,21 @@ namespace Battler.BattleSystem.Units.Actions
     {
         [SerializeField] private MeleeVisual _visual;
         [SerializeField] private MeleeWeapon _weapon;
+        [SerializeField] private Sound _sound;
+
+        //For testing
+        [ContextMenu("attack")]
+        public override void Shoot()
+        {
+            _weapon.Initialize(_targetLayer);
+            base.Shoot();
+        }
 
         private void OnEnable()
         {
             _visual.AttackStarted += EnableDamage;
             _visual.AttackEnded += DisableDamage;
+            _weapon.DamageDid += OnDamageDid;
         }
 
         public override void Initialize(LayerMask targetLayer)
@@ -33,6 +43,7 @@ namespace Battler.BattleSystem.Units.Actions
         {
             _visual.AttackStarted -= EnableDamage;
             _visual.AttackEnded -= DisableDamage;
+            _weapon.DamageDid -= OnDamageDid;
         }
 
         protected override async UniTask ProcessAction(Unit target, Func<bool> isClose)
@@ -51,12 +62,19 @@ namespace Battler.BattleSystem.Units.Actions
 
         private void EnableDamage()
         {
+            Debug.Log("damage enabling");
+            _sound.PlayAttackSound();
             _weapon.EnableDamage();
         }
 
         private void DisableDamage()
         {
             _weapon.DisableDamage();
+        }
+
+        private void OnDamageDid()
+        {
+            _sound.PlayDamageSound();
         }
     }
 }

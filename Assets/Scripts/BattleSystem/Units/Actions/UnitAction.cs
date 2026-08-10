@@ -2,7 +2,6 @@ using UnityEngine;
 using System;
 using Cysharp.Threading.Tasks;
 using System.Threading;
-using static UnityEngine.GraphicsBuffer;
 
 namespace Battler.BattleSystem.Units.Actions
 {
@@ -24,10 +23,10 @@ namespace Battler.BattleSystem.Units.Actions
 
         [Header("For testing")]
         [SerializeField] private Unit _target;
-        [SerializeField] private LayerMask _targetLayer;
+        [SerializeField] public LayerMask _targetLayer;
 
         [ContextMenu("attadk")]
-        public void Shoot()
+        public virtual void Shoot()
         {
             StartAction(_target, () => _target != null).Forget();
             TargetLayer = _targetLayer;
