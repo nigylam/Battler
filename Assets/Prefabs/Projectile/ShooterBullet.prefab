@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1451453634609063531}
   - component: {fileID: 5942365811826644063}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: ShooterBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -217,6 +217,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8294600, guid: ab277be0b43f1824090ab10e4ce64cef, type: 3}
+      propertyPath: m_Pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8294600, guid: ab277be0b43f1824090ab10e4ce64cef, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c922c34f559ead440a273a13a924cfc7, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
