@@ -16,6 +16,7 @@ namespace Battler.BattleSystem.Units
         [SerializeField] private UnitAction _action;
         [SerializeField] private Mover _mover;
         [SerializeField] private Collider _collider;
+        [SerializeField] private Sound _sound;
         [SerializeField] private bool _isFlying = false;
 
         [Header("for testing")]
@@ -51,7 +52,7 @@ namespace Battler.BattleSystem.Units
         }
 
         [ContextMenu("damage")]
-        public void TakeDamage() 
+        public void TakeDamage()
         {
             TakeDamage(_damage, Vector3.zero);
         }
@@ -125,6 +126,9 @@ namespace Battler.BattleSystem.Units
 
         private void OnDead()
         {
+            if (_sound != null)
+                _sound.PlayDeathSound();
+
             _action.Stop();
             IsDead = true;
             _visual.PlayDeathAnimation();

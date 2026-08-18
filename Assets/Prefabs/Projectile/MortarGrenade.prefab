@@ -243,6 +243,10 @@ PrefabInstance:
       propertyPath: m_Pitch
       value: 1.2
       objectReference: {fileID: 0}
+    - target: {fileID: 82007018935423512, guid: a7c694f0877ea874fa57e033221095c3, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -8919916827322080253, guid: d11f85ee55361ca4698caec39a7ce317, type: 2}
     - target: {fileID: 199479367386540494, guid: a7c694f0877ea874fa57e033221095c3, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
@@ -330,6 +334,10 @@ PrefabInstance:
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: 865e88b4b32e7c44298c5cffdb7a80af, type: 3}
+    - target: {fileID: 8294600, guid: ab277be0b43f1824090ab10e4ce64cef, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -8919916827322080253, guid: d11f85ee55361ca4698caec39a7ce317, type: 2}
     - target: {fileID: 19831534, guid: ab277be0b43f1824090ab10e4ce64cef, type: 3}
       propertyPath: lengthInSec
       value: 3

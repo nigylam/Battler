@@ -17743,7 +17743,6 @@ MonoBehaviour:
     m_Bits: 256
   _audioSource: {fileID: 1062050777}
   _startDragSound: {fileID: 8300000, guid: 6ae1f849aec030841b64e59020774c83, type: 3}
-  _fieldPlaceSound: {fileID: 8300000, guid: 37632785baf8ad34c96b33b41f804164, type: 3}
   _menuPlaceSound: {fileID: 8300000, guid: ca58a3057a4cca44786211a2f7e91f89, type: 3}
 --- !u!114 &1062050776
 MonoBehaviour:

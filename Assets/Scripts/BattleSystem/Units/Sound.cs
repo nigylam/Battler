@@ -9,6 +9,7 @@ namespace Battler.BattleSystem.Units
         [SerializeField] private AudioSource _audioSource;
         [SerializeField] private AudioClip[] _damageSounds;
         [SerializeField] private AudioClip[] _actionSounds;
+        [SerializeField] private AudioClip[] _deathSounds;
         [SerializeField] private float _pitchOffset;
 
         private float _defaultPitch;
@@ -29,6 +30,11 @@ namespace Battler.BattleSystem.Units
         public void PlayActionSound()
         {
             Play(_actionSounds);
+        }
+
+        public void PlayDeathSound()
+        {
+            Play(_deathSounds);
         }
 
         private void Play(AudioClip[] audioClips)

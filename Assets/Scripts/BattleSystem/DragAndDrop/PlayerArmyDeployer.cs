@@ -14,7 +14,6 @@ namespace Battler.BattleSystem.DragAndDrop
         private readonly DragVisualSpawner _visualSpawner;
         private readonly AudioSource _audioSource;
         private readonly AudioClip _startDragSound;
-        private readonly AudioClip _fieldPlaceSound;
         private readonly AudioClip _menuPlaceSound;
 
         private BattleSquadKeeper _keeper;
@@ -30,7 +29,6 @@ namespace Battler.BattleSystem.DragAndDrop
             Transform squadsParrent,
             AudioSource audioSource,
             AudioClip startDragSound,
-            AudioClip placeSound,
             AudioClip menuPlaceSound
         ) : base(field, commander, creator, squadsParrent)
         {
@@ -39,7 +37,6 @@ namespace Battler.BattleSystem.DragAndDrop
             _visualSpawner = visualSpawner;
             _audioSource = audioSource;
             _startDragSound = startDragSound;
-            _fieldPlaceSound = placeSound;
             _menuPlaceSound = menuPlaceSound;
         }
 
@@ -123,7 +120,6 @@ namespace Battler.BattleSystem.DragAndDrop
             }
 
             ResetPlayButton();
-            _audioSource.PlayOneShot(_fieldPlaceSound);
         }
 
         private void OnDropFail(DragContext item)

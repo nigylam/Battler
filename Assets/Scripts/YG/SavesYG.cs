@@ -12,7 +12,7 @@ namespace YG
         public string lastOpenedLevelId = "";
         public string lastOpenedGoodId = "";
         public string boughtSquadsDictionary = "";
-        public float soundUI = 1f;
+        public float soundUI = 0.3f;
         public float soundSFX = 1f;
 
         public void AddBoughtSquad(string squadPlanId)

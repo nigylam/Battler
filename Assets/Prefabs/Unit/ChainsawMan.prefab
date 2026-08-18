@@ -1450,6 +1450,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3057451500338440276}
     - target: {fileID: 5463160595052530089, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
+      propertyPath: _sound
+      value: 
+      objectReference: {fileID: 6347023214893925754}
+    - target: {fileID: 5463160595052530089, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
       propertyPath: _action
       value: 
       objectReference: {fileID: 4620976939058773016}
@@ -1721,6 +1725,8 @@ MonoBehaviour:
   _actionSounds:
   - {fileID: 8300000, guid: 6ba6e93a679d48345a61385097e1de6a, type: 3}
   - {fileID: 8300000, guid: 424cc4a50a92d7943ac5bf96562b9e9e, type: 3}
+  _deathSounds:
+  - {fileID: 8300000, guid: c505d486c2e9ace4a8d321163260d4f7, type: 3}
   _pitchOffset: 0.3
 --- !u!82 &2129422658950139404
 AudioSource:
@@ -1731,7 +1737,7 @@ AudioSource:
   m_GameObject: {fileID: 6899701012849001654}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -8919916827322080253, guid: d11f85ee55361ca4698caec39a7ce317, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.6

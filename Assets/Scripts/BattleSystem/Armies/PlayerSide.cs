@@ -16,7 +16,6 @@ namespace Battler.BattleSystem.Armies
         [SerializeField] private LayerMask _thisCanvas;
         [SerializeField] private AudioSource _audioSource;
         [SerializeField] private AudioClip _startDragSound;
-        [SerializeField] private AudioClip _fieldPlaceSound;
         [SerializeField] private AudioClip _menuPlaceSound;
 
         private SquadPlacer _placer;
@@ -71,7 +70,6 @@ namespace Battler.BattleSystem.Armies
                 transform,
                 _audioSource,
                 _startDragSound,
-                _fieldPlaceSound,
                 _menuPlaceSound
             );
         }
