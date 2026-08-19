@@ -36,6 +36,7 @@ namespace Battler.BattleSystem.Armies
 
         public void ClearRound()
         {
+            GetSurvived();
             _army.Clear();
             _field.Clear();
             ClearSpawned();

@@ -39,12 +39,5 @@ namespace Battler.BattleSystem.Units.Actions
                 StartCoolDown().Forget();
             }
         }
-
-        private Vector3 GetDirection(Vector3 targetPosition, Vector3 startPosition)
-        {
-            Vector3 shotDirection = targetPosition - startPosition;
-            shotDirection.y = 0;
-            return shotDirection;
-        }
     }
 }

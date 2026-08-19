@@ -63,6 +63,12 @@ namespace Battler.BattleSystem.Units
             Heal(10);
         }
 
+        [ContextMenu("target")]
+        public void DebugTarget()
+        {
+            Debug.Log(_target.ToString());
+        }
+
         public void Initialize(Material armyMaterial, LayerMask targetLayer)
         {
             _visual.SetArmyMaterial(armyMaterial);

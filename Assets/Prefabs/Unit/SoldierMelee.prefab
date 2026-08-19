@@ -1461,7 +1461,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 5
-  _damageUpgraded: 8
+  _damageUpgraded: 10
   _collider: {fileID: 7053361074623932402}
 --- !u!4 &2137320546529154826 stripped
 Transform:
@@ -1493,6 +1493,12 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 28e72781a9a517b489ec4a9a452ce04e, type: 2}
+    - target: {fileID: 2389418485003686422, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
+      propertyPath: m_WarningMessage
+      value: "\nBinding warning: Some generic clip(s) animate transforms that are
+        already bound by a Humanoid avatar. These transforms can only be changed
+        by Humanoid clips.\n\tTransform 'lowerarm_l'\n\tFrom animation clip 'MeleeIdle'"
+      objectReference: {fileID: 0}
     - target: {fileID: 2858756706154115267, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
       propertyPath: _maxHealthUpgraded
       value: 40

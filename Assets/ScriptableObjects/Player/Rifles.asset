@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Rifles
   m_EditorClassIdentifier: 
   _squad: {fileID: 8985550516221197739, guid: 661723031e579b843a6cc73b51419ab9, type: 3}
-  _count: 2
+  _count: 1
