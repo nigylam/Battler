@@ -150,9 +150,7 @@ namespace Battler.BattleSystem.Units
             await _action.StartAction(_target, isClose);
 
             if (_action.IsSingleAction)
-            {
                 _target = null;
-            }
         }
 
         private async UniTask MoveToTarget()

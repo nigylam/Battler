@@ -1507,7 +1507,7 @@ PrefabInstance:
       objectReference: {fileID: 3440098622324506580}
     - target: {fileID: 4207753064186563347, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
       propertyPath: m_Name
-      value: SoldierRifle
+      value: SoldierRifleTrial
       objectReference: {fileID: 0}
     - target: {fileID: 4207753064186563347, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
       propertyPath: m_IsActive
@@ -1690,7 +1690,7 @@ NavMeshAgent:
   m_Radius: 0.5
   m_Speed: 3.5
   m_Acceleration: 8
-  avoidancePriority: 30
+  avoidancePriority: 20
   m_AngularSpeed: 120
   m_StoppingDistance: 3.9
   m_AutoTraverseOffMeshLink: 1
@@ -1789,7 +1789,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a958eadbf8777f34c94f0063612c99c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 6215048333103159297, guid: 9dd0d6ab68bca134694b2b9ec8e68d69, type: 3}
+  _prefab: {fileID: 8539806053061642366, guid: c6c2bb9f2f24b194fb89e2e2ea534b54, type: 3}
 --- !u!114 &-8140209196085868535
 MonoBehaviour:
   m_ObjectHideFlags: 0

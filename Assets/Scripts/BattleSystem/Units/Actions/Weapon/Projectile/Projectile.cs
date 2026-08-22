@@ -1,16 +1,21 @@
 using Battler.BattleSystem.Units;
 using System;
 using System.Collections;
+using Unity.Collections;
 using UnityEngine;
 
 namespace Battler.BattleSystem.Units.Actions.Weapon
 {
-    public abstract class Projectile : Damager
+    public class Projectile : Damager
     {
-        [SerializeField] private float _startLifetime = 4f;
+        [SerializeField] private DamageType _damageType;
+        [SerializeField] private VelocityType _projectileType;
+        [SerializeField] private ParticleSystem _explosionEffect;
         [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private MeshRenderer _visual;
-        
+        [SerializeField] private float _damageRadius;
+        [SerializeField] private float _startLifetime = 4f;
+
         private readonly float _effectTime = 2f;
 
         private float _lifetime;
@@ -42,53 +47,42 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
 
         private void OnDisable()
         {
+            if (_explosionEffect != null)
+                _explosionEffect.gameObject.SetActive(false);
+
             if (_disableAfterEffect != null)
                 StopCoroutine(_disableAfterEffect);
-
-            Disable();
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent(out Unit unitMember) == false)
+            if (ProjectileDamageDealer.TryDealDamage(_damageType, other, transform, _damageRadius, IsInLayerMask, ApplyDamage) == false)
                 return;
 
-            if (IsInLayerMask(unitMember.gameObject) == false)
-                return;
+            if (_explosionEffect != null)
+                _explosionEffect.gameObject.SetActive(true);
 
-            Vector3 hitPoint = other.ClosestPoint(transform.position);
-            ApplyDamage(unitMember, hitPoint);
-            OnTrigger();
+            _rigidbody.velocity = Vector3.zero;
+            _visual.enabled = false;
 
             if (_disableAfterEffect != null)
                 StopCoroutine(_disableAfterEffect);
+
             _disableAfterEffect = StartCoroutine(DisableAfterEffect());
         }
 
-        public virtual void Initialize(LayerMask attackTargets, Vector3 shotDirection)
+        public void Initialize(LayerMask attackTargets, Vector3 shotDirection)
         {
             base.Initialize(attackTargets);
             _lifetime = _startLifetime;
-        }
-
-        protected virtual void OnTrigger() { }
-        protected virtual void Disable() { }
-
-        protected void HideVisual()
-        {
-            _visual.enabled = false;
-        }
-
-        protected void SetVelocity(Vector3 velocity)
-        {
-            _rigidbody.velocity = velocity;
+            _rigidbody.velocity = VelocityCalculator.CalculateVelocity(_projectileType, shotDirection);
         }
 
         private IEnumerator DisableAfterEffect()
         {
             float time = 0;
 
-            while(time < _effectTime)
+            while (time < _effectTime)
             {
                 time += Time.deltaTime;
                 yield return null;

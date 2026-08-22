@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5718703166708925509}
   - component: {fileID: 5615922289110471858}
   - component: {fileID: 1451453634609063531}
-  - component: {fileID: -2490699038816690824}
+  - component: {fileID: 8434566272571257116}
   m_Layer: 0
   m_Name: MissileGrenade
   m_TagString: Untagged
@@ -136,7 +136,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-2490699038816690824
+--- !u!114 &8434566272571257116
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -145,16 +145,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 197186118139232886}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab56c0bfd42079a4481d9756526c50ab, type: 3}
+  m_Script: {fileID: 11500000, guid: 16c69c7e2985f4c4ebc42b949f8942c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 16
-  _damageUpgraded: 20
-  _startLifetime: 6
+  _damage: 8
+  _damageUpgraded: 0
+  _damageType: 1
+  _projectileType: 1
+  _explosionEffect: {fileID: 1754236264206477763}
   _rigidbody: {fileID: 5615922289110471858}
   _visual: {fileID: 5718703166708925509}
-  _arcHeight: 5
-  _explosionEffect: {fileID: 1754236264206477763}
+  _damageRadius: 3
+  _startLifetime: 4
 --- !u!1001 &1754236264221800293
 PrefabInstance:
   m_ObjectHideFlags: 0

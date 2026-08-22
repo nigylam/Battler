@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5718703166708925509}
   - component: {fileID: 5615922289110471858}
   - component: {fileID: 1451453634609063531}
-  - component: {fileID: 5942365811826644063}
+  - component: {fileID: 6509467756145157869}
   m_Layer: 0
   m_Name: TurretBullet
   m_TagString: Untagged
@@ -135,7 +135,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5942365811826644063
+--- !u!114 &6509467756145157869
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,15 +144,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 197186118139232886}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d06df584fa6c7d74d86265d19ab77772, type: 3}
+  m_Script: {fileID: 11500000, guid: 16c69c7e2985f4c4ebc42b949f8942c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 0
-  _damageUpgraded: 0
-  _startLifetime: 4
+  _damage: 3
+  _damageUpgraded: 4
+  _damageType: 0
+  _projectileType: 0
+  _explosionEffect: {fileID: 0}
   _rigidbody: {fileID: 5615922289110471858}
   _visual: {fileID: 5718703166708925509}
-  _speed: 15
+  _damageRadius: 0
+  _startLifetime: 4
 --- !u!1001 &2664479860075151532
 PrefabInstance:
   m_ObjectHideFlags: 0

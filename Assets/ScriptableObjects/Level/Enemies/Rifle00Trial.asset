@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37d79409a69a4d44192ce7940f16e70a, type: 3}
-  m_Name: Melee
+  m_Script: {fileID: 11500000, guid: d719c12d2589bc742895eb3fd133b250, type: 3}
+  m_Name: Rifle00Trial
   m_EditorClassIdentifier: 
-  _squads:
-  - {fileID: 11400000, guid: 9d24aa9cb652bbe4a979e35ae401b4f8, type: 2}
+  _squadPlan: {fileID: 8985550516221197739, guid: 3c19f59fe2595d0458168ae1bd10a11a, type: 3}
+  positionX: 0
+  positionY: 0

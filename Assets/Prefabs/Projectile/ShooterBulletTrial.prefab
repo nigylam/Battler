@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 5718703166708925509}
   - component: {fileID: 5615922289110471858}
   - component: {fileID: 1451453634609063531}
-  - component: {fileID: 6215048333103159297}
+  - component: {fileID: 8539806053061642366}
   m_Layer: 0
-  m_Name: ShooterBullet
+  m_Name: ShooterBulletTrial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -135,7 +135,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6215048333103159297
+--- !u!114 &8539806053061642366
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -147,8 +147,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16c69c7e2985f4c4ebc42b949f8942c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 3
-  _damageUpgraded: 6
+  _damage: 2
+  _damageUpgraded: 2
   _damageType: 0
   _projectileType: 0
   _explosionEffect: {fileID: 0}

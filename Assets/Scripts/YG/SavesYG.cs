@@ -7,7 +7,7 @@ namespace YG
 {
     public partial class SavesYG
     {
-        public int gold = 100;
+        public int gold = 0;
         public int score = 0;
         public string lastOpenedLevelId = "";
         public string lastOpenedGoodId = "";

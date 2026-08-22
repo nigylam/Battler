@@ -21,16 +21,27 @@ namespace Battler.BattleSystem.Units.TargetFinding
             }
 
             if (potentialTargets.Count == 0)
-                return null;
+                return GetClosestTarget(alies);
 
             if(potentialTargets.Contains(_previousTarget) && potentialTargets.Count > 1)
                 potentialTargets.Remove(_previousTarget);
 
-            Unit closestTarget = potentialTargets[0];
+            Unit closestTarget = GetClosestTarget(potentialTargets);
+            _previousTarget = closestTarget;
+
+            return closestTarget;
+        }
+
+        private Unit GetClosestTarget(List<Unit> units)
+        {
+            Unit closestTarget = units[0];
             float closestTargetSqrDistance = Vector3.SqrMagnitude(closestTarget.transform.position - transform.position);
 
-            foreach (Unit target in potentialTargets)
+            foreach (Unit target in units)
             {
+                if (target.transform == transform)
+                    continue;
+
                 float targetSqrDistance = Vector3.SqrMagnitude(target.transform.position - transform.position);
 
                 if (closestTargetSqrDistance > targetSqrDistance)
@@ -39,8 +50,6 @@ namespace Battler.BattleSystem.Units.TargetFinding
                     closestTarget = target;
                 }
             }
-
-            _previousTarget = closestTarget;
 
             return closestTarget;
         }

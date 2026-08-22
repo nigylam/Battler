@@ -10,9 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 37d79409a69a4d44192ce7940f16e70a, type: 3}
-  m_Name: RifleRifleRifle
+  m_Name: MeleeMelee
   m_EditorClassIdentifier: 
   _squads:
-  - {fileID: 11400000, guid: abeeba51205a6294dafff0f70c650e85, type: 2}
-  - {fileID: 11400000, guid: 45f79f8baf5586a42b3055a6f7023fe5, type: 2}
-  - {fileID: 11400000, guid: d2a5f3b22a6cdc04c971b858a0a3328c, type: 2}
+  - {fileID: 11400000, guid: e7692c983a7afb840acc06bd02b6c4cc, type: 2}
+  - {fileID: 11400000, guid: 9d24aa9cb652bbe4a979e35ae401b4f8, type: 2}

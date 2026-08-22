@@ -670,6 +670,7 @@ MonoBehaviour:
   _hitEffects: {fileID: 2380400741769483332}
   _healEffect: {fileID: 178249147952181221}
   _rotationSpeed: 0
+  _towerRotationOffsetY: 0
   _destroyEffectDuration: 3
   _tower: {fileID: 0}
   _explosionEffect: {fileID: 5443430139618089392}
@@ -709,7 +710,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a958eadbf8777f34c94f0063612c99c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: -2490699038816690824, guid: c8ad1457202a9d347bd3fdae03777572, type: 3}
+  _prefab: {fileID: 8434566272571257116, guid: c8ad1457202a9d347bd3fdae03777572, type: 3}
 --- !u!114 &6798202474587157844 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3365085714825458440, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}

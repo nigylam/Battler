@@ -26,11 +26,11 @@ namespace Battler.BattleSystem.Units.Actions
 
         protected override async UniTask ProcessAction(Unit target, Func<bool> isClose)
         {
-            if (target.IsDead || isClose() == false)
+            if (target.IsDead || isClose() == false || target.HealthDecreased == false)
                 return;
 
-            await UniTask.WaitUntil(() => IsCooldownEnded, cancellationToken: ActionCancelToken);
             _visual.OnHealing();
+            await UniTask.WaitUntil(() => IsCooldownEnded, cancellationToken: ActionCancelToken);
             Heal(target);
             _sound.PlayActionSound();
             StartCoolDown().Forget();
