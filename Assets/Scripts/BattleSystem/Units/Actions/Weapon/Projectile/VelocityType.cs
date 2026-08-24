@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace Battler
+namespace Battler.BattleSystem.Units.Actions.Weapon
 {
     public enum VelocityType
     {

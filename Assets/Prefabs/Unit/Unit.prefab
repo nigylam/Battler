@@ -130,6 +130,10 @@ MonoBehaviour:
   _visual: {fileID: 0}
   _action: {fileID: 0}
   _mover: {fileID: 0}
+  _collider: {fileID: 0}
+  _sound: {fileID: 0}
+  _isFlying: 0
+  _damage: 0
 --- !u!114 &2858756706154115267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,7 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 20
-  _maxHealthUpgraded: 100
+  _maxHealthUpgraded: 30
 --- !u!114 &3764579935532093189
 MonoBehaviour:
   m_ObjectHideFlags: 0

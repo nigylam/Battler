@@ -1441,6 +1441,10 @@ PrefabInstance:
       propertyPath: _maxHealth
       value: 40
       objectReference: {fileID: 0}
+    - target: {fileID: 2858756706154115267, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
+      propertyPath: _maxHealthUpgraded
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 4207753064186563347, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
       propertyPath: m_Name
       value: ChainsawMan

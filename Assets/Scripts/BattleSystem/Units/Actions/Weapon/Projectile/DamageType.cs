@@ -1,4 +1,4 @@
-namespace Battler
+namespace Battler.BattleSystem.Units.Actions.Weapon
 {
     public enum DamageType
     {

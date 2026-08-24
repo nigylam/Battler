@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Battler
+namespace Battler.BattleSystem.Units.Actions.Weapon
 {
     public static class VelocityCalculator
     {

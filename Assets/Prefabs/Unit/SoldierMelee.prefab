@@ -1500,8 +1500,12 @@ PrefabInstance:
         by Humanoid clips.\n\tTransform 'lowerarm_l'\n\tFrom animation clip 'MeleeIdle'"
       objectReference: {fileID: 0}
     - target: {fileID: 2858756706154115267, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
+      propertyPath: _maxHealth
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858756706154115267, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
       propertyPath: _maxHealthUpgraded
-      value: 40
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3365085714825458440, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
       propertyPath: _health

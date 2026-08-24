@@ -1,8 +1,7 @@
-using Battler.BattleSystem.Units;
 using System;
 using UnityEngine;
 
-namespace Battler
+namespace Battler.BattleSystem.Units.Actions.Weapon
 {
     public class ProjectileDamageDealer
     {
@@ -29,7 +28,7 @@ namespace Battler
             return true;
         }
 
-        private static void DealExplosionDamageTargets(Transform transform, float damageRadius, 
+        private static void DealExplosionDamageTargets(Transform transform, float damageRadius,
             Func<GameObject, bool> isInLayerMask, Action<Unit, Vector3> applyDamage)
         {
             if (damageRadius <= 1)

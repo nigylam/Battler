@@ -7,6 +7,8 @@ public class SmoothSliderBar : SliderBar
     [SerializeField] private float _changeSpeed = 0.1f;
     [SerializeField] private float _smoothStep = 0.01f;
 
+    private const float MinValue = 0.1f;
+
     private WaitForSeconds _smoothStepDelay;
     private Coroutine _smoothChange;
 
@@ -24,6 +26,9 @@ public class SmoothSliderBar : SliderBar
     private IEnumerator SmoothChangeValue(float targetValue)
     {
         float currentValue = Slider.value;
+
+        if (targetValue < MinValue && targetValue != 0)
+            targetValue = MinValue;
 
         while (Mathf.Approximately(currentValue, targetValue) == false)
         {
