@@ -35,8 +35,11 @@ namespace Battler.BattleSystem.Units.Actions
                 if (_visual != null)
                     _visual.PlayShotAnimation();
 
-                _weapon.Shoot(_muzzlePoint.position, TargetLayer, target.Body.position - _muzzlePoint.position, _isUpgraded);
-                StartCoolDown().Forget();
+                if (target.IsDead == false)
+                {
+                    _weapon.Shoot(_muzzlePoint.position, TargetLayer, target.Body.position - _muzzlePoint.position, _isUpgraded);
+                    StartCoolDown().Forget();
+                }
             }
         }
     }

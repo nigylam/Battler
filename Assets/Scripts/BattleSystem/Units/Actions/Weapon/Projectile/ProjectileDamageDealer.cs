@@ -8,13 +8,16 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
         public static bool TryDealDamage(DamageType damageType, Collider hitCollider, Transform transform, float damageRadius,
             Func<GameObject, bool> isInLayerMask, Action<Unit, Vector3> applyDamage)
         {
-            if (hitCollider.TryGetComponent(out Unit unit) == false)
-                return false;
+            if (hitCollider.TryGetComponent(out Ground ground) == false)
+            {
+                if (hitCollider.TryGetComponent(out Unit unit) == false)
+                    return false;
 
-            if (isInLayerMask(unit.gameObject) == false)
-                return false;
+                if (isInLayerMask(unit.gameObject) == false)
+                    return false;
 
-            applyDamage(unit, transform.position);
+                applyDamage(unit, transform.position);
+            }
 
             switch (damageType)
             {
