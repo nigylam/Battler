@@ -47,9 +47,7 @@ namespace Battler.UI.BattleView
             _rewardBlock.SetActive(false);
             _titleLose.gameObject.SetActive(true);
             _titleWin.gameObject.SetActive(false);
-
-            if(isAutoLose)
-                _titleAllDead.gameObject.SetActive(true);
+            _titleAllDead.gameObject.SetActive(isAutoLose);
         }
 
         private void SetWin(int goldReward, SquadGoodConfig squadReward = null)
