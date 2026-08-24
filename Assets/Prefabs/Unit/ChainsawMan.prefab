@@ -1345,6 +1345,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chainsaw
       objectReference: {fileID: 0}
+    - target: {fileID: 3713071764314329154, guid: f4fed089402875f489df2f776ee0dd62, type: 3}
+      propertyPath: _damage
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3713071764314329154, guid: f4fed089402875f489df2f776ee0dd62, type: 3}
+      propertyPath: _damageUpgraded
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 4914565198233899736, guid: f4fed089402875f489df2f776ee0dd62, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.284

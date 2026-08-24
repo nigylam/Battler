@@ -437,7 +437,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2858756706154115267, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
       propertyPath: _maxHealth
-      value: 150
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858756706154115267, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
+      propertyPath: _maxHealthUpgraded
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 4207753064186563347, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
       propertyPath: m_Name
@@ -689,7 +693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00660d3525010244c90398f786711293, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cooldownTime: 5
+  _cooldownTime: 6
   _target: {fileID: 0}
   _targetLayer:
     serializedVersion: 2

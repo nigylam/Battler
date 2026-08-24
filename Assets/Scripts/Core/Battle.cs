@@ -174,12 +174,14 @@ namespace Battler.Core
         {
             HaveLevelWinner = true;
             _levelWinner = _enemy;
+            _isAutoLose = false;
         }
 
         private void OnAutoLose()
         {
             HaveLevelWinner = true;
             _levelWinner = _enemy;
+            _isAutoLose = true;
             EndLevel();
         }
 
