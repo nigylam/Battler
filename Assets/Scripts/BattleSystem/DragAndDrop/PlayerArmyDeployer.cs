@@ -2,6 +2,7 @@ using Battler.BattleSystem.Armies;
 using Battler.BattleSystem.Squads;
 using Battler.UI.BattleView;
 using Cysharp.Threading.Tasks;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,6 +18,8 @@ namespace Battler.BattleSystem.DragAndDrop
         private readonly AudioClip _menuPlaceSound;
 
         private BattleSquadKeeper _keeper;
+
+        public event Action SquadsEnded;
 
         public PlayerArmyDeployer
         (
@@ -47,6 +50,9 @@ namespace Battler.BattleSystem.DragAndDrop
 
         public void EnablePlacing()
         {
+            if (_keeper.IsEmpty && Field.IsEmpty())
+                SquadsEnded?.Invoke();
+
             _menu.ArmyPannel.gameObject.SetActive(true);
             _menu.ArmyPannel.DragStarted += OnMenuDragStarted;
             _menu.StartButtonClicked += OnPlayClicked;

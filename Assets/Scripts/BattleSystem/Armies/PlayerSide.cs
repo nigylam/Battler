@@ -2,7 +2,6 @@ using Battler.BattleSystem.DragAndDrop;
 using Battler.UI.BattleView;
 using Cysharp.Threading.Tasks;
 using System;
-using System.Threading;
 using UnityEngine;
 
 namespace Battler.BattleSystem.Armies
@@ -22,6 +21,7 @@ namespace Battler.BattleSystem.Armies
         private PlayerArmyDeployer _deployer;
 
         public event Action ReadyForRound;
+        public event Action SquadsEnded;
 
         protected override ArmyDeployer ArmyDeployer => _deployer;
 
@@ -77,17 +77,24 @@ namespace Battler.BattleSystem.Armies
         protected override void Enable()
         {
             _deployer.DeploymentFinished += OnDeploymentFinished;
+            _deployer.SquadsEnded += OnSquadsEnded;
         }
 
         protected override void Disable()
         {
             _deployer.DeploymentFinished -= OnDeploymentFinished;
+            _deployer.SquadsEnded -= OnSquadsEnded;
         }
 
         private void OnDeploymentFinished()
         {
             _deployer.DisablePlacing();
             ReadyForRound?.Invoke();
+        }
+
+        private void OnSquadsEnded()
+        {
+            SquadsEnded.Invoke();
         }
     }
 }

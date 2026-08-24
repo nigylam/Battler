@@ -37,8 +37,10 @@ namespace Battler.Core
 
         private float _defaultTimeScale;
         private bool _isBattleActive;
+        private bool _isAutoLose;
 
         public event Action<bool> End;
+        public event Action AutoLose;
         public event Action Pause;
 
         private void Awake()
@@ -78,14 +80,14 @@ namespace Battler.Core
 
                 _isBattleActive = true;
                 var combatPhase = new CombatPhase();
-                
-                if(await combatPhase.ExecuteAsync(this).SuppressCancellationThrow())
+
+                if (await combatPhase.ExecuteAsync(this).SuppressCancellationThrow())
                     return;
 
                 RoundWinner = combatPhase.RoundWinner;
                 _isBattleActive = false;
 
-                if(await new RoundEndPhase().ExecuteAsync(this).SuppressCancellationThrow())
+                if (await new RoundEndPhase().ExecuteAsync(this).SuppressCancellationThrow())
                     return;
             }
 
@@ -140,9 +142,12 @@ namespace Battler.Core
             else
             {
                 Sound.PlayLoseLevelSound();
-                End?.Invoke(false);
-            }
 
+                if (_isAutoLose)
+                    AutoLose.Invoke();
+                else
+                    End?.Invoke(false);
+            }
         }
 
         private void PauseGame()
@@ -171,11 +176,19 @@ namespace Battler.Core
             _levelWinner = _enemy;
         }
 
+        private void OnAutoLose()
+        {
+            HaveLevelWinner = true;
+            _levelWinner = _enemy;
+            EndLevel();
+        }
+
         private void Subscribe()
         {
             _menu.PlayerWin += OnPlayerWin;
             _menu.EnemyWin += OnEnemyWin;
             _menu.Pause += OnPause;
+            _player.SquadsEnded += OnAutoLose;
         }
 
         private void Unsubscribe()
@@ -183,6 +196,7 @@ namespace Battler.Core
             _menu.PlayerWin -= OnPlayerWin;
             _menu.EnemyWin -= OnEnemyWin;
             _menu.Pause -= OnPause;
+            _player.SquadsEnded -= OnAutoLose;
         }
     }
 }

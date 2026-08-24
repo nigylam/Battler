@@ -13,6 +13,7 @@ namespace Battler.State
             Context.Battle.StartLevel(Context);
             Context.Battle.End += OnBattleEnd;
             Context.Battle.Pause += OnBattlePause;
+            Context.Battle.AutoLose += OnAutoLose;
         }
 
         public override void Exit()
@@ -20,11 +21,19 @@ namespace Battler.State
             Context.Battle.CloseLevel();
             Context.Battle.End -= OnBattleEnd;
             Context.Battle.Pause -= OnBattlePause;
+            Context.Battle.AutoLose -= OnAutoLose;
+
         }
 
         private void OnBattleEnd(bool isPlayerWin)
         {
-            Context.Rewarder.GenerateReward(isPlayerWin, Context);
+            Context.Rewarder.GenerateReward(isPlayerWin, false, Context);
+            StateMachine.PushState(GameStateType.BattleEnd);
+        }
+
+        private void OnAutoLose()
+        {
+            Context.Rewarder.GenerateReward(false, true, Context);
             StateMachine.PushState(GameStateType.BattleEnd);
         }
 

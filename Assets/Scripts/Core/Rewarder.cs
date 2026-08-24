@@ -5,14 +5,16 @@ public class Rewarder
     public Rewarder() { }
 
     public bool IsPlayerWin { get; private set; }
+    public bool IsAutoLose { get; private set; }
     public int GoldReward { get; private set; }
     public SquadGoodConfig SquadReward { get; private set; }
 
-    public void GenerateReward(bool isPlayerWin, GameContext context)
+    public void GenerateReward(bool isPlayerWin, bool isAutoLose, GameContext context)
     {
         SquadReward = null;
         LevelConfig level = context.Level;
         IsPlayerWin = isPlayerWin;
+        IsAutoLose = isAutoLose;
 
         if (IsPlayerWin == false)
             return;

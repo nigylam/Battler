@@ -11,6 +11,7 @@ namespace Battler
         public event Action Changed;
 
         public IReadOnlyList<TSquad> Squads => _squads;
+        public bool IsEmpty => _squads.Count == 0;
 
         public Keeper(List<TSquad> squads)
         {

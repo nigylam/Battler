@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Melees
   m_EditorClassIdentifier: 
   _squad: {fileID: -864476455278839830, guid: 52c80bb4894fe674590570b75397ddeb, type: 3}
-  _count: 4
+  _count: 1

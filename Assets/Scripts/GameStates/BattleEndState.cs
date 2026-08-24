@@ -14,7 +14,7 @@ namespace Battler.State
 
         public override void Enter()
         {
-            _battleEndScreen.Set(Context.Rewarder.IsPlayerWin, Context.Rewarder.GoldReward, Context.Rewarder.SquadReward);
+            _battleEndScreen.Set(Context.Rewarder.IsPlayerWin, Context.Rewarder.IsAutoLose, Context.Rewarder.GoldReward, Context.Rewarder.SquadReward);
             _battleEndScreen.End += OnEndClicked;
         }
 
