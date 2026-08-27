@@ -16,3 +16,4 @@ MonoBehaviour:
   _price: 180
   _startAvailable: 0
   _id: turret
+  _levelIdOpen: 7

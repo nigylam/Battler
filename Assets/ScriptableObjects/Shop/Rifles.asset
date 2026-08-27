@@ -16,3 +16,4 @@ MonoBehaviour:
   _price: 70
   _startAvailable: 0
   _id: rifles
+  _levelIdOpen: 2

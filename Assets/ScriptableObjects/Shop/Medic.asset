@@ -16,3 +16,4 @@ MonoBehaviour:
   _price: 130
   _startAvailable: 0
   _id: medic
+  _levelIdOpen: 3

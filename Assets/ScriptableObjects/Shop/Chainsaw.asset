@@ -16,3 +16,4 @@ MonoBehaviour:
   _price: 150
   _startAvailable: 0
   _id: chainsaw
+  _levelIdOpen: 6

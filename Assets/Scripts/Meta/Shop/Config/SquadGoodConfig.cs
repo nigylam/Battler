@@ -7,9 +7,11 @@ public class SquadGoodConfig : ScriptableObject
     [SerializeField] private int _price;
     [SerializeField] private bool _startAvailable;
     [SerializeField] private string _id;
+    [SerializeField] private int _levelIdOpen;
 
     public SquadPlan Squad => _squad;
     public int Price => _price;
     public bool StartAvailable => _startAvailable;
     public string Id => _id;
+    public int LevelIdOpen => _levelIdOpen;
 }
