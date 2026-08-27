@@ -10,7 +10,7 @@ namespace Battler.UI.BattleView
     {
         [SerializeField] private TextMeshProUGUI _titleLose;
         [SerializeField] private TextMeshProUGUI _titleWin;
-        [SerializeField] private TextMeshProUGUI _titleAllDead;
+        [SerializeField] private GameObject _titleAllDead;
         [SerializeField] private GameObject _rewardBlock;
         [SerializeField] private GameObject _squadRewardBlock;
         [SerializeField] private Image _squadReward;
@@ -47,7 +47,7 @@ namespace Battler.UI.BattleView
             _rewardBlock.SetActive(false);
             _titleLose.gameObject.SetActive(true);
             _titleWin.gameObject.SetActive(false);
-            _titleAllDead.gameObject.SetActive(isAutoLose);
+            _titleAllDead.SetActive(isAutoLose);
         }
 
         private void SetWin(int goldReward, SquadGoodConfig squadReward = null)
@@ -57,7 +57,7 @@ namespace Battler.UI.BattleView
 
             _rewardBlock.SetActive(true);
             _titleLose.gameObject.SetActive(false);
-            _titleAllDead.gameObject.SetActive(false);
+            _titleAllDead.SetActive(false);
             _titleWin.gameObject.SetActive(true);
             _goldReward.text = goldReward.ToString();
 
