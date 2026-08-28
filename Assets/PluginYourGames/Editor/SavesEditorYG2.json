@@ -1,0 +1,18 @@
+{
+    "intExample": 5,
+    "strExample": "Hello!",
+    "boolExample": [
+        false,
+        false,
+        false,
+        false
+    ],
+    "idSave": 2,
+    "gold": 500,
+    "score": 0,
+    "lastOpenedLevelId": "10",
+    "lastOpenedGoodId": "turret",
+    "boughtSquadsDictionary": "",
+    "soundUI": 0.30000001192092898,
+    "soundSFX": 1.0
+}

@@ -1,16 +1,32 @@
-using Lean.Localization;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace Battler
+namespace Battler.UI.Tooltip
 {
-    public class Tooltip : MonoBehaviour
+    public abstract class Tooltip : MonoBehaviour
     {
-        [SerializeField] private LeanToken _levelIndexToken;
+        private const float PivotRight = 0f;
+        private const float PivotLeft = 1f;
 
-        public void Enable(int levelIndex, Vector2 position)
+        [SerializeField] private RectTransform _rectTransform;
+        [SerializeField] private Vector2 _offset;
+
+        public void Enable(Vector2 position)
         {
-            transform.position = position;
-            _levelIndexToken.SetValue(levelIndex);
+            Vector2 dynamicOffset = _offset;
+
+            if (position.x > Screen.width / 2)
+            {
+                dynamicOffset.x = -_offset.x;
+                _rectTransform.pivot = new Vector2(PivotLeft, _rectTransform.pivot.y);
+            }
+            else
+            {
+                _rectTransform.pivot = new Vector2(PivotRight, _rectTransform.pivot.y);
+            }
+
+            transform.position = position + dynamicOffset;
             gameObject.SetActive(true);
         }
 

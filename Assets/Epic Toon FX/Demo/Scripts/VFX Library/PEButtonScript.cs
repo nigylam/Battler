@@ -21,13 +21,13 @@ public class PEButtonScript : MonoBehaviour, IEventSystemHandler, IPointerEnterH
 	}
 
 	public void OnPointerEnter(PointerEventData eventData) {
-		// Used for Tooltip
+		// Used for ClosedGoodTooltip
 		UICanvasManager.GlobalAccess.MouseOverButton = true;
 		UICanvasManager.GlobalAccess.UpdateToolTip (ButtonType);
 	}
 
 	public void OnPointerExit(PointerEventData eventData) {
-		// Used for Tooltip
+		// Used for ClosedGoodTooltip
 		UICanvasManager.GlobalAccess.MouseOverButton = false;
 		UICanvasManager.GlobalAccess.ClearToolTip ();
 	}

@@ -42,7 +42,7 @@ namespace Battler.UI.ShopView
             _shop = shop;
             _gold = gold;
             _keeper = keeper;
-            _shopPanel.SetItems(_shop);
+            _shopPanel.Initialize(_shop, price => _gold.Current >= price);
             _armyPanel.SetItems(_keeper);
         }
 

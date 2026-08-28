@@ -48,6 +48,8 @@ MonoBehaviour:
   _preview: {fileID: 2274916110906511293, guid: c1bbff8ebb914f04db08127cbc7fb4ea, type: 3}
   _dragIcon: {fileID: 21300000, guid: 1856fd064af02434abe3b2f4875ee7fc, type: 3}
   _uiIcon: {fileID: 21300000, guid: 1856fd064af02434abe3b2f4875ee7fc, type: 3}
+  _actionIcon: {fileID: 21300000, guid: 38edd934ef2004b40a6bcf2b622a6f97, type: 3}
+  _actionDescriptionId: SquadRifleDescription
   _unitCount: 3
   _sizeX: 1
   _sizeY: 3

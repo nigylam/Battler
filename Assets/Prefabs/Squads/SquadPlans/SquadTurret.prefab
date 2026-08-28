@@ -48,6 +48,8 @@ MonoBehaviour:
   _preview: {fileID: 4553163789813497844, guid: a8188ac335b30044ebd06f0b1840320d, type: 3}
   _dragIcon: {fileID: 21300000, guid: 26aa2f903984e2a4ca9b9e4c25c37dda, type: 3}
   _uiIcon: {fileID: 21300000, guid: 26aa2f903984e2a4ca9b9e4c25c37dda, type: 3}
+  _actionIcon: {fileID: 21300000, guid: 38edd934ef2004b40a6bcf2b622a6f97, type: 3}
+  _actionDescriptionId: SquadTurretDescription
   _unitCount: 1
   _sizeX: 1
   _sizeY: 1

@@ -10,6 +10,7 @@ namespace Battler.BattleSystem.Units
 {
     public class Unit : MonoBehaviour
     {
+        [SerializeField] private UnitStats _stats;
         [SerializeField] private Health _health;
         [SerializeField] private TargetFinder _targetFinder;
         [SerializeField] private UnitVisual _visual;
@@ -34,6 +35,7 @@ namespace Battler.BattleSystem.Units
         public bool HealthDecreased => _health.Current < _health.Max;
         public Transform Body => _visual.Body;
         public bool IsFlying => _isFlying;
+        public UnitStats Stats => _stats;
 
         private void OnEnable()
         {

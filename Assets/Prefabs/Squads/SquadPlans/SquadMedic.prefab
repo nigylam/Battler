@@ -48,6 +48,8 @@ MonoBehaviour:
   _preview: {fileID: 7350751016646580553, guid: 1901d7fe89a8541429593ce33418eed1, type: 3}
   _dragIcon: {fileID: 21300000, guid: 8d6d5c181a067684abc4ba774b31e8fa, type: 3}
   _uiIcon: {fileID: 21300000, guid: 8d6d5c181a067684abc4ba774b31e8fa, type: 3}
+  _actionIcon: {fileID: 21300000, guid: 3a0458dc6caee5645bde21637aa32744, type: 3}
+  _actionDescriptionId: SquadMedicDescription
   _unitCount: 1
   _sizeX: 1
   _sizeY: 1

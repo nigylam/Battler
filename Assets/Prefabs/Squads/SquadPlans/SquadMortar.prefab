@@ -48,6 +48,8 @@ MonoBehaviour:
   _preview: {fileID: 8217582988732442545, guid: e95ab51b4a61c794db840ea34cfe8922, type: 3}
   _dragIcon: {fileID: 21300000, guid: 04297126fe5ae124aa7d7e8bca73c1a0, type: 3}
   _uiIcon: {fileID: 21300000, guid: 04297126fe5ae124aa7d7e8bca73c1a0, type: 3}
+  _actionIcon: {fileID: 21300000, guid: 3b7968fc9ae8e71428f7e03a71dac9e4, type: 3}
+  _actionDescriptionId: SquadMortarDescription
   _unitCount: 1
   _sizeX: 2
   _sizeY: 1

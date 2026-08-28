@@ -48,6 +48,8 @@ MonoBehaviour:
   _preview: {fileID: 9093233627119384218, guid: 4897874084f8258448f602dfb7f530ca, type: 3}
   _dragIcon: {fileID: 21300000, guid: 81f14c0824925fc45a52034e3d2106d9, type: 3}
   _uiIcon: {fileID: 21300000, guid: 81f14c0824925fc45a52034e3d2106d9, type: 3}
+  _actionIcon: {fileID: 21300000, guid: ea59b3a0772fc04428c6cd8c120c13fa, type: 3}
+  _actionDescriptionId: SquadMeleeDescription
   _unitCount: 2
   _sizeX: 2
   _sizeY: 1
