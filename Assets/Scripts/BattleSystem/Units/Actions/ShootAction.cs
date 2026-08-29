@@ -12,13 +12,6 @@ namespace Battler.BattleSystem.Units.Actions
         [SerializeField] private ProjectileWeapon _weapon;
         [SerializeField] private Transform _muzzlePoint;
 
-        private bool _isUpgraded;
-
-        public override void Upgrade()
-        {
-            _isUpgraded = true;
-        }
-
         protected override void Disable()
         {
             Stop();
@@ -37,7 +30,7 @@ namespace Battler.BattleSystem.Units.Actions
 
                 if (target.IsDead == false)
                 {
-                    _weapon.Shoot(_muzzlePoint.position, TargetLayer, target.Body.position - _muzzlePoint.position, _isUpgraded);
+                    _weapon.Shoot(_muzzlePoint.position, TargetLayer, target.Body.position - _muzzlePoint.position, CurrentActionValue);
                     StartCoolDown().Forget();
                 }
             }

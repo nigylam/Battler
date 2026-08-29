@@ -11,12 +11,6 @@ namespace Battler.BattleSystem.Units.Actions
         [SerializeField] private Transform[] _muzzlePoints;
 
         private readonly float _shotDelay = 0.5f;
-        private bool _isUpgraded;
-
-        public override void Upgrade()
-        {
-            _isUpgraded = true;
-        }
 
         protected override void Disable()
         {
@@ -34,7 +28,7 @@ namespace Battler.BattleSystem.Units.Actions
 
                 foreach(var muzzlePoint in _muzzlePoints)
                 {
-                    _weapon.Shoot(muzzlePoint.position, TargetLayer, target.transform.position - muzzlePoint.position, _isUpgraded);
+                    _weapon.Shoot(muzzlePoint.position, TargetLayer, target.transform.position - muzzlePoint.position, CurrentActionValue);
                     await UniTask.WaitForSeconds(_shotDelay, cancellationToken: ActionCancelToken);
                 }
                 

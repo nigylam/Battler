@@ -3,8 +3,10 @@ using UnityEngine;
 
 public class Health : ICountable
 {
+    private readonly int _max;
+    private readonly int _maxUpgraded;
+
     private float _current;
-    private int _max;
     private bool _active = true;
 
     public event Action Dead;
@@ -12,14 +14,13 @@ public class Health : ICountable
 
     public Health(int max, int maxUpgraded)
     {
-        Max = max;
-        MaxUpgraded = maxUpgraded;
         _max = max;
+        _maxUpgraded = maxUpgraded;
         _current = max;
+        Max = _max;
     }
 
-    public float Max { get; }
-    public float MaxUpgraded { get; }
+    public float Max { get; private set; }
 
     public float Current
     {
@@ -64,7 +65,7 @@ public class Health : ICountable
 
     public void Upgrade()
     {
-        _max = (int)MaxUpgraded;
-        Current = _max;
+        Max = _maxUpgraded;
+        Current = Max;
     }
 }

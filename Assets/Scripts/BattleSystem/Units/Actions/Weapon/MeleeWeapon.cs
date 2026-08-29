@@ -4,10 +4,14 @@ using UnityEngine;
 
 namespace Battler.BattleSystem.Units.Actions.Weapon
 {
-    public class MeleeWeapon : Damager
+    public class MeleeWeapon : MonoBehaviour
     {
         [SerializeField] private Collider _collider;
 
+        private Damager _damager;
+        private int _damage;
+        private int _damageUpgraded;
+        private int _currentDamage;
         private bool _damageDid = false;
 
         public event Action DamageDid;
@@ -15,6 +19,19 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
         private void OnEnable()
         {
             _collider.enabled = false;
+        }
+
+        public void Initialize(LayerMask targetLayer, int actionValue, int actionValueUpgraded)
+        {
+            _damage = actionValue;
+            _damageUpgraded = actionValueUpgraded;
+            _currentDamage = _damage;
+            _damager = new Damager(targetLayer);
+        }
+
+        public void Upgrade()
+        {
+            _currentDamage = _damageUpgraded;
         }
 
         public void EnableDamage()
@@ -33,7 +50,7 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
             if (_collider.enabled == false)
                 return;
 
-            if (IsInLayerMask(other.gameObject) == false)
+            if (_damager.IsInLayerMask(other.gameObject) == false)
                 return;
 
             if (other.TryGetComponent(out Unit member))
@@ -43,7 +60,7 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
 
                 Vector3 hitPoint = other.ClosestPoint(transform.position);
                 _damageDid = true;
-                ApplyDamage(member, hitPoint);
+                _damager.ApplyDamage(member, hitPoint, _currentDamage);
                 DamageDid?.Invoke();
             }
         }

@@ -14,14 +14,7 @@ namespace Battler.BattleSystem.Units.Actions
         [SerializeField] private float _fireRate;
         [SerializeField] private int _fireBurstSize;
 
-        private bool _isUpgraded;
-
         public override bool IsSingleAction => true;
-
-        public override void Upgrade()
-        {
-            _isUpgraded = true;
-        }
 
         protected override void Disable()
         {
@@ -38,7 +31,7 @@ namespace Battler.BattleSystem.Units.Actions
 
             for (int i = 0; i < _fireBurstSize; i++)
             {
-                _weapon.Shoot(_muzzlePoint.position, TargetLayer, _muzzlePoint.forward, _isUpgraded);
+                _weapon.Shoot(_muzzlePoint.position, TargetLayer, _muzzlePoint.forward, CurrentActionValue);
                 await UniTask.WaitForSeconds(_fireRate, cancellationToken: ActionCancelToken);
             }
 

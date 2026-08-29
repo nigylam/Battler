@@ -16,14 +16,7 @@ namespace Battler.BattleSystem.Units.Actions
         private readonly int _fireBurstSize = 8;
         private readonly float _targetOffsetY = 1f;
 
-        private bool _isUpgraded;
-
         public override bool IsSingleAction => true;
-
-        public override void Upgrade()
-        {
-            _isUpgraded = true;
-        }
 
         protected override void Disable()
         {
@@ -43,7 +36,7 @@ namespace Battler.BattleSystem.Units.Actions
                 {
                     foreach (var muzzlePoint in _muzzlePoints)
                     {
-                        _weapon.Shoot(muzzlePoint.position, TargetLayer, GetDirection(target.transform.position, muzzlePoint.position), _isUpgraded);
+                        _weapon.Shoot(muzzlePoint.position, TargetLayer, GetDirection(target.transform.position, muzzlePoint.position), CurrentActionValue);
                         await UniTask.WaitForSeconds(_fireRate, cancellationToken:ActionCancelToken);
                     }
                 }

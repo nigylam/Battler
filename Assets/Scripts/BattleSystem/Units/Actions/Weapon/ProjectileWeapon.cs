@@ -4,19 +4,21 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
 {
     public class ProjectileWeapon : Spawner<Projectile>
     {
-        public Projectile Shoot(Vector3 position, LayerMask attackTargets, Vector3 shotDirection, bool isUpgraded)
+        [SerializeField] private VelocityType _velocityType;
+        [SerializeField] private DamageType _damageType;
+        [SerializeField] private float _damageRadius;
+
+        public Projectile Shoot(Vector3 position, LayerMask attackTargets, Vector3 shotDirection, int damageValue)
         {
             Projectile projectile = Pool.Get();
             projectile.gameObject.SetActive(true);
             projectile.transform.position = position;
             projectile.transform.parent = transform;
-            projectile.Initialize(attackTargets, shotDirection);
+            var projectileSettings = new ProjectileSettings(_velocityType, _damageType, attackTargets, shotDirection, damageValue, _damageRadius);
+            projectile.Initialize(projectileSettings);
             projectile.Collided += OnCollided;
             projectile.Wasted += OnWasted;
             TryAddToActiveList(projectile);
-
-            if (isUpgraded)
-                projectile.Upgrade();
 
             return projectile;
         }

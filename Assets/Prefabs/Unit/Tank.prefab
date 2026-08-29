@@ -415,6 +415,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefab: {fileID: 2265363595727998, guid: 34e8651f20a6c55498cd026fdf0fb995, type: 3}
+  _velocityType: 0
+  _damageType: 1
+  _damageRadius: 1.5
 --- !u!208 &258029406022223253
 NavMeshObstacle:
   m_ObjectHideFlags: 0

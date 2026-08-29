@@ -86,7 +86,7 @@ namespace Battler.BattleSystem.Units
         public void Initialize(Material armyMaterial, LayerMask targetLayer)
         {
             _visual.SetArmyMaterial(armyMaterial);
-            _action.Initialize(targetLayer);
+            _action.Initialize(targetLayer, _stats.ActionValue, _stats.ActionValueUpgraded);
             _health = new Health(_stats.Health, _stats.HealthUpgraded);
             _healthBar.Initialize(_health);
             Subscribe();

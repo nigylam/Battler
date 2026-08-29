@@ -11,15 +11,17 @@ namespace Battler.BattleSystem.Units.Actions
 
         private readonly float _coolDownOffset = 0.6f;
 
+        private int _actionValue;
+        private int _actionValueUpgraded;
         private CancellationTokenSource _ñooldownCts;
         private CancellationTokenSource _actionCts;
 
         public virtual bool IsSingleAction => false;
 
+        protected int CurrentActionValue { get; private set; }
         protected bool IsCooldownEnded { get; private set; } = true;
         protected CancellationToken ActionCancelToken => _actionCts.Token;
         protected LayerMask TargetLayer { get; private set; }
-
 
         [Header("For testing")]
         [SerializeField] private Unit _target;
@@ -44,9 +46,12 @@ namespace Battler.BattleSystem.Units.Actions
             Disable();
         }
 
-        public virtual void Initialize(LayerMask targetLayer)
+        public virtual void Initialize(LayerMask targetLayer, int actionValue, int actionValueUpgraded)
         {
             TargetLayer = targetLayer;
+            CurrentActionValue = actionValue;
+            _actionValue = actionValue;
+            _actionValueUpgraded = actionValueUpgraded;
         }
 
         public async UniTask StartAction(Unit target, Func<bool> isClose)
@@ -64,7 +69,10 @@ namespace Battler.BattleSystem.Units.Actions
             _actionCts?.Cancel();
         }
 
-        public abstract void Upgrade();
+        public virtual void Upgrade()
+        {
+            CurrentActionValue = _actionValueUpgraded;
+        }
 
         protected virtual void Disable() { }
         protected abstract UniTask ProcessAction(Unit target, Func<bool> isClose);

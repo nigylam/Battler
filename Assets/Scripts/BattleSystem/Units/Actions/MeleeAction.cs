@@ -17,7 +17,6 @@ namespace Battler.BattleSystem.Units.Actions
         [ContextMenu("attack")]
         public override void Shoot()
         {
-            _weapon.Initialize(_targetLayer);
             base.Shoot();
         }
 
@@ -28,14 +27,15 @@ namespace Battler.BattleSystem.Units.Actions
             _weapon.DamageDid += OnDamageDid;
         }
 
-        public override void Initialize(LayerMask targetLayer)
+        public override void Initialize(LayerMask targetLayer, int actionValue, int actionValueUpgraded)
         {
-            base.Initialize(targetLayer);
-            _weapon.Initialize(targetLayer);
+            base.Initialize(targetLayer, actionValue, actionValueUpgraded);
+            _weapon.Initialize(targetLayer, actionValue, actionValueUpgraded);
         }
 
         public override void Upgrade()
         {
+            base.Upgrade();
             _weapon.Upgrade();
         }
 

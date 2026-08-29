@@ -2,33 +2,25 @@ using UnityEngine;
 
 namespace Battler.BattleSystem.Units.Actions.Weapon
 {
-    public abstract class Damager : MonoBehaviour
+    public class Damager
     {
-        [SerializeField] private int _damage;
-        [SerializeField] private int _damageUpgraded;
-
         private readonly int _damageOffset = 2;
         private readonly int _damageMinValue = 1;
-        private LayerMask _attackTargets;
+        private readonly LayerMask _attackTargets;
 
-        public virtual void Initialize(LayerMask attackTargets)
+        public Damager(LayerMask attackTargets)
         {
             _attackTargets = attackTargets;
         }
 
-        public virtual void Upgrade()
+        public void ApplyDamage(Unit member, Vector3 hitPoint, int damage)
         {
-            _damage = _damageUpgraded;
+            int finalDamage = Random.Range(damage - _damageOffset, damage + _damageOffset);
+            finalDamage = Mathf.Clamp(finalDamage, _damageMinValue, int.MaxValue);
+            member.TakeDamage(finalDamage, hitPoint);
         }
 
-        protected void ApplyDamage(Unit member, Vector3 hitPoint)
-        {
-            int damage = Random.Range(_damage - _damageOffset, _damage + _damageOffset);
-            damage = Mathf.Clamp(damage, _damageMinValue, int.MaxValue);
-            member.TakeDamage(damage, hitPoint);
-        }
-
-        protected bool IsInLayerMask(GameObject obj)
+        public bool IsInLayerMask(GameObject obj)
         {
             return (_attackTargets.value & 1 << obj.layer) != 0;
         }

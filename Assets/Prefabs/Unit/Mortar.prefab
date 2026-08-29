@@ -1611,6 +1611,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefab: {fileID: 7492481481908151368, guid: b0893300d8af5f843bfa3d8138f1b3a1, type: 3}
+  _velocityType: 1
+  _damageType: 1
+  _damageRadius: 2
 --- !u!114 &586016473290788396
 MonoBehaviour:
   m_ObjectHideFlags: 0

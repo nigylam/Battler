@@ -735,6 +735,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefab: {fileID: 8434566272571257116, guid: c8ad1457202a9d347bd3fdae03777572, type: 3}
+  _velocityType: 1
+  _damageType: 1
+  _damageRadius: 2
 --- !u!114 &6798202474587157844 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3365085714825458440, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
