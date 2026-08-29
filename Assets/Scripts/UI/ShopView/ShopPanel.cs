@@ -12,13 +12,17 @@ namespace Battler.UI.ShopView
         [SerializeField] private SquadInfoTooltip _infoTooltip;
         [SerializeField] private Vector2 _tooltipPositionOffset;
 
+        private ShopPanelContext _panelContext;
         private Func<int, bool> _canAffordCheck;
+
+        protected override PanelContext PanelContext => _panelContext;
 
         public event Action<SquadGood> Buy;
 
         public void Initialize(ISquadViewable<SquadGood> shop, Func<int, bool> canAffordCheck)
         {
             _canAffordCheck = canAffordCheck ?? throw new ArgumentNullException(nameof(canAffordCheck));
+            _panelContext = new ShopPanelContext(canAffordCheck);
             SetItems(shop);
         }
 
@@ -39,6 +43,7 @@ namespace Battler.UI.ShopView
         private void OnBuyItem(SquadGood good)
         {
             Buy?.Invoke(good);
+            DisableTooltip();
         }
 
         private void OnPointerEnter(SquadGood good, Vector2 position)
@@ -52,6 +57,11 @@ namespace Battler.UI.ShopView
         }
 
         private void OnPointerExit()
+        {
+            DisableTooltip();
+        }
+
+        private void DisableTooltip()
         {
             _goodClosedTooltip.Disable();
             _notEnoughMoneyTooltip.Disable();

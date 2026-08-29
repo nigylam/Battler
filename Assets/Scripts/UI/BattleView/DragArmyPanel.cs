@@ -1,5 +1,6 @@
 using Battler;
 using Battler.UI.BattleView;
+using Battler.UI.SquadView;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;

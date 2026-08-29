@@ -18,6 +18,8 @@ namespace Battler.UI.ShopView
         public event Action<SquadGood, Vector2> PointerEnter;
         public event Action PointerExit;
 
+        public bool CanAfford { get; private set; }
+
         private void OnEnable()
         {
             _buyButton.Clicked += OnBuyClick;
@@ -38,13 +40,15 @@ namespace Battler.UI.ShopView
             PointerExit?.Invoke();
         }
 
-        public override void Initialize(SquadGood good)
+        public override void Initialize(SquadGood good, PanelContext panelContext)
         {
+            ShopPanelContext shopPanelContext = panelContext as ShopPanelContext;
+            CanAfford = shopPanelContext.CanAfford(good.Price);
+            _buyButton.gameObject.SetActive(good.Available && CanAfford);
             _good = good;
             SetSquad(good.Squad);
             _price.text = good.Price.ToString();
             _notAvailableMask.SetActive(good.Available == false);
-            _buyButton.SetInteractable(good.Available);
         }
 
         private void OnBuyClick()

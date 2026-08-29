@@ -14,7 +14,7 @@ namespace Battler.Meta
 
         public IReadOnlyList<SquadGood> Squads => _goods.Values.ToList();
 
-        public Shop(List<SquadGoodConfig> goods) : base()
+        public Shop(List<SquadGoodConfig> goods)
         {
             if (goods == null)
                 throw new ArgumentNullException(nameof(goods));
@@ -59,6 +59,7 @@ namespace Battler.Meta
 
             gold.Spend(good.Price);
             squad = good.Squad;
+            Changed?.Invoke();
             return true;
         }
 

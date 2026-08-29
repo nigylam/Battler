@@ -7,12 +7,12 @@
         false,
         false
     ],
-    "idSave": 12,
-    "gold": 10,
+    "idSave": 22,
+    "gold": 330,
     "score": 0,
     "lastOpenedLevelId": "10",
     "lastOpenedGoodId": "turret",
-    "boughtSquadsDictionary": "SquadMedic,2;SquadMortar,1;SquadTurret,1;",
+    "boughtSquadsDictionary": "SquadMedic,2;SquadMortar,1;SquadTurret,1;SquadRifle,3;SquadMelee,2;",
     "soundUI": 0.30000001192092898,
     "soundSFX": 1.0
 }

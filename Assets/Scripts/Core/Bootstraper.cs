@@ -42,7 +42,7 @@ namespace Battler.Core
             GameSquadKeeper squadKeeper = SquadKeeperFabric.Create(_startSquadSet, _squadPlans);
             var gold = new Gold();
             var score = new Score();
-            Shop shop = CreateShop();
+            Shop shop = CreateShop(gold);
             LevelProgress levelProgress = new (_levelConfigs, YG2.saves.lastOpenedLevelId);
             _levelMenu.Initialize(gold, levelProgress);
             _shopMenu.Initialize(gold, shop, squadKeeper);
@@ -80,7 +80,7 @@ namespace Battler.Core
             _audio.ApplySavedSettings();
         }
 
-        private Shop CreateShop()
+        private Shop CreateShop(Gold gold)
         {
             List<SquadGoodConfig> goods = new();
             goods.AddRange(_shopSet.Goods);

@@ -13,10 +13,10 @@ public class SquadGood
         LevelIdOpen = config.LevelIdOpen;
     }
 
-    public SquadPlan Squad { get; private set; }
-    public int Price { get; private set; }
+    public SquadPlan Squad { get; }
+    public int Price { get; }
+    public int LevelIdOpen { get; }
     public bool Available { get; private set; }
-    public int LevelIdOpen { get; private set; }
 
     public void Unlock()
     {

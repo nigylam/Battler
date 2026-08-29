@@ -1,90 +1,95 @@
-using Battler.UI.SquadView;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class SquadPanel<TItem, TSquad> : MonoBehaviour where TItem : Item<TSquad>
+namespace Battler.UI.SquadView
 {
-    [SerializeField] private TItem _itemPrefab;
-    [SerializeField] private Transform _itemParrent;
-
-    private readonly List<TItem> _items = new();
-
-    private ISquadViewable<TSquad> _viewable;
-    private bool _subscribed;
-
-    public IReadOnlyCollection<TItem> Items => _items;
-
-    private void OnEnable()
+    public abstract class SquadPanel<TItem, TSquad> : MonoBehaviour where TItem : Item<TSquad>
     {
-        Subscribe();
-    }
+        [SerializeField] private TItem _itemPrefab;
+        [SerializeField] private Transform _itemParrent;
 
-    private void OnDisable()
-    {
-        Unsubscribe();
-    }
+        private readonly List<TItem> _items = new();
 
-    public void SetItems(ISquadViewable<TSquad> viewable)
-    {
-        _viewable = viewable;
-        UpdateItems();
-    }
+        private ISquadViewable<TSquad> _viewable;
+        private bool _subscribed;
 
-    protected virtual void SubscribeToItem(TItem item) { }
-    protected virtual void UnsubscribeFromItem(TItem item) { }
+        public IReadOnlyCollection<TItem> Items => _items;
 
-    private void UpdateItems()
-    {
-        Clear();
+        protected virtual PanelContext PanelContext { get; }
 
-        foreach (TSquad squad in _viewable.Squads)
+        private void OnEnable()
         {
-            AddItem(squad);
+            Subscribe();
         }
 
-        Subscribe();
-    }
+        private void OnDisable()
+        {
+            Unsubscribe();
+        }
 
-    private void Clear()
-    {
-        Unsubscribe();
+        public void SetItems(ISquadViewable<TSquad> viewable)
+        {
+            _viewable = viewable;
+            UpdateItems();
+        }
 
-        if (_items.Count == 0)
-            return;
+        protected virtual void SubscribeToItem(TItem item) { }
+        protected virtual void UnsubscribeFromItem(TItem item) { }
 
-        for(int i = _items.Count - 1; i >= 0; i--)
-            Destroy(_items[i].gameObject);
+        private void UpdateItems()
+        {
+            Clear();
 
-        _items.Clear();
-    }
+            foreach (TSquad squad in _viewable.Squads)
+            {
+                AddItem(squad);
+            }
 
-    private void AddItem(TSquad data)
-    {
-        TItem item = Instantiate(_itemPrefab, _itemParrent);
-        item.Initialize(data);
-        _items.Add(item);
-    }
+            Subscribe();
+        }
 
-    private void Subscribe()
-    {
-        if (_subscribed)
-            return;
+        private void Clear()
+        {
+            Unsubscribe();
 
-        _viewable.Changed += UpdateItems;
+            if (_items.Count == 0)
+                return;
 
-        if (_items.Count > 0)
-            foreach (var item in _items)
-                SubscribeToItem(item);
+            for (int i = _items.Count - 1; i >= 0; i--)
+                Destroy(_items[i].gameObject);
 
-        _subscribed = true;
-    }
+            _items.Clear();
+        }
 
-    private void Unsubscribe()
-    {
-        if (_items.Count > 0)
-            foreach (var item in _items)
-                UnsubscribeFromItem(item);
+        private void AddItem(TSquad data)
+        {
+            TItem item = Instantiate(_itemPrefab, _itemParrent);
+            item.Initialize(data, PanelContext);
+            _items.Add(item);
+        }
 
-        _subscribed = false;
+        private void Subscribe()
+        {
+            if (_subscribed)
+                return;
+
+            _viewable.Changed += UpdateItems;
+
+            if (_items.Count > 0)
+                foreach (var item in _items)
+                    SubscribeToItem(item);
+
+            _subscribed = true;
+        }
+
+        private void Unsubscribe()
+        {
+            if (_items.Count > 0)
+                foreach (var item in _items)
+                    UnsubscribeFromItem(item);
+
+            _subscribed = false;
+        }
     }
 }

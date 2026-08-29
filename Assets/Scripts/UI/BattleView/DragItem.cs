@@ -1,4 +1,5 @@
 using Battler.BattleSystem.DragAndDrop;
+using Battler.UI.SquadView;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -20,9 +21,9 @@ namespace Battler.UI.BattleView
 
         public bool CreateUpgraded { get; private set; }
 
-        public override void Initialize(BattleSquadCell squadCell)
+        public override void Initialize(BattleSquadCell squadCell, PanelContext _)
         {
-            base.Initialize(squadCell);
+            base.Initialize(squadCell, _);
             CreateUpgraded = squadCell.CreateUpgraded;
             _upgradeMark.SetActive(CreateUpgraded);
             Activate();

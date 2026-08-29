@@ -11,7 +11,7 @@ namespace Battler.UI.SquadView
 
         public SquadPlan SquadPlan => _squad;
 
-        public abstract void Initialize(TSquad squad);
+        public abstract void Initialize(TSquad squad, PanelContext panelContext);
 
         protected void SetSquad(SquadPlan squad)
         {
