@@ -1,32 +1,34 @@
 using System;
 using UnityEngine;
 
-public class Health : MonoBehaviour, ICountable
+public class Health : ICountable
 {
-    [SerializeField] private float _maxHealth = 100f;
-    [SerializeField] private float _maxHealthUpgraded = 100f;
-
-    private float _currentHealth;
+    private float _current;
+    private int _max;
     private bool _active = true;
 
     public event Action Dead;
     public event Action Changed;
 
-    public float Max => _maxHealth;
+    public Health(int max, int maxUpgraded)
+    {
+        Max = max;
+        MaxUpgraded = maxUpgraded;
+        _max = max;
+        _current = max;
+    }
+
+    public float Max { get; }
+    public float MaxUpgraded { get; }
 
     public float Current
     {
-        get { return _currentHealth; }
+        get { return _current; }
         private set
         {
-            _currentHealth = value;
+            _current = value;
             Changed?.Invoke();
         }
-    }
-
-    private void OnEnable()
-    {
-        Restart();
     }
 
     public void TakeDamage(float damage)
@@ -50,19 +52,19 @@ public class Health : MonoBehaviour, ICountable
 
         Current += count;
 
-        if (Current > _maxHealth)
-            Current = _maxHealth;
+        if (Current > _max)
+            Current = _max;
     }
 
     public void Restart()
     {
-        Current = _maxHealth;
+        Current = _max;
         _active = true;
     }
 
     public void Upgrade()
     {
-        _maxHealth = _maxHealthUpgraded;
-        Current = _maxHealth;
+        _max = (int)MaxUpgraded;
+        Current = _max;
     }
 }

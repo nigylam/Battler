@@ -11,13 +11,13 @@ namespace Battler.BattleSystem.Units
     public class Unit : MonoBehaviour
     {
         [SerializeField] private UnitStats _stats;
-        [SerializeField] private Health _health;
         [SerializeField] private TargetFinder _targetFinder;
         [SerializeField] private UnitVisual _visual;
         [SerializeField] private UnitAction _action;
         [SerializeField] private Mover _mover;
         [SerializeField] private Collider _collider;
         [SerializeField] private Sound _sound;
+        [SerializeField] private HealthBar _healthBar;
         [SerializeField] private bool _isFlying = false;
 
         [Header("for testing")]
@@ -26,6 +26,8 @@ namespace Battler.BattleSystem.Units
         private readonly float _targetRequestDelay = 1f;
 
         private Unit _target;
+        private Health _health;
+        private bool _subscribed = false;
 
         public event Action<Unit> Dead;
         public event Action<Unit> NeedTarget;
@@ -37,20 +39,10 @@ namespace Battler.BattleSystem.Units
         public bool IsFlying => _isFlying;
         public UnitStats Stats => _stats;
 
-        private void OnEnable()
+        [ContextMenu("health")]
+        public void ShowHealth()
         {
-            _health.Dead += OnDead;
-        }
-
-        private void Update()
-        {
-            if (_mover != null)
-                _visual.PlayMoveAnimation(_mover.Speed > 0);
-        }
-
-        private void OnDisable()
-        {
-            _health.Dead -= OnDead;
+            Debug.Log(_health.Current);
         }
 
         [ContextMenu("damage")]
@@ -71,10 +63,33 @@ namespace Battler.BattleSystem.Units
             Debug.Log(_target.ToString());
         }
 
+        private void OnEnable()
+        {
+            if(_health == null)
+                return;
+
+            _health.Restart();
+            Subscribe();
+        }
+
+        private void Update()
+        {
+            if (_mover != null)
+                _visual.PlayMoveAnimation(_mover.Speed > 0);
+        }
+
+        private void OnDisable()
+        {
+            Unsubscribe();
+        }
+
         public void Initialize(Material armyMaterial, LayerMask targetLayer)
         {
             _visual.SetArmyMaterial(armyMaterial);
             _action.Initialize(targetLayer);
+            _health = new Health(_stats.Health, _stats.HealthUpgraded);
+            _healthBar.Initialize(_health);
+            Subscribe();
         }
 
         public void Upgrade(bool playAnimation)
@@ -100,6 +115,7 @@ namespace Battler.BattleSystem.Units
         {
             _health.Heal(count);
             _visual.OnHeal();
+            _healthBar.OnHeal();
         }
 
         public async UniTask StartCombat()
@@ -130,6 +146,21 @@ namespace Battler.BattleSystem.Units
         public Vector3 GetClosestPoint(Vector3 point)
         {
             return _collider.ClosestPoint(point);
+        }
+
+        private void Subscribe()
+        {
+            if (_subscribed)
+                return;
+
+            _health.Dead += OnDead;
+            _subscribed = true;
+        }
+
+        private void Unsubscribe()
+        {
+            _health.Dead -= OnDead;
+            _subscribed = false;
         }
 
         private void OnDead()

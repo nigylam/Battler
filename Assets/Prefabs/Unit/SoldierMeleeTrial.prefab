@@ -1481,6 +1481,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -3075378150140096334, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
+      propertyPath: _health
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -3075378150140096334, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
+      propertyPath: _actionValue
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -3075378150140096334, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
+      propertyPath: _healthUpgraded
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -3075378150140096334, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
+      propertyPath: _actionValueUpgraded
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2362099997980165548, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1506,7 +1522,7 @@ PrefabInstance:
     - target: {fileID: 3365085714825458440, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
       propertyPath: _health
       value: 
-      objectReference: {fileID: 8408272208221307127}
+      objectReference: {fileID: 0}
     - target: {fileID: 3365085714825458440, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
       propertyPath: _healEffect
       value: 
@@ -1901,17 +1917,6 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 2389418485003686422, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
   m_PrefabInstance: {fileID: 5988792539531374644}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8408272208221307127 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2858756706154115267, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
-  m_PrefabInstance: {fileID: 5988792539531374644}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7599971757103004455}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01dc8ab66a3f084428f993ee05d20f27, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &9056554911666225980 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3365085714825458440, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}

@@ -5,47 +5,47 @@ public class HealthBar : MonoBehaviour
 {
     [SerializeField] private SmoothSliderBar _healthSliderBar;
     [SerializeField] private GameObject _decorUpgraded;
-    [SerializeField] private Health _health;
     [SerializeField] private ParticleSystem _healEffect;
 
+    private Health _health;
     private bool _isUpgraded;
-    private int _healthPrevious;
+    private bool _initialized = false;
 
-    private void Awake()
+    public void Initialize(Health health)
     {
+        _health = health;
         _healthSliderBar.Initialize(_health);
+        _initialized = true;
+
+        if (gameObject.activeInHierarchy)
+            OnEnable();
     }
 
     private void OnEnable()
     {
+        if (_initialized == false)
+            return;
+
         _healthSliderBar.Enable();
-        _health.Changed += OnHealthChanged;
-        _healthPrevious = (int)_health.Current;
 
         if (_isUpgraded)
             _decorUpgraded.gameObject.SetActive(true);
     }
 
-    private void OnHealthChanged()
+    public void OnHeal()
     {
-        if (_healthPrevious < _health.Current)
+        if (_healEffect.IsAlive() == false)
         {
-            if (_healEffect.IsAlive() == false)
-            {
-                _healEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-                _healEffect.time = 0f;
-                _healEffect.Play(true);
-            }
+            _healEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            _healEffect.time = 0f;
+            _healEffect.Play(true);
         }
-
-        _healthPrevious = (int)_health.Current;
     }
 
     private void OnDisable()
     {
         _decorUpgraded.SetActive(false);
         _healthSliderBar.Disable();
-        _health.Changed -= OnHealthChanged;
     }
 
     public void Upgrade()

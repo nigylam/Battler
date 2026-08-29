@@ -20,7 +20,23 @@ public class SmoothSliderBar : SliderBar
             StopCoroutine(_smoothChange);
 
         _smoothStepDelay = new WaitForSeconds(_changeSpeed);
-        _smoothChange = StartCoroutine(SmoothChangeValue(targetValue));
+
+        if (gameObject.activeInHierarchy)
+            _smoothChange = StartCoroutine(SmoothChangeValue(targetValue));
+        else
+            SnapValue();
+    }
+
+    private void SnapValue()
+    {
+        if (_smoothChange != null)
+        {
+            StopCoroutine(_smoothChange);
+            _smoothChange = null;
+        }
+
+        float targetValue = Stat.Current / Stat.Max;
+        Slider.SetValueWithoutNotify(targetValue);
     }
 
     private IEnumerator SmoothChangeValue(float targetValue)
