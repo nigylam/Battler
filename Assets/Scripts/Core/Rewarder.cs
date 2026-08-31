@@ -1,37 +1,48 @@
+using System;
 using UnityEngine;
 
-public class Rewarder
+namespace Battler.Meta
 {
-    public Rewarder() { }
-
-    public bool IsPlayerWin { get; private set; }
-    public bool IsAutoLose { get; private set; }
-    public int GoldReward { get; private set; }
-    public SquadGoodConfig SquadReward { get; private set; }
-
-    public void GenerateReward(bool isPlayerWin, bool isAutoLose, GameContext context)
+    public class Rewarder
     {
-        SquadReward = null;
-        LevelConfig level = context.Level;
-        IsPlayerWin = isPlayerWin;
-        IsAutoLose = isAutoLose;
+        private const int AdditionalGoldReward = 20;
 
-        if (IsPlayerWin == false)
-            return;
+        public Rewarder() { }
 
-        context.Score.Increase(context.Level.ScoreReward);
-        context.Gold.Increase(context.Level.GoldReward);
-        GoldReward = context.Level.GoldReward;
+        public bool IsPlayerWin { get; private set; }
+        public bool IsAutoLose { get; private set; }
+        public int GoldReward { get; private set; }
+        public SquadGoodConfig SquadReward { get; private set; }
 
-        if (context.LevelProgress.Completed(level) == false)
+        public void GenerateReward(bool isPlayerWin, bool isAutoLose, GameContext context)
         {
-            context.LevelProgress.SetCompleted(level);
+            SquadReward = null;
+            LevelConfig level = context.Level;
+            IsPlayerWin = isPlayerWin;
+            IsAutoLose = isAutoLose;
 
-            if (context.Level.SquadReward != null)
+            if (IsPlayerWin == false)
+                return;
+
+            context.Score.Increase(context.Level.ScoreReward);
+            context.Gold.Increase(context.Level.GoldReward);
+            GoldReward = context.Level.GoldReward;
+
+            if (context.LevelProgress.Completed(level) == false)
             {
-                SquadReward = context.Level.SquadReward;
-                context.Shop.Unlock(SquadReward);
+                context.LevelProgress.SetCompleted(level);
+
+                if (context.Level.SquadReward != null)
+                {
+                    SquadReward = context.Level.SquadReward;
+                    context.Shop.Unlock(SquadReward);
+                }
             }
+        }
+
+        public void GenerateAdditionalReward(GameContext context)
+        {
+            context.Gold.Increase(AdditionalGoldReward);
         }
     }
 }

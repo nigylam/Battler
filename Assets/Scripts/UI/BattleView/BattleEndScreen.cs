@@ -16,17 +16,23 @@ namespace Battler.UI.BattleView
         [SerializeField] private Image _squadReward;
         [SerializeField] private TextMeshProUGUI _goldReward;
         [SerializeField] private UIButton _endButton;
+        [SerializeField] private UIButton _rewardButton;
+
+        private const string _increasedRewardAddId = "IncreasedReward";
 
         public event Action End;
+        public event Action Reward;
 
         private void OnEnable()
         {
-            _endButton.Clicked += OnClick;
+            _endButton.Clicked += OnEndClick;
+            _rewardButton.Clicked += OnRewardClick;
         }
 
         private void OnDisable()
         {
-            _endButton.Clicked -= OnClick;
+            _endButton.Clicked -= OnEndClick;
+            _rewardButton.Clicked -= OnRewardClick;
         }
 
         public void Set(bool isPlayerWin, bool isAutoLose, int goldReward, SquadGoodConfig squadReward = null)
@@ -73,9 +79,16 @@ namespace Battler.UI.BattleView
             _squadReward.sprite = squadIcon;
         }
 
-        private void OnClick()
+        private void OnRewardClick()
         {
-            _endButton.Clicked -= OnClick;
+            _rewardButton.Clicked -= OnRewardClick;
+            Reward?.Invoke();
+            YG2.RewardedAdvShow(_increasedRewardAddId);
+        }
+
+        private void OnEndClick()
+        {
+            _endButton.Clicked -= OnEndClick;
             End?.Invoke();
             YG2.InterstitialAdvShow();
         }
