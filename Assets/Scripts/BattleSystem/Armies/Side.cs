@@ -43,9 +43,9 @@ namespace Battler.BattleSystem.Armies
 
         public abstract UniTask SpawnSquads();
 
-        public virtual void StartLevel(GameContext context)
+        protected void StartLevel(CancellationToken cancelToken)
         {
-            AsyncCancelToken = context.Battle.LevelToken;
+            AsyncCancelToken = cancelToken;
             ArmyDeployer.SetToken(AsyncCancelToken);
         }
 

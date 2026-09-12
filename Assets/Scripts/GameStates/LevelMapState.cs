@@ -1,3 +1,5 @@
+using Battler.BattleSystem;
+using Battler.Meta;
 using Battler.UI.LevelView;
 using UnityEngine;
 
@@ -6,15 +8,17 @@ namespace Battler.State
     public class LevelMapState : GameState
     {
         private readonly LevelMenu _levelMenu;
+        private readonly LevelProgress _levelProgress;
 
-        public LevelMapState(GameStateMachine stateMachine, GameContext context, LevelMenu levelMenu) : base(stateMachine, context)
+        public LevelMapState(GameStateMachine stateMachine, LevelMenu levelMenu, LevelProgress levelProgress) : base(stateMachine)
         {
             _levelMenu = levelMenu;
+            _levelProgress = levelProgress;
         }
 
-        public override void Enter()
+        public override void Enter(GameContext context)
         {
-            _levelMenu.Enable(Context.LevelProgress);
+            _levelMenu.Enable(_levelProgress);
 
             if (_levelMenu.ShowWinGame)
                 ShowWinGame();
@@ -36,11 +40,12 @@ namespace Battler.State
 
         private void OnLevelClick(LevelConfig level)
         {
-            if (Context.LevelProgress.Opened(level) == false)
+            if (_levelProgress.Opened(level) == false)
                 return;
 
-            Context.SetLevel(level);
-            StateMachine.ChangeState(GameStateType.Battle);
+            var levelSettings = new LevelSettings(false, level.Rounds);
+            var context = new GameContext(levelSettings, level);
+            StateMachine.ChangeState(GameStateType.Battle, context);
         }
 
         private void OnShopClick()

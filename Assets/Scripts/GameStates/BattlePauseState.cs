@@ -1,3 +1,4 @@
+using Battler.Core;
 using Battler.UI.BattleView;
 using System;
 using UnityEngine;
@@ -7,13 +8,15 @@ namespace Battler.State
     public class BattlePauseState : GameState
     {
         private readonly BattlePauseMenu _battlePauseMenu;
+        private readonly Battle _battle;
 
-        public BattlePauseState(GameStateMachine stateMachine, GameContext context, BattlePauseMenu battlePauseMenu) : base(stateMachine, context)
+        public BattlePauseState(GameStateMachine stateMachine, BattlePauseMenu battlePauseMenu, Battle battle) : base(stateMachine)
         {
             _battlePauseMenu = battlePauseMenu ?? throw new ArgumentNullException(nameof(battlePauseMenu));
+            _battle = battle;
         }
 
-        public override void Enter()
+        public override void Enter(GameContext context)
         {
             _battlePauseMenu.gameObject.SetActive(true);
             _battlePauseMenu.Resume += OnResumeClick;
@@ -31,7 +34,7 @@ namespace Battler.State
 
         private void OnResumeClick()
         {
-            Context.Battle.ResumeGame();
+            _battle.ResumeGame();
             StateMachine.PopState();
         }
 

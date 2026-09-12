@@ -1,3 +1,4 @@
+using Battler.BattleSystem;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,25 +17,20 @@ namespace Battler.UI.BattleView
         [SerializeField] private Color _armyPanelPlacingColor;
 
         public event Action Pause;
-        public event Action PlayerWin;
-        public event Action EnemyWin;
         public event Action StartButtonClicked;
 
         public DragArmyPanel ArmyPannel => _armyPanel;
+        public RoundWinsPannel RoundWinsPannel => _roundWinsPanel;
 
         private void OnEnable()
         {
             _roundWinsPanel.Restart();
             _startButton.gameObject.SetActive(false);
-            _roundWinsPanel.EnemyWin += OnEnemyWin;
-            _roundWinsPanel.PlayerWin += OnPlayerWin;
             _pauseButton.Clicked += OnPauseClick;
         }
 
         private void OnDisable()
         {
-            _roundWinsPanel.EnemyWin -= OnEnemyWin;
-            _roundWinsPanel.PlayerWin -= OnPlayerWin;
             _pauseButton.Clicked -= OnPauseClick;
             _startButton.Clicked -= OnStartClick;
             _roundWinnerPanel.Restart();
@@ -110,16 +106,6 @@ namespace Battler.UI.BattleView
         private void OnPauseClick()
         {
             Pause?.Invoke();
-        }
-
-        private void OnEnemyWin()
-        {
-            EnemyWin?.Invoke();
-        }
-
-        private void OnPlayerWin()
-        {
-            PlayerWin?.Invoke();
         }
     }
 }

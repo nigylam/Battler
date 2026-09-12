@@ -8,12 +8,12 @@ namespace Battler.State
     {
         private ApprovePopup _popup;
 
-        public QuitApproveState(GameStateMachine stateMachine, GameContext context, ApprovePopup popup) : base(stateMachine, context)
+        public QuitApproveState(GameStateMachine stateMachine, ApprovePopup popup) : base(stateMachine)
         {
             _popup = popup ?? throw new ArgumentNullException(nameof(popup));
         }
 
-        public override void Enter()
+        public override void Enter(GameContext context)
         {
             _popup.gameObject.SetActive(true);
             _popup.Resume += OnResumeClick;

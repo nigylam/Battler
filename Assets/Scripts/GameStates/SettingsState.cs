@@ -5,14 +5,14 @@ namespace Battler.State
 {
     public class SettingsState : GameState
     {
-        private SettingsMenu _settingsMenu;
+        private readonly SettingsMenu _settingsMenu;
 
-        public SettingsState(GameStateMachine stateMachine, GameContext context, SettingsMenu settingsMenu) : base(stateMachine, context)
+        public SettingsState(GameStateMachine stateMachine, SettingsMenu settingsMenu) : base(stateMachine)
         {
             _settingsMenu = settingsMenu;
         }
 
-        public override void Enter()
+        public override void Enter(GameContext context)
         {
             _settingsMenu.gameObject.SetActive(true);
             _settingsMenu.Resume += OnResumeClick;

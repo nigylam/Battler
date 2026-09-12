@@ -1,3 +1,4 @@
+using Battler.BattleSystem;
 using Battler.UI.BattleView;
 using System;
 using UnityEngine;
@@ -10,19 +11,18 @@ public class RoundWinsPannel : MonoBehaviour
     [SerializeField] private IconCounter _playerWinsIcons;
     [SerializeField] private Canvas _canvas;
 
-    public event Action PlayerWin;
-    public event Action EnemyWin;
+    public event Action<RoundsCount> WinConditionAchieved;
 
     private void OnEnable()
     {
-        _enemyWinsCounter.Win += OnEnemyWin;
-        _playerWinsCounter.Win += OnPlayerWin;
+        _enemyWinsCounter.Win += OnWinConditionAchieved;
+        _playerWinsCounter.Win += OnWinConditionAchieved;
     }
 
     private void OnDisable()
     {
-        _enemyWinsCounter.Win -= OnEnemyWin;
-        _playerWinsCounter.Win -= OnPlayerWin;
+        _enemyWinsCounter.Win -= OnWinConditionAchieved;
+        _playerWinsCounter.Win -= OnWinConditionAchieved;
     }
 
     public void Initialize(int roundsToWin)
@@ -50,13 +50,8 @@ public class RoundWinsPannel : MonoBehaviour
         _playerWinsCounter.Restart();
     }
 
-    private void OnPlayerWin()
+    private void OnWinConditionAchieved()
     {
-        PlayerWin?.Invoke();
-    }
-
-    private void OnEnemyWin()
-    {
-        EnemyWin?.Invoke();
+        WinConditionAchieved?.Invoke(new RoundsCount((int)_playerWinsCounter.Current, (int)_enemyWinsCounter.Current));
     }
 }

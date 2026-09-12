@@ -1,7 +1,9 @@
 using Battler.BattleSystem.DragAndDrop;
+using Battler.Core.SquadKeeping;
 using Battler.UI.BattleView;
 using Cysharp.Threading.Tasks;
 using System;
+using System.Threading;
 using UnityEngine;
 
 namespace Battler.BattleSystem.Armies
@@ -25,10 +27,10 @@ namespace Battler.BattleSystem.Armies
 
         protected override ArmyDeployer ArmyDeployer => _deployer;
 
-        public override void StartLevel(GameContext context)
+        public void StartLevel(GameSquadKeeper squadKeeper, CancellationToken cancelToken)
         {
-            base.StartLevel(context);
-            BattleSquadKeeper battleSquadKeeper = new(context.SquadKeeper);
+            StartLevel(cancelToken);
+            BattleSquadKeeper battleSquadKeeper = new(squadKeeper);
             _battleMenu.SetSquads(battleSquadKeeper);
             _deployer.Set(battleSquadKeeper);
         }

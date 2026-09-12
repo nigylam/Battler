@@ -1,40 +1,43 @@
-using Battler;
 using System;
+using Battler.BattleSystem;
+using Battler.Core;
+using Battler.Core.SquadKeeping;
 using UnityEngine;
 
 namespace Battler.State
 {
     public class BattleState : GameState
     {
-        public BattleState(GameStateMachine stateMachine, GameContext context) : base(stateMachine, context) { }
+        private readonly Battle _battle;
+        private readonly GameSquadKeeper _gameSquadKeeper;
 
-        public override void Enter()
+        private LevelConfig _levelConfig;
+
+        public BattleState(GameStateMachine stateMachine, Battle battle, GameSquadKeeper gameSquadKeeper) : base(stateMachine)
         {
-            Context.Battle.StartLevel(Context);
-            Context.Battle.End += OnBattleEnd;
-            Context.Battle.Pause += OnBattlePause;
-            Context.Battle.AutoLose += OnAutoLose;
+            _battle = battle;
+            _gameSquadKeeper = gameSquadKeeper;
+        }
+
+        public override void Enter(GameContext context)
+        {
+            _levelConfig = context.LevelConfig;
+            _battle.StartLevel(context.LevelSettings, _gameSquadKeeper);
+            _battle.End += OnBattleEnd;
+            _battle.Pause += OnBattlePause;
         }
 
         public override void Exit()
         {
-            Context.Battle.CloseLevel();
-            Context.Battle.End -= OnBattleEnd;
-            Context.Battle.Pause -= OnBattlePause;
-            Context.Battle.AutoLose -= OnAutoLose;
-
+            _battle.CloseLevel();
+            _battle.End -= OnBattleEnd;
+            _battle.Pause -= OnBattlePause;
         }
 
-        private void OnBattleEnd(bool isPlayerWin)
+        private void OnBattleEnd(BattleEndContext battleEndContext)
         {
-            Context.Rewarder.GenerateReward(isPlayerWin, false, Context);
-            StateMachine.PushState(GameStateType.BattleEnd);
-        }
-
-        private void OnAutoLose()
-        {
-            Context.Rewarder.GenerateReward(false, true, Context);
-            StateMachine.PushState(GameStateType.BattleEnd);
+            var context = new GameContext(battleEndContext, _levelConfig);
+            StateMachine.PushState(GameStateType.BattleEnd, context);
         }
 
         private void OnBattlePause()

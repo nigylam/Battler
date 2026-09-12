@@ -7,12 +7,12 @@ namespace Battler.State
     {
         private readonly LeaderboardPannel _leaderboardPannel;
 
-        public LeaderboardState(GameStateMachine stateMachine, GameContext context, LeaderboardPannel leaderboardPannel) : base(stateMachine, context)
+        public LeaderboardState(GameStateMachine stateMachine, LeaderboardPannel leaderboardPannel) : base(stateMachine)
         {
             _leaderboardPannel = leaderboardPannel;
         }
 
-        public override void Enter()
+        public override void Enter(GameContext context)
         {
             _leaderboardPannel.SetDefaultTitle();
             _leaderboardPannel.Resume += OnResumeClick;

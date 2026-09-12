@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace Battler.BattleSystem.Armies
@@ -17,12 +18,16 @@ namespace Battler.BattleSystem.Armies
             _deployer = new EnemyArmyDeployer(Field, Commander, Creator, transform);
         }
 
-        public override void StartLevel(GameContext context)
+        public void StartLevel(IReadOnlyCollection<EnemyRound> rounds, bool isRoundReplay, CancellationToken cancelToken)
         {
-            base.StartLevel(context);
+            StartLevel(cancelToken);
             _rounds = new();
-            _rounds.AddRange(context.Level.Rounds);
-            _currentRound = 0;
+            _rounds.AddRange(rounds);
+
+            if (isRoundReplay)
+                _currentRound = _rounds.Count - 1;
+            else
+                _currentRound = 0;
         }
 
         public override async UniTask SpawnSquads()

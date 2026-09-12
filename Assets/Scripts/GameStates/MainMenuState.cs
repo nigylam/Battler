@@ -4,14 +4,14 @@ namespace Battler.State
 {
     public class MainMenuState : GameState
     {
-        private MainMenu _mainMenu;
+        private readonly MainMenu _mainMenu;
 
-        public MainMenuState(GameStateMachine stateMachine, GameContext context, MainMenu mainMenu) : base(stateMachine, context)
+        public MainMenuState(GameStateMachine stateMachine, MainMenu mainMenu) : base(stateMachine)
         {
             _mainMenu = mainMenu;
         }
 
-        public override void Enter()
+        public override void Enter(GameContext context)
         {
             _mainMenu.gameObject.SetActive(true);
             _mainMenu.Start += OnStartClick;

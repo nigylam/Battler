@@ -1,37 +1,59 @@
-using Battler.Core;
-using Battler.Core.SquadKeeping;
+using Battler.BattleSystem;
 using Battler.Meta;
+using System;
 
-public class GameContext
+public struct GameContext
 {
-    public GameContext
-    (
-        GameSquadKeeper squadKeeper,
-        Gold gold,
-        Score score,
-        Shop shop,
-        LevelProgress levelProgress,
-        Battle battle
-    )
+    public LevelSettings LevelSettings;
+    public BattleEndContext BattleEndContext;
+    public Reward Reward;
+    public LevelConfig LevelConfig;
+
+    public GameContext(BattleEndContext battleEndContext)
     {
-        SquadKeeper = squadKeeper;
-        Gold = gold;
-        Score = score;
-        Shop = shop;
-        LevelProgress = levelProgress;
-        Battle = battle;
-        Rewarder = new Rewarder();
+        LevelSettings = new LevelSettings();
+        BattleEndContext = battleEndContext;
+        Reward = new Reward();
+        LevelConfig = null;
     }
 
-    public GameSquadKeeper SquadKeeper { get; }
-    public Gold Gold { get; }
-    public Score Score { get; }
-    public Shop Shop { get; }
-    public LevelProgress LevelProgress { get; }
-    public Battle Battle { get; }
-    public Rewarder Rewarder { get; }
-    public LevelConfig Level { get; private set; }
+    public GameContext(BattleEndContext battleEndContext, LevelConfig levelConfig)
+    {
+        LevelSettings = new LevelSettings();
+        BattleEndContext = battleEndContext;
+        Reward = new Reward();
+        LevelConfig = levelConfig;
+    }
 
-    public void SetLevel(LevelConfig level)
-        => Level = level;
+    public GameContext(LevelSettings levelSettings, LevelConfig levelConfig)
+    {
+        LevelSettings = levelSettings;
+        BattleEndContext = new BattleEndContext();
+        Reward = new Reward();
+        LevelConfig = levelConfig;
+    }
+
+    public GameContext(LevelConfig levelConfig)
+    {
+        LevelSettings = new LevelSettings();
+        BattleEndContext = new BattleEndContext();
+        Reward = new Reward();
+        LevelConfig = levelConfig;
+    }
+
+    public GameContext(LevelSettings levelSettings)
+    {
+        LevelSettings = levelSettings;
+        BattleEndContext = new BattleEndContext();
+        Reward = new Reward();
+        LevelConfig = null;
+    }
+
+    public GameContext(LevelSettings levelSettings, BattleEndContext battleEndContext, Reward reward, LevelConfig levelConfig)
+    {
+        LevelSettings = levelSettings;
+        BattleEndContext = battleEndContext;
+        Reward = reward;
+        LevelConfig = levelConfig;
+    }
 }

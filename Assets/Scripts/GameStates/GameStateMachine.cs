@@ -1,3 +1,6 @@
+using Battler.Core;
+using Battler.Core.SquadKeeping;
+using Battler.Meta;
 using Battler.UI.BattleView;
 using Battler.UI.ShopView;
 using System.Collections.Generic;
@@ -12,33 +15,41 @@ namespace Battler.State
 
         public GameStateMachine
         (
-            GameContext context, 
-            UI.MainMenu mainMenu, 
-            UI.LevelView.LevelMenu levelMenu, 
-            ShopMenu shopMenu, 
-            BattleEndScreen battleEndScreen, 
-            UI.BattleView.BattlePauseMenu battlePauseMenu, 
+            UI.MainMenu mainMenu,
+            UI.LevelView.LevelMenu levelMenu,
+            ShopMenu shopMenu,
+            BattleEndScreen battleEndScreen,
+            BattlePauseMenu battlePauseMenu,
             UI.SettingsMenu settingsMenu,
             UI.LeaderboardPannel leaderboardPannel,
-            UI.ApprovePopup quitApprovePopup
+            UI.ApprovePopup quitApprovePopup,
+            Battle battle,
+            Rewarder rewarder,
+            LevelProgress levelProgress,
+            GameSquadKeeper squadKeeper
         )
         {
             _states = new()
             {
-                {GameStateType.MainMenu, new MainMenuState(this, context, mainMenu) },
-                {GameStateType.LevelMap, new LevelMapState(this, context, levelMenu) },
-                {GameStateType.Battle, new BattleState(this, context) },
-                {GameStateType.BattleEnd, new BattleEndState(this, context, battleEndScreen) },
-                {GameStateType.Shop, new ShopState(this, context, shopMenu) },
-                {GameStateType.BattlePause, new BattlePauseState(this, context, battlePauseMenu) },
-                {GameStateType.Settings, new SettingsState(this, context, settingsMenu) },
-                {GameStateType.Leaderboard, new LeaderboardState(this, context, leaderboardPannel) },
-                {GameStateType.WinGame, new WinGameState(this, context, leaderboardPannel) },
-                {GameStateType.QuitApprove, new QuitApproveState(this, context, quitApprovePopup) }
+                {GameStateType.MainMenu, new MainMenuState(this, mainMenu) },
+                {GameStateType.LevelMap, new LevelMapState(this, levelMenu, levelProgress) },
+                {GameStateType.Battle, new BattleState(this, battle, squadKeeper) },
+                {GameStateType.BattleEnd, new BattleEndState(this, battleEndScreen, rewarder) },
+                {GameStateType.Shop, new ShopState(this, shopMenu) },
+                {GameStateType.BattlePause, new BattlePauseState(this, battlePauseMenu, battle) },
+                {GameStateType.Settings, new SettingsState(this, settingsMenu) },
+                {GameStateType.Leaderboard, new LeaderboardState(this, leaderboardPannel) },
+                {GameStateType.WinGame, new WinGameState(this, leaderboardPannel) },
+                {GameStateType.QuitApprove, new QuitApproveState(this, quitApprovePopup) }
             };
         }
 
         public void ChangeState(GameStateType stateType)
+        {
+            ChangeState(stateType, new GameContext());
+        }
+
+        public void ChangeState(GameStateType stateType, GameContext context)
         {
             GameState state = _states[stateType];
 
@@ -48,14 +59,19 @@ namespace Battler.State
             }
 
             _statesStack.Push(state);
-            state.Enter();
+            state.Enter(context);
         }
 
         public void PushState(GameStateType stateType)
         {
+            PushState(stateType, new GameContext());
+        }
+
+        public void PushState(GameStateType stateType, GameContext context)
+        {
             GameState state = _states[stateType];
             _statesStack.Push(state);
-            state.Enter();
+            state.Enter(context);
         }
 
         public void PopState()

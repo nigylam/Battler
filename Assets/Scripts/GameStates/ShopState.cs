@@ -5,12 +5,12 @@ public class ShopState : GameState
 {
     private ShopMenu _shopMenu;
 
-    public ShopState(GameStateMachine stateMachine, GameContext context, ShopMenu shopMenu) : base(stateMachine, context)
+    public ShopState(GameStateMachine stateMachine, ShopMenu shopMenu) : base(stateMachine)
     {
         _shopMenu = shopMenu;
     }
 
-    public override void Enter()
+    public override void Enter(GameContext context)
     {
         _shopMenu.gameObject.SetActive(true);
         _shopMenu.Exit += ExitShop;

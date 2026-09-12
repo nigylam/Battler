@@ -6,6 +6,7 @@ using System;
 using UnityEngine;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Battler.Core.SquadKeeping;
 
 namespace Battler.Core
 {
@@ -38,9 +39,9 @@ namespace Battler.Core
         private float _defaultTimeScale;
         private bool _isBattleActive;
         private bool _isAutoLose;
+        private RoundsCount _roundsCount;
 
-        public event Action<bool> End;
-        public event Action AutoLose;
+        public event Action<BattleEndContext> End;
         public event Action Pause;
 
         private void Awake()
@@ -68,9 +69,9 @@ namespace Battler.Core
             }
         }
 
-        public async void StartLevel(GameContext context)
+        public async void StartLevel(LevelSettings levelSettings, GameSquadKeeper squadKeeper)
         {
-            SetupNewLevel(context);
+            SetupNewLevel(levelSettings, squadKeeper);
 
             while (HaveLevelWinner == false)
             {
@@ -94,16 +95,23 @@ namespace Battler.Core
             EndLevel();
         }
 
-        private void SetupNewLevel(GameContext context)
+        private void SetupNewLevel(LevelSettings levelSettings, GameSquadKeeper squadKeeper)
         {
+            _roundsCount = new RoundsCount (0,0);
             RefreshCancelToken();
             HaveLevelWinner = false;
-            _enemy.StartLevel(context);
-            _player.StartLevel(context);
+            _enemy.StartLevel(levelSettings.EnemyRounds, levelSettings.IsRoundReplay, LevelToken);
+            _player.StartLevel(squadKeeper, LevelToken);
             _menu.gameObject.SetActive(true);
             _menu.Initialize(RoundsToWin);
             _cameraMover.gameObject.SetActive(true);
             Time.timeScale = _defaultTimeScale;
+
+            if (levelSettings.IsRoundReplay)
+            {
+                _menu.OnEnemyWinRound();
+                _menu.OnPlayerWinRound();
+            }
         }
 
         public void CloseLevel()
@@ -134,20 +142,15 @@ namespace Battler.Core
 
         private void EndLevel()
         {
+            bool isPlayerWin = _levelWinner == _player;
+            var battleEndContext = new BattleEndContext(isPlayerWin, _isAutoLose, _roundsCount.PlayerWins, _roundsCount.EnemyWins);
+
             if (_levelWinner == _player)
-            {
                 Sound.PlayWinLevelSound();
-                End?.Invoke(true);
-            }
             else
-            {
                 Sound.PlayLoseLevelSound();
 
-                if (_isAutoLose)
-                    AutoLose.Invoke();
-                else
-                    End?.Invoke(false);
-            }
+            End?.Invoke(battleEndContext);
         }
 
         private void PauseGame()
@@ -164,16 +167,15 @@ namespace Battler.Core
             PauseGame();
         }
 
-        private void OnPlayerWin()
+        private void OnWinCondition(RoundsCount roundsCount)
         {
-            HaveLevelWinner = true;
-            _levelWinner = _player;
-        }
+            if (roundsCount.PlayerWins == RoundsToWin)
+                _levelWinner = _player;
+            else
+                _levelWinner = _enemy;
 
-        private void OnEnemyWin()
-        {
+            _roundsCount = roundsCount;
             HaveLevelWinner = true;
-            _levelWinner = _enemy;
             _isAutoLose = false;
         }
 
@@ -187,16 +189,14 @@ namespace Battler.Core
 
         private void Subscribe()
         {
-            _menu.PlayerWin += OnPlayerWin;
-            _menu.EnemyWin += OnEnemyWin;
+            _menu.RoundWinsPannel.WinConditionAchieved += OnWinCondition;
             _menu.Pause += OnPause;
             _player.SquadsEnded += OnAutoLose;
         }
 
         private void Unsubscribe()
         {
-            _menu.PlayerWin -= OnPlayerWin;
-            _menu.EnemyWin -= OnEnemyWin;
+            _menu.RoundWinsPannel.WinConditionAchieved -= OnWinCondition;
             _menu.Pause -= OnPause;
             _player.SquadsEnded -= OnAutoLose;
         }

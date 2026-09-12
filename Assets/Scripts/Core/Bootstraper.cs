@@ -42,26 +42,15 @@ namespace Battler.Core
             GameSquadKeeper squadKeeper = SquadKeeperFabric.Create(_startSquadSet, _squadPlans);
             var gold = new Gold();
             var score = new Score();
-            Shop shop = CreateShop(gold);
+            Shop shop = CreateShop();
             LevelProgress levelProgress = new (_levelConfigs, YG2.saves.lastOpenedLevelId);
             _levelMenu.Initialize(gold, levelProgress);
             _shopMenu.Initialize(gold, shop, squadKeeper);
             _audio = new Audio(_audioMixer);
             _settingsMenu.Initialize(new Language("en", "ru", "tr"), _audio);
 
-            var context = new GameContext
-            (
-                squadKeeper,
-                gold,
-                score,
-                shop,
-                levelProgress,
-                _battle
-            );
-
             var stateMachine = new GameStateMachine
             (
-                context,
                 _mainMenu,
                 _levelMenu,
                 _shopMenu,
@@ -69,7 +58,11 @@ namespace Battler.Core
                 _battlePauseMenu,
                 _settingsMenu,
                 _leaderboardPannel,
-                _quitApprovePopup
+                _quitApprovePopup,
+                _battle,
+                new Rewarder(score, gold, shop, levelProgress),
+                levelProgress,
+                squadKeeper
             );
 
             stateMachine.ChangeState(GameStateType.MainMenu);
@@ -80,7 +73,7 @@ namespace Battler.Core
             _audio.ApplySavedSettings();
         }
 
-        private Shop CreateShop(Gold gold)
+        private Shop CreateShop()
         {
             List<SquadGoodConfig> goods = new();
             goods.AddRange(_shopSet.Goods);

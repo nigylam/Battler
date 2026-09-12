@@ -1,3 +1,4 @@
+using Battler.Meta;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,16 +7,14 @@ namespace Battler.State
 {
     public abstract class GameState
     {
-        protected GameStateMachine StateMachine { get; }
-        protected GameContext Context { get; }
-
-        public GameState(GameStateMachine stateMachine, GameContext context)
+        public GameState(GameStateMachine stateMachine)
         {
             StateMachine = stateMachine;
-            Context = context;
         }
 
-        public virtual void Enter() { }
+        protected GameStateMachine StateMachine { get; }
+
+        public virtual void Enter(GameContext context) { }
         public virtual void Exit() { }
         public virtual void Resume() { }
     }

@@ -3,7 +3,6 @@ using Battler.BattleSystem.Squads;
 using Battler.UI.BattleView;
 using Cysharp.Threading.Tasks;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Battler.BattleSystem.DragAndDrop
