@@ -6,16 +6,25 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
 {
     public class Projectile : MonoBehaviour
     {
+        [Serializable]
+        public struct Settings
+        {
+            public float Lifetime;
+            public VelocityType VelocityType;
+            public ContactBehaviour ContactBehaviour;
+        }
+
         [SerializeField] private ParticleSystem _explosionEffect;
         [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private MeshRenderer _visual;
-        [SerializeField] private float _startLifetime = 4f;
 
         private readonly float _effectTime = 2f;
 
-        private ProjectileSettings _settings;
+        private Settings _settings;
+        private LayerMask _layerMask;
+        private int _damage;
+        private float _remainingLifetime;
         private Coroutine _disableAfterEffect;
-        private float _lifetime;
 
         public event Action<Projectile> Collided;
         public event Action<Projectile> Wasted;
@@ -30,9 +39,9 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
 
         private void Update()
         {
-            _lifetime -= Time.deltaTime;
+            _remainingLifetime -= Time.deltaTime;
 
-            if (_lifetime < 0)
+            if (_remainingLifetime < 0)
                 Wasted?.Invoke(this);
         }
 
@@ -47,20 +56,12 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
 
         private void OnTriggerEnter(Collider other)
         {
-            var damager = new Damager(_settings.AttackTargets);
-            Unit unit = null;
-
             if (
-                other.TryGetComponent(out Ground _)
-                || (other.TryGetComponent(out unit) && damager.IsInLayerMask(unit.gameObject))
-                )
-            {
-                DealDamage(damager, unit);
-            }
+                other.TryGetComponent(out Ground _) 
+                || other.TryGetComponent(out Unit unit) && Damager.IsInLayerMask(unit.gameObject, _layerMask))
+                _settings.ContactBehaviour.Activate(other, _damage, transform.position, _layerMask);
             else
-            {
                 return;
-            }
 
             if (_explosionEffect != null)
                 _explosionEffect.gameObject.SetActive(true);
@@ -74,11 +75,13 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
             _disableAfterEffect = StartCoroutine(DisableAfterEffect());
         }
 
-        public void Initialize(ProjectileSettings settings)
+        public void Initialize(Settings settings, Vector3 direction, int damage, LayerMask layerMask)
         {
+            _layerMask = layerMask;
             _settings = settings;
-            _lifetime = _startLifetime;
-            _rigidbody.velocity = VelocityCalculator.CalculateVelocity(settings.VelocityType, settings.ShotDirection);
+            _remainingLifetime = settings.Lifetime;
+            _damage = damage;
+            _rigidbody.velocity = VelocityCalculator.CalculateVelocity(settings.VelocityType, direction);
         }
 
         private IEnumerator DisableAfterEffect()
@@ -92,45 +95,6 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
             }
 
             Collided?.Invoke(this);
-        }
-
-        private void DealDamage(Damager damager, Unit unit)
-        {
-            switch (_settings.DamageType)
-            {
-                case DamageType.Direct:
-                    DealDirectDamage(damager, unit);
-                    break;
-                case DamageType.Explosion:
-                    DealExplosionDamageTargets(damager, unit);
-                    break;
-            }
-        }
-
-        private void DealDirectDamage(Damager damager, Unit unit)
-        {
-            if (unit != null)
-                damager.ApplyDamage(unit, transform.position, _settings.Damage);
-        }
-
-        private void DealExplosionDamageTargets(Damager damager, Unit unit)
-        {
-            if (unit != null)
-                damager.ApplyDamage(unit, transform.position, _settings.Damage);
-
-            Collider[] targets = Physics.OverlapSphere(transform.position, _settings.DamageRadius);
-
-            foreach (Collider target in targets)
-            {
-                if (target.TryGetComponent(out unit) == false)
-                    continue;
-
-                if (damager.IsInLayerMask(unit.gameObject) == false)
-                    continue;
-
-                Vector3 hitPoint = target.ClosestPoint(transform.position);
-                damager.ApplyDamage(unit, hitPoint, _settings.Damage);
-            }
         }
     }
 }

@@ -418,6 +418,10 @@ MonoBehaviour:
   _velocityType: 0
   _damageType: 1
   _damageRadius: 1.5
+  _settings:
+    Lifetime: 4
+    VelocityType: 0
+    ContactBehaviour: {fileID: 11400000, guid: ab2ef16316639b4458ba54b5a20b08c6, type: 2}
 --- !u!208 &258029406022223253
 NavMeshObstacle:
   m_ObjectHideFlags: 0

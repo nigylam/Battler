@@ -1810,6 +1810,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefab: {fileID: 6215048333103159297, guid: 9dd0d6ab68bca134694b2b9ec8e68d69, type: 3}
+  _velocityType: 0
+  _damageType: 0
+  _damageRadius: 0
+  _settings:
+    Lifetime: 4
+    VelocityType: 0
+    ContactBehaviour: {fileID: 11400000, guid: d3d17be546923ab43992384843538c0f, type: 2}
 --- !u!114 &-8140209196085868535
 MonoBehaviour:
   m_ObjectHideFlags: 0

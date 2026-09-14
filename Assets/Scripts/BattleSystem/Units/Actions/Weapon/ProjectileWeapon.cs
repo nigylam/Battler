@@ -4,9 +4,7 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
 {
     public class ProjectileWeapon : Spawner<Projectile>
     {
-        [SerializeField] private VelocityType _velocityType;
-        [SerializeField] private DamageType _damageType;
-        [SerializeField] private float _damageRadius;
+        [SerializeField] private Projectile.Settings _settings;
 
         public Projectile Shoot(Vector3 position, LayerMask attackTargets, Vector3 shotDirection, int damageValue)
         {
@@ -14,8 +12,7 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
             projectile.gameObject.SetActive(true);
             projectile.transform.position = position;
             projectile.transform.parent = transform;
-            var projectileSettings = new ProjectileSettings(_velocityType, _damageType, attackTargets, shotDirection, damageValue, _damageRadius);
-            projectile.Initialize(projectileSettings);
+            projectile.Initialize(_settings, shotDirection, damageValue, attackTargets);
             projectile.Collided += OnCollided;
             projectile.Wasted += OnWasted;
             TryAddToActiveList(projectile);

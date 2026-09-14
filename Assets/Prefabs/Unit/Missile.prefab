@@ -738,6 +738,10 @@ MonoBehaviour:
   _velocityType: 1
   _damageType: 1
   _damageRadius: 2
+  _settings:
+    Lifetime: 4
+    VelocityType: 1
+    ContactBehaviour: {fileID: 11400000, guid: a1f800dfb43691341893f0195d6daab4, type: 2}
 --- !u!114 &6798202474587157844 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3365085714825458440, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}

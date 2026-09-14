@@ -1813,6 +1813,10 @@ MonoBehaviour:
   _velocityType: 0
   _damageType: 0
   _damageRadius: 0
+  _settings:
+    Lifetime: 4
+    VelocityType: 0
+    ContactBehaviour: {fileID: 11400000, guid: d3d17be546923ab43992384843538c0f, type: 2}
 --- !u!114 &-8140209196085868535
 MonoBehaviour:
   m_ObjectHideFlags: 0

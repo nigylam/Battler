@@ -6,12 +6,15 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
     {
         private readonly int _damageOffset = 2;
         private readonly int _damageMinValue = 1;
-        private readonly LayerMask _attackTargets;
 
-        public Damager(LayerMask attackTargets)
+        private readonly LayerMask _layerMask;
+
+        public Damager(LayerMask layerMask)
         {
-            _attackTargets = attackTargets;
+            _layerMask = layerMask;
         }
+
+        public Damager() { }
 
         public void ApplyDamage(Unit member, Vector3 hitPoint, int damage)
         {
@@ -22,7 +25,12 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
 
         public bool IsInLayerMask(GameObject obj)
         {
-            return (_attackTargets.value & 1 << obj.layer) != 0;
+            return IsInLayerMask(obj, _layerMask);
+        }
+
+        public static bool IsInLayerMask(GameObject obj, LayerMask layerMask)
+        {
+            return (layerMask.value & 1 << obj.layer) != 0;
         }
     }
 }

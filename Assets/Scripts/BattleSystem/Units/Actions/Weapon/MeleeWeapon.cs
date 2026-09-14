@@ -26,7 +26,7 @@ namespace Battler.BattleSystem.Units.Actions.Weapon
             _damage = actionValue;
             _damageUpgraded = actionValueUpgraded;
             _currentDamage = _damage;
-            _damager = new Damager(targetLayer);
+            _damager = new(targetLayer);
         }
 
         public void Upgrade()

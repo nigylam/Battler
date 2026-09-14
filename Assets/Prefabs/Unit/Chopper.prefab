@@ -454,6 +454,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefab: {fileID: 5530953984871965071, guid: 673da42af02ac3d4ba7af7cf5debeaa0, type: 3}
+  _velocityType: 0
+  _damageType: 0
+  _damageRadius: 0
+  _settings:
+    Lifetime: 4
+    VelocityType: 0
+    ContactBehaviour: {fileID: 11400000, guid: d3d17be546923ab43992384843538c0f, type: 2}
 --- !u!198 &6091580450981770517 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 8255795374563781049, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}

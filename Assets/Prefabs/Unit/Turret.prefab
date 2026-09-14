@@ -775,6 +775,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefab: {fileID: 6509467756145157869, guid: edb4eaed6bab54246a03bf7af3f38ea1, type: 3}
+  _velocityType: 0
+  _damageType: 0
+  _damageRadius: 0
+  _settings:
+    Lifetime: 4
+    VelocityType: 0
+    ContactBehaviour: {fileID: 11400000, guid: d3d17be546923ab43992384843538c0f, type: 2}
 --- !u!114 &6537302057191203494 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3365085714825458440, guid: b28aa5f53b811364d9cf678709c4b5c5, type: 3}
