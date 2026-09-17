@@ -19,6 +19,7 @@ namespace Battler.UI.ShopView
         private Shop _shop;
         private Gold _gold;
         private GameSquadKeeper _keeper;
+        private ShopModel _shopModel;
 
         public event Action Exit;
 
@@ -27,6 +28,7 @@ namespace Battler.UI.ShopView
             _exitButton.Clicked += OnExitClick;
             _shopPanel.Buy += OnBuyGood;
             _goldCounter.Enable();
+            _shopModel.Enable();
         }
 
         private void OnDisable()
@@ -34,6 +36,7 @@ namespace Battler.UI.ShopView
             _exitButton.Clicked -= OnExitClick;
             _shopPanel.Buy -= OnBuyGood;
             _goldCounter.Disable();
+            _shopModel.Disable();
         }
 
         public void Initialize(Gold gold, Shop shop, GameSquadKeeper keeper)
@@ -42,7 +45,8 @@ namespace Battler.UI.ShopView
             _shop = shop;
             _gold = gold;
             _keeper = keeper;
-            _shopPanel.Initialize(_shop, price => _gold.Current >= price);
+            _shopModel = new ShopModel(_shop, _gold);
+            _shopPanel.SetItems(_shopModel);
             _armyPanel.SetItems(_keeper);
         }
 

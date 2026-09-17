@@ -6,18 +6,17 @@ using UnityEngine.EventSystems;
 
 namespace Battler.UI.ShopView
 {
-    public class GoodItem : Item<SquadGood>, IPointerEnterHandler, IPointerExitHandler
+    public class GoodItem : Item<GoodItemContext>, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private TextMeshProUGUI _price;
         [SerializeField] private UIButton _buyButton;
         [SerializeField] private GameObject _notAvailableMask;
 
-        private SquadGood _good;
-
         public event Action<SquadGood> Buy;
-        public event Action<SquadGood, Vector2> PointerEnter;
+        public event Action<GoodItem, Vector2> PointerEnter;
         public event Action PointerExit;
 
+        public SquadGood Good { get; private set; }
         public bool CanAfford { get; private set; }
 
         private void OnEnable()
@@ -32,7 +31,7 @@ namespace Battler.UI.ShopView
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            PointerEnter?.Invoke(_good, transform.position);
+            PointerEnter?.Invoke(this, transform.position);
         }
 
         public void OnPointerExit(PointerEventData eventData)
@@ -40,20 +39,19 @@ namespace Battler.UI.ShopView
             PointerExit?.Invoke();
         }
 
-        public override void Initialize(SquadGood good, PanelContext panelContext)
+        public override void Initialize(GoodItemContext good)
         {
-            ShopPanelContext shopPanelContext = panelContext as ShopPanelContext;
-            CanAfford = shopPanelContext.CanAfford(good.Price);
-            _buyButton.gameObject.SetActive(good.Available && CanAfford);
-            _good = good;
-            SetSquad(good.Squad);
-            _price.text = good.Price.ToString();
-            _notAvailableMask.SetActive(good.Available == false);
+            CanAfford = good.CanAfford;
+            _buyButton.gameObject.SetActive(good.SquadGood.Available && CanAfford);
+            Good = good.SquadGood;
+            SetSquad(good.SquadGood.Squad);
+            _price.text = good.SquadGood.Price.ToString();
+            _notAvailableMask.SetActive(good.SquadGood.Available == false);
         }
 
         private void OnBuyClick()
         {
-            Buy?.Invoke(_good);
+            Buy?.Invoke(Good);
         }
     }
 }

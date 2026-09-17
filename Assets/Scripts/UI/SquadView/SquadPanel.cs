@@ -73,7 +73,7 @@ namespace Battler.UI.SquadView
         private void AddItem(TSquad data)
         {
             TItem item = Instantiate(_itemPrefab, _itemParrent);
-            item.Initialize(data, PanelContext);
+            item.Initialize(data);
             _items.Add(item);
         }
 

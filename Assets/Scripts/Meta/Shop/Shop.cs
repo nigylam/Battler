@@ -10,10 +10,6 @@ namespace Battler.Meta
     {
         private readonly Dictionary<SquadGoodConfig, SquadGood> _goods;
 
-        public event Action Changed;
-
-        public IReadOnlyList<SquadGood> Squads => _goods.Values.ToList();
-
         public Shop(List<SquadGoodConfig> goods)
         {
             if (goods == null)
@@ -40,6 +36,10 @@ namespace Battler.Meta
                     break;
             }
         }
+
+        public event Action Changed;
+
+        public IReadOnlyList<SquadGood> Squads => _goods.Values.ToList();
 
         public bool TryBuy(SquadGood good, Gold gold, out SquadPlan squad)
         {

@@ -19,9 +19,9 @@ namespace Battler.UI.BattleView
 
         public bool CreateUpgraded { get; private set; }
 
-        public override void Initialize(BattleSquadCell squadCell, PanelContext _)
+        public override void Initialize(BattleSquadCell squadCell)
         {
-            base.Initialize(squadCell, _);
+            base.Initialize(squadCell);
             CreateUpgraded = squadCell.CreateUpgraded;
             _upgradeMark.SetActive(CreateUpgraded);
         }

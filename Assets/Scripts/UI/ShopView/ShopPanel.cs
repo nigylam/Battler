@@ -5,26 +5,14 @@ using UnityEngine;
 
 namespace Battler.UI.ShopView
 {
-    public class ShopPanel : SquadPanel<GoodItem, SquadGood>
+    public class ShopPanel : SquadPanel<GoodItem, GoodItemContext>
     {
         [SerializeField] private ClosedGoodTooltip _goodClosedTooltip;
         [SerializeField] private NotEnoughMoneyTooltip _notEnoughMoneyTooltip;
         [SerializeField] private SquadInfoTooltip _infoTooltip;
         [SerializeField] private Vector2 _tooltipPositionOffset;
 
-        private ShopPanelContext _panelContext;
-        private Func<int, bool> _canAffordCheck;
-
-        protected override PanelContext PanelContext => _panelContext;
-
         public event Action<SquadGood> Buy;
-
-        public void Initialize(ISquadViewable<SquadGood> shop, Func<int, bool> canAffordCheck)
-        {
-            _canAffordCheck = canAffordCheck ?? throw new ArgumentNullException(nameof(canAffordCheck));
-            _panelContext = new ShopPanelContext(canAffordCheck);
-            SetItems(shop);
-        }
 
         protected override void SubscribeToItem(GoodItem item)
         {
@@ -46,14 +34,14 @@ namespace Battler.UI.ShopView
             DisableTooltip();
         }
 
-        private void OnPointerEnter(SquadGood good, Vector2 position)
+        private void OnPointerEnter(GoodItem goodItem, Vector2 position)
         {
-            if (good.Available == false)
-                _goodClosedTooltip.Enable(good.LevelIdOpen, position);
-            else if (_canAffordCheck(good.Price) == false)
+            if (goodItem.Good.Available == false)
+                _goodClosedTooltip.Enable(goodItem.Good.LevelIdOpen, position);
+            else if (goodItem.CanAfford == false)
                 _notEnoughMoneyTooltip.Enable(position);
             else
-                _infoTooltip.Enable(good.Squad, position);
+                _infoTooltip.Enable(goodItem.Good.Squad, position);
         }
 
         private void OnPointerExit()
