@@ -1,6 +1,7 @@
 using Battler.UI;
 using UnityEngine;
 using System;
+using Battler.Core;
 
 namespace Battler.State
 {

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Tank Contact Behaviour
   m_EditorClassIdentifier: 
   _explosionSettings:
-    Radius: 2
+    Radius: 1.5

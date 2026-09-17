@@ -1,4 +1,5 @@
 using Battler.BattleSystem;
+using Battler.Core;
 using Battler.Meta;
 using Battler.UI.LevelView;
 using UnityEngine;
@@ -43,8 +44,8 @@ namespace Battler.State
             if (_levelProgress.Opened(level) == false)
                 return;
 
-            var levelSettings = new LevelSettings(false, level.Rounds);
-            var context = new GameContext(levelSettings, level);
+            var levelSettings = new LevelSettings(false, level);
+            var context = new GameContext(levelSettings);
             StateMachine.ChangeState(GameStateType.Battle, context);
         }
 

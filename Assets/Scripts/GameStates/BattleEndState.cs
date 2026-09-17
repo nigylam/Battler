@@ -1,4 +1,5 @@
 using Battler.BattleSystem;
+using Battler.Core;
 using Battler.Meta;
 using Battler.UI.BattleView;
 using System;
@@ -20,8 +21,8 @@ namespace Battler.State
 
         public override void Enter(GameContext context)
         {
-            _levelConfig = context.LevelConfig;
-            Reward reward = _rewarder.GenerateReward(context.BattleEndContext, context.LevelSettings, context.LevelConfig);
+            _levelConfig = context.LevelSettings.LevelConfig;
+            Reward reward = _rewarder.GenerateReward(context.BattleEndContext, context.LevelSettings);
             _battleEndScreen.Set(reward);
             _battleEndScreen.End += OnEndClicked;
             _battleEndScreen.Reward += OnRewardClicked;
@@ -38,8 +39,8 @@ namespace Battler.State
 
         private void OnAddRoundClicked()
         {
-            var levelSettings = new LevelSettings(true, _levelConfig.Rounds);
-            StateMachine.ChangeState(GameStateType.Battle, new GameContext(levelSettings, _levelConfig));
+            var levelSettings = new LevelSettings(true, _levelConfig);
+            StateMachine.ChangeState(GameStateType.Battle, new GameContext(levelSettings));
         }
 
         private void OnRewardClicked()

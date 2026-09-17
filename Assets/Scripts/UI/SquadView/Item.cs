@@ -10,8 +10,14 @@ namespace Battler.UI.SquadView
         private SquadPlan _squad;
 
         public SquadPlan SquadPlan => _squad;
+        protected bool IsInteractable { get; private set; } = true;
 
         public abstract void Initialize(TSquad squad, PanelContext panelContext);
+
+        public void SetInteractable(bool isInteractable)
+        {
+            IsInteractable = isInteractable;
+        }
 
         protected void SetSquad(SquadPlan squad)
         {

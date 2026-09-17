@@ -1,3 +1,4 @@
+using Battler.Core;
 using Battler.Meta;
 using System.Collections;
 using System.Collections.Generic;

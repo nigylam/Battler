@@ -21,6 +21,7 @@ namespace Battler.UI.SquadView
         private void OnEnable()
         {
             Subscribe();
+            SetInteractable(true);
         }
 
         private void OnDisable()
@@ -32,6 +33,13 @@ namespace Battler.UI.SquadView
         {
             _viewable = viewable;
             UpdateItems();
+            SetInteractable(true);
+        }
+
+        public void SetInteractable(bool isInteractable)
+        {
+            foreach(var item in Items)
+                item.SetInteractable(isInteractable);
         }
 
         protected virtual void SubscribeToItem(TItem item) { }

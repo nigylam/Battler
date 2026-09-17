@@ -41,12 +41,18 @@ namespace Battler.BattleSystem.Armies
             Disable();
         }
 
+        public void SetInteractable(bool isInteractable)
+        {
+            Commander.SetInteractable(isInteractable);
+        }
+
         public abstract UniTask SpawnSquads();
 
         protected void StartLevel(CancellationToken cancelToken)
         {
             AsyncCancelToken = cancelToken;
             ArmyDeployer.SetToken(AsyncCancelToken);
+            Commander.SetInteractable(true);
         }
 
         public virtual async UniTask PlayWin()

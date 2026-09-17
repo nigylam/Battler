@@ -1,3 +1,4 @@
+using Battler.Core;
 using Battler.State;
 using Battler.UI.ShopView;
 

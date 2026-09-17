@@ -27,6 +27,7 @@ namespace Battler.UI.BattleView
             _roundWinsPanel.Restart();
             _startButton.gameObject.SetActive(false);
             _pauseButton.Clicked += OnPauseClick;
+            SetInteractable(true);
         }
 
         private void OnDisable()
@@ -36,6 +37,11 @@ namespace Battler.UI.BattleView
             _roundWinnerPanel.Restart();
             _startButton.gameObject.SetActive(false);
             _roundWinnerPanel.gameObject.SetActive(false);
+        }
+
+        public void Initialize(int roundsToWin)
+        {
+            _roundWinsPanel.Initialize(roundsToWin);
         }
 
         public void SetSquads(Keeper<BattleSquadCell> keeper)
@@ -71,11 +77,6 @@ namespace Battler.UI.BattleView
             _armyPanelImage.color = _armyPanelDefaultColor;
         }
 
-        public void Initialize(int roundsToWin)
-        {
-            _roundWinsPanel.Initialize(roundsToWin);
-        }
-
         public void OnPlayerWinRound()
         {
             _roundWinsPanel.PlayerIncrease();
@@ -94,6 +95,13 @@ namespace Battler.UI.BattleView
         public void SetPlayerWinPanel()
         {
             _roundWinnerPanel.SetPlayerWinner();
+        }
+
+        public void SetInteractable(bool isInteractable)
+        {
+            _pauseButton.SetInteractable(isInteractable);
+            _startButton.SetInteractable(isInteractable);
+            _armyPanel.SetInteractable(isInteractable);
         }
 
         private void OnStartClick()

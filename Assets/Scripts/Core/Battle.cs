@@ -27,6 +27,13 @@ namespace Battler.Core
 
         private CancellationTokenSource _cancelTokenSource;
         private Side _levelWinner;
+        private RoundsCount _roundsCount;
+        private float _defaultTimeScale;
+        private bool _isBattleActive;
+        private bool _isAutoLose;
+
+        public event Action<BattleEndContext> End;
+        public event Action Pause;
 
         public PlayerSide Player => _player;
         public EnemySide Enemy => _enemy;
@@ -35,14 +42,6 @@ namespace Battler.Core
         public BattleSound Sound { get; private set; }
         public bool HaveLevelWinner { get; private set; }
         public Side RoundWinner { get; private set; }
-
-        private float _defaultTimeScale;
-        private bool _isBattleActive;
-        private bool _isAutoLose;
-        private RoundsCount _roundsCount;
-
-        public event Action<BattleEndContext> End;
-        public event Action Pause;
 
         private void Awake()
         {
@@ -100,7 +99,7 @@ namespace Battler.Core
             _roundsCount = new RoundsCount (0,0);
             RefreshCancelToken();
             HaveLevelWinner = false;
-            _enemy.StartLevel(levelSettings.EnemyRounds, levelSettings.IsRoundReplay, LevelToken);
+            _enemy.StartLevel(levelSettings.LevelConfig.Rounds, levelSettings.IsRoundReplay, LevelToken);
             _player.StartLevel(squadKeeper, LevelToken);
             _menu.gameObject.SetActive(true);
             _menu.Initialize(RoundsToWin);
@@ -127,6 +126,24 @@ namespace Battler.Core
         {
             Time.timeScale = _defaultTimeScale;
             _cameraMover.gameObject.SetActive(true);
+            _menu.SetInteractable(true);
+            _player.SetInteractable(true);
+        }
+
+        private void PauseGame()
+        {
+            if (_isBattleActive)
+                Time.timeScale = PauseTimeScale;
+
+            _cameraMover.gameObject.SetActive(false);
+            _menu.SetInteractable(false);
+            _player.SetInteractable(false);
+        }
+
+        private void OnPause()
+        {
+            Pause?.Invoke();
+            PauseGame();
         }
 
         private void RefreshCancelToken()
@@ -151,20 +168,6 @@ namespace Battler.Core
                 Sound.PlayLoseLevelSound();
 
             End?.Invoke(battleEndContext);
-        }
-
-        private void PauseGame()
-        {
-            if (_isBattleActive)
-                Time.timeScale = PauseTimeScale;
-
-            _cameraMover.gameObject.SetActive(false);
-        }
-
-        private void OnPause()
-        {
-            Pause?.Invoke();
-            PauseGame();
         }
 
         private void OnWinCondition(RoundsCount roundsCount)

@@ -22,7 +22,7 @@ namespace Battler.Meta
             _levelProgress = levelProgress;
         }
 
-        public Reward GenerateReward(BattleEndContext battleEndContext, LevelSettings levelSettings, LevelConfig level)
+        public Reward GenerateReward(BattleEndContext battleEndContext, LevelSettings levelSettings)
         {
             Reward reward;
 
@@ -36,18 +36,18 @@ namespace Battler.Meta
                 return reward;
             }
 
-            _score.Increase(level.ScoreReward);
-            _gold.Increase(level.GoldReward);
-            int goldReward = level.GoldReward;
+            _score.Increase(levelSettings.LevelConfig.ScoreReward);
+            _gold.Increase(levelSettings.LevelConfig.GoldReward);
+            int goldReward = levelSettings.LevelConfig.GoldReward;
             SquadGoodConfig squadReward = null;
 
-            if (_levelProgress.Completed(level) == false)
+            if (_levelProgress.Completed(levelSettings.LevelConfig) == false)
             {
-                _levelProgress.SetCompleted(level);
+                _levelProgress.SetCompleted(levelSettings.LevelConfig);
 
-                if (level.SquadReward != null)
+                if (levelSettings.LevelConfig.SquadReward != null)
                 {
-                    squadReward = level.SquadReward;
+                    squadReward = levelSettings.LevelConfig.SquadReward;
                     _shop.Unlock(squadReward);
                 }
             }

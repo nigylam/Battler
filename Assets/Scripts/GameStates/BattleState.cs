@@ -1,7 +1,7 @@
-using System;
 using Battler.BattleSystem;
 using Battler.Core;
 using Battler.Core.SquadKeeping;
+using System;
 using UnityEngine;
 
 namespace Battler.State
@@ -11,7 +11,7 @@ namespace Battler.State
         private readonly Battle _battle;
         private readonly GameSquadKeeper _gameSquadKeeper;
 
-        private LevelConfig _levelConfig;
+        private LevelSettings _levelSettings;
 
         public BattleState(GameStateMachine stateMachine, Battle battle, GameSquadKeeper gameSquadKeeper) : base(stateMachine)
         {
@@ -21,7 +21,7 @@ namespace Battler.State
 
         public override void Enter(GameContext context)
         {
-            _levelConfig = context.LevelConfig;
+            _levelSettings = context.LevelSettings;
             _battle.StartLevel(context.LevelSettings, _gameSquadKeeper);
             _battle.End += OnBattleEnd;
             _battle.Pause += OnBattlePause;
@@ -36,7 +36,7 @@ namespace Battler.State
 
         private void OnBattleEnd(BattleEndContext battleEndContext)
         {
-            var context = new GameContext(battleEndContext, _levelConfig);
+            var context = new GameContext(_levelSettings, battleEndContext);
             StateMachine.PushState(GameStateType.BattleEnd, context);
         }
 

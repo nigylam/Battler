@@ -13,6 +13,8 @@ namespace Battler.BattleSystem.Armies
         private readonly List<SquadFieldContext> _spawnedSquads = new();
         private readonly List<SquadFieldContext> _survivedSquads = new();
 
+        private bool _isInteractable;
+
         public event Action<SquadFieldContext, UnitDragger> DragStarted;
 
         public IReadOnlyCollection<SquadFieldContext> SurvivedSquads => _survivedSquads;
@@ -21,6 +23,12 @@ namespace Battler.BattleSystem.Armies
         {
             _army = army;
             _field = field;
+            _isInteractable = true;
+        }
+
+        public void SetInteractable(bool isInteractable)
+        {
+            _isInteractable = isInteractable;
         }
 
         public void Attack()
@@ -110,7 +118,8 @@ namespace Battler.BattleSystem.Armies
 
         private void OnDragStarted(Squad squad, UnitDragger dragger)
         {
-            DragStarted?.Invoke(Get(squad), dragger);
+            if (_isInteractable)
+                DragStarted?.Invoke(Get(squad), dragger);
         }
 
         private SquadFieldContext Get(Squad squad)

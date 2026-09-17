@@ -4,15 +4,15 @@ using UnityEngine;
 
 namespace Battler.BattleSystem
 {
-    public struct LevelSettings
+    public readonly struct LevelSettings
     {
-        public bool IsRoundReplay;
-        public IReadOnlyCollection<EnemyRound> EnemyRounds;
+        public readonly bool IsRoundReplay;
+        public readonly LevelConfig LevelConfig;
 
-        public LevelSettings(bool isRoundReplay, IReadOnlyCollection<EnemyRound> enemyRounds)
+        public LevelSettings(bool isRoundReplay, LevelConfig levelConfig)
         {
             IsRoundReplay = isRoundReplay;
-            EnemyRounds = enemyRounds;
+            LevelConfig = levelConfig;
         }
     }
 }

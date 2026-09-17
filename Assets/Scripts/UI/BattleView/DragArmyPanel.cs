@@ -2,8 +2,8 @@ using Battler;
 using Battler.UI.BattleView;
 using Battler.UI.SquadView;
 using System;
-using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine;
 
 public class DragArmyPanel : SquadPanel<DragItem, BattleSquadCell>
 {
@@ -26,17 +26,13 @@ public class DragArmyPanel : SquadPanel<DragItem, BattleSquadCell>
         DragStarted?.Invoke(item);
 
         foreach(DragItem newItem in Items)
-        {
-            newItem.Deactivate();
-        }
+            newItem.SetInteractable(false);
     }
 
     private void OnDragEnded(PointerEventData _)
     {
         foreach (DragItem item in Items)
-        {
-            item.Activate();
-        }
+            item.SetInteractable(true);
     }
     
 }

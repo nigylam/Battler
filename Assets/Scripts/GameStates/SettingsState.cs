@@ -1,3 +1,4 @@
+using Battler.Core;
 using Battler.UI;
 using UnityEngine;
 
