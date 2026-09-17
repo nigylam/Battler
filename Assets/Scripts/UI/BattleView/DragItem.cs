@@ -19,6 +19,8 @@ namespace Battler.UI.BattleView
 
         public bool CreateUpgraded { get; private set; }
 
+        private bool _isDragging = false;
+
         public override void Initialize(BattleSquadCell squadCell)
         {
             base.Initialize(squadCell);
@@ -33,11 +35,12 @@ namespace Battler.UI.BattleView
 
             DragStarted?.Invoke(this);
             transform.localScale = Vector3.one;
+            _isDragging = true;
         }
 
         public void OnDrag(PointerEventData eventData)
         {
-            if (IsInteractable == false)
+            if (IsInteractable == false && _isDragging == false)
                 return;
 
             Dragged?.Invoke(eventData);
@@ -45,10 +48,11 @@ namespace Battler.UI.BattleView
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            if (IsInteractable == false)
+            if (IsInteractable == false && _isDragging == false)
                 return;
 
             DragEnded?.Invoke(eventData);
+            _isDragging = false;
         }
 
         public void OnPointerEnter(PointerEventData eventData)
