@@ -16,9 +16,6 @@ namespace Battler.UI.ShopView
         [SerializeField] private AudioClip _buySound;
         [SerializeField] private AudioClip _cancelBuySound;
 
-        private Shop _shop;
-        private Gold _gold;
-        private GameSquadKeeper _keeper;
         private ShopModel _shopModel;
 
         public event Action Exit;
@@ -39,15 +36,12 @@ namespace Battler.UI.ShopView
             _shopModel.Disable();
         }
 
-        public void Initialize(Gold gold, Shop shop, GameSquadKeeper keeper)
+        public void Initialize(ShopModel shopModel)
         {
-            _goldCounter.Initialize(gold);
-            _shop = shop;
-            _gold = gold;
-            _keeper = keeper;
-            _shopModel = new ShopModel(_shop, _gold);
+            _shopModel = shopModel;
+            _goldCounter.Initialize(_shopModel.Gold);
             _shopPanel.SetItems(_shopModel);
-            _armyPanel.SetItems(_keeper);
+            _armyPanel.SetItems(_shopModel.SquadKeeper);
         }
 
         private void OnExitClick()
@@ -58,18 +52,10 @@ namespace Battler.UI.ShopView
 
         private void OnBuyGood(SquadGood good)
         {
-            if (_shop.TryBuy(good, _gold, out SquadPlan squad))
-            {
-                GameSquadCell squadCell = new(squad, 1);
-                _keeper.AddSquad(squadCell);
-                YG2.saves.AddBoughtSquad(squadCell.Plan.Id);
-                YG2.SaveProgress();
+            if (_shopModel.TryBuyGood(good))
                 PlayBuySound(_buySound);
-            }
-            else
-            {
+            else 
                 PlayBuySound(_cancelBuySound);
-            }
         }
 
         private void PlayBuySound(AudioClip clip)

@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 namespace Battler.UI.ShopView
 {
-    public class GoodItem : Item<GoodItemContext>, IPointerEnterHandler, IPointerExitHandler
+    public class GoodItem : Item<GoodContext>, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private TextMeshProUGUI _price;
         [SerializeField] private UIButton _buyButton;
@@ -17,7 +17,7 @@ namespace Battler.UI.ShopView
         public event Action PointerExit;
 
         public SquadGood Good { get; private set; }
-        public bool CanAfford { get; private set; }
+        public GoodContext.ItemState State { get; private set; }
 
         private void OnEnable()
         {
@@ -39,14 +39,14 @@ namespace Battler.UI.ShopView
             PointerExit?.Invoke();
         }
 
-        public override void Initialize(GoodItemContext good)
+        public override void Initialize(GoodContext good)
         {
-            CanAfford = good.CanAfford;
-            _buyButton.gameObject.SetActive(good.SquadGood.Available && CanAfford);
+            State = good.State;
             Good = good.SquadGood;
             SetSquad(good.SquadGood.Squad);
             _price.text = good.SquadGood.Price.ToString();
-            _notAvailableMask.SetActive(good.SquadGood.Available == false);
+            _buyButton.gameObject.SetActive(State == GoodContext.ItemState.CanBuy);
+            _notAvailableMask.SetActive(State == GoodContext.ItemState.ClosedLevel);
         }
 
         private void OnBuyClick()

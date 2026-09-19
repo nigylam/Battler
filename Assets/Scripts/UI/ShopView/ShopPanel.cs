@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Battler.UI.ShopView
 {
-    public class ShopPanel : SquadPanel<GoodItem, GoodItemContext>
+    public class ShopPanel : SquadPanel<GoodItem, GoodContext>
     {
         [SerializeField] private ClosedGoodTooltip _goodClosedTooltip;
         [SerializeField] private NotEnoughMoneyTooltip _notEnoughMoneyTooltip;
@@ -36,12 +36,18 @@ namespace Battler.UI.ShopView
 
         private void OnPointerEnter(GoodItem goodItem, Vector2 position)
         {
-            if (goodItem.Good.Available == false)
-                _goodClosedTooltip.Enable(goodItem.Good.LevelIdOpen, position);
-            else if (goodItem.CanAfford == false)
-                _notEnoughMoneyTooltip.Enable(position);
-            else
-                _infoTooltip.Enable(goodItem.Good.Squad, position);
+            switch (goodItem.State)
+            {
+                case GoodContext.ItemState.ClosedLevel:
+                    _goodClosedTooltip.Enable(goodItem.Good.LevelIdOpen, position);
+                    break;
+                case GoodContext.ItemState.NotEnoughMoney:
+                    _notEnoughMoneyTooltip.Enable(position);
+                    break;
+                default:
+                    _infoTooltip.Enable(goodItem.Good.Squad, position);
+                    break;
+            }
         }
 
         private void OnPointerExit()

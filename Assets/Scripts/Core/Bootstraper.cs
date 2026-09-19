@@ -43,9 +43,10 @@ namespace Battler.Core
             var gold = new Gold();
             var score = new Score();
             Shop shop = CreateShop();
+            var shopModel = new ShopModel(shop, gold, squadKeeper);
             LevelProgress levelProgress = new (_levelConfigs, YG2.saves.lastOpenedLevelId);
             _levelMenu.Initialize(gold, levelProgress);
-            _shopMenu.Initialize(gold, shop, squadKeeper);
+            _shopMenu.Initialize(shopModel);
             _audio = new Audio(_audioMixer);
             _settingsMenu.Initialize(new Language("en", "ru", "tr"), _audio);
 
